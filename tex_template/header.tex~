@@ -1,0 +1,14 @@
+\usepackage[top=.5in, bottom=.5in, left=.75in, right=.75in]{geometry}
+\usepackage{titlesec}
+\usepackage{relsize}
+\usepackage{amsmath}
+\titleformat{\section}{\huge\bfseries}{\thesection}{1em}{}
+\titlespacing{\section}{0pt}{0pt}{1em}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\pagestyle{empty}
+
+\renewcommand{\labelitemii}{\raise .5ex\hbox{\tiny$\blacktriangleright$}}
+
+\usepackage[default]{opensans}
+\usepackage[none]{hyphenat}
