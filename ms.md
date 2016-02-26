@@ -17,12 +17,12 @@
 ### Introduction
 
 <!-- The Problem -->
-1. Reproducibility crisis in species distribution modelling (SDM).
+Reproducibility crisis in species distribution modelling (SDM).
 Difficult for new SDM users to access latest methods.
 Equally difficult for methods developers to disseminate their advances.
 
 <!-- The Solution: ZOOOOOON!  -->
-2. The `zoon` R package encodes SDM analyses as a simple workflow of five steps: obtaining occurrence data, obtaining covariate data, pre-processing these data, fitting a model, and generating outputs.
+The `zoon` R package encodes SDM analyses as a simple workflow of five steps: obtaining occurrence data, obtaining covariate data, pre-processing these data, fitting a model, and generating outputs.
 Each of these steps is carried out by one or more community-contributed software modules 
 This framework facilitates rapid dissemination of novel SDM methodologies by lowering the bar to creating research software.
 `zoon` workflows are re-runnable records of the data, code and results of an entire SDM analysis and can be easily reproduced, scrutinized and extended by the whole research community.
@@ -30,7 +30,13 @@ This framework facilitates rapid dissemination of novel SDM methodologies by low
 <!-- How It Works -->
 ### Implementing a `zoon` workflow
 
-Modules types (and examples) in a diagram.
+Module types (and examples) in a diagram.
+
+![The modular SDM structure encoded by a zoon workflow.
+A) Flow diagram representing the module types.
+B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module').
+C) Chaining and listing modules of the same type.
+D) An example workflow, corresponding to Example 1 below.](./figs/workflow_schematic.pdf)
 
 Structure of workflow objects:
  - code (all and modules used)
