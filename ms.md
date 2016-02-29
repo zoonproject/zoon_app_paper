@@ -96,37 +96,61 @@ Some plottable results of this analysis
 
 #### Repeating a MEE methods comparison 
 
+Proposed paper:
 
-Explanation & citation
+>Merow & Silander (2014) A comparison of Maxlike and Maxent for modelling species distributions. *Methods in Ecology and Evolution*
 
-One of the modules we had to write:
+This is a method that saw a lot of discussion and for which more experiments could be useful.
+
+Possible experiments:
+* evaluating with different criteria (e.g. deviance or pseudo-r-squared which measure calibration capacity)
+* fitting the same models with GBIF data and evaluating against the BBS PA data,
+* fitting/evaluating on spatially-stratified holdout data
+* fitting the models with other species
+
+(choose only one of these)
+
+
+One of the modules we had to write (simpler than the MaxLike one!):
 
 ```r
-AnotherAwesomeModule <- function(.df) {
-    something
-    return (something else)
+CarolinaWrenPO <- function() {
+  
+  # load maxlike and the dataset into this environment
+  zoon::GetPackage('maxlike')
+  data(carw, envir = environment())
+  occ <- na.omit(carw.data$pa.data)
+
+  # keep only presences
+  occ <- occ[occ$y == 1, ]
+  
+  # build the occurrence dataset and return
+  data.frame(longitude = occ$Lon,
+             latitude = occ$Lat,
+             value = occ$y,
+             type = 'presence'),
+             fold = 1)
+  
 }
 ```
-
 
 What the workflow looks like:
 
 ```r
-whitstanley_et_al <- workflow(
-    occurrence = ...,
+merow_and_silander <- workflow(
+    occurrence = CarolinaWrenPO,
     covariate = ...,
     process = ...,
-    model = ...,
+    model = list(MaxEnt, MaxLike),
     output = ...)
 ```
 
-So we added an additional model and an additional evaluation criterion and re-ran it:
+So we ran it again with disc-based spatial stratification:
 
 ```r
-whitstanley_et_al_interactive <- ReRunWorkflow(
-    whitstanley_et_al,
-    model = list(..., MaxEnt),
-    output = Chain(..., SomethingNew))
+merow_and_silander_spatial <- ReRunWorkflow(
+    merow_and_silander,
+    process = Chain(..., PartitionDisc))
 ```
 
 ### Future developments
