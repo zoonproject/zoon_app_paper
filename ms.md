@@ -1,14 +1,17 @@
+---
+output: pdf_document
+---
 # The `zoon` R package for reproducible and shareable species distribution modelling
 
 ## Nick Golding, Tom August, Tim C.D. Lucas, Emiel Van Loon & Greg McInerny
 
 ### Abstract
 
-1. The diverse array of software and methodological research available for species distribution modelling (SDM) hinder independent evaluation of new methods as well as their dissemination to SDM users.  
+1. The diverse array of software and methodological research available for species distribution modelling (SDM) hinders independent evaluation of new methods and their dissemination to SDM users.  
 
 2. The `zoon` R package encodes SDM analyses as a simple, but fully reproducible workflow of five steps: obtaining occurrence data, obtaining covariate data, pre-processing these data, fitting a model, and generating outputs.
 
-3. Each of these steps is carried out by one or more community-contributed software modules maintained in a version-controlled online repository.
+3. Each of these steps is carried out by one or more community-contributed software modules maintained in a version-controlled online repository and built upon existing SDM code form R-packages and the research community.
 
 4. `zoon` workflows are re-runnable records of the data, code and results of an entire SDM analysis and can be easily reproduced, scrutinized and extended by the whole research community.
  
@@ -19,11 +22,12 @@
 <!-- The Problem -->
 Reproducibility crisis in species distribution modelling (SDM).
 Difficult for new SDM users to access latest methods.
+Difficult for anyone to compare methods effectively. 
 Equally difficult for methods developers to disseminate their advances.
 
 <!-- The Solution: ZOOOOOON!  -->
 The `zoon` R package encodes SDM analyses as a simple workflow of five steps: obtaining occurrence data, obtaining covariate data, pre-processing these data, fitting a model, and generating outputs.
-Each of these steps is carried out by one or more community-contributed software modules 
+Each of these steps is carried out by one or more community-contributed software modules. 
 This framework facilitates rapid dissemination of novel SDM methodologies by lowering the bar to creating research software.
 `zoon` workflows are re-runnable records of the data, code and results of an entire SDM analysis and can be easily reproduced, scrutinized and extended by the whole research community.
  
@@ -52,10 +56,12 @@ Things you can do to workflows:
 * execute whole thing from scratch (grabs new data from web)
 * execute from part way through
 
+Include a figure visualising the sturcutre of the workflow object and how it can be adopted in the ChangeWorkflow function (corresponding to an example below?).
+
 ### Example Applications
 
-We demonstrate the `zoon` R package by recreating two SDM analyses from published research articles in the `zoon` R package and extending them.
-Workflow objects which complete replicate these analyses can be accessed at [http://figshare.com/articles/zoon_applications_paper_workflows](http://figshare.com/articles/zoon_applications_paper_workflows).
+We demonstrate the `zoon` R package by recreating two SDM analyses from published research articles and extending them.
+Workflow objects created by these analyses can be accessed at [http://figshare.com/articles/zoon_applications_paper_workflows](http://figshare.com/articles/zoon_applications_paper_workflows).
 We encourage readers to download, interrogate and alter these workflows for themselves.
 Full code and metadata for all of the modules used in the examples below, can be found at [https://github.com/zoonproject/modules/R](https://github.com/zoonproject/modules/R)
 
@@ -71,7 +77,6 @@ AwesomeModule <- function(.df) {
     return (something else)
 }
 ```
-
 
 What the workflow looks like
 
@@ -91,6 +96,8 @@ carruthers_et_al_interactive <- ReRunWorkflow(
     carruthers_et_al,
     output = InteractiveMap)
 ```
+
+![The interactive map module overlay the raw data and predicted distribution, allowing users to interactivly explore thier results.](./figs/interactive_map.png)
 
 Some plottable results of this analysis 
 
@@ -159,6 +166,6 @@ Tutorials on how to create workflows and modules, as well as full technical deta
 
 While the `zoon` R package can be used in isolation, future work will develop an online platform to facilitate exploring contributed modules and workflows.
 This platform will also provide an online space to discuss, and openly evaluate, proposed best practices in SDM.
-The zoon R package therefore represents the first step towards a more reproducible ecosystem of SDM software. 
+The zoon R package therefore represents a step towards a more reproducible ecosystem of SDM software. 
 
 
