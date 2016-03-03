@@ -1,5 +1,8 @@
 # make figure 1, stick it in ./figs
 
+# Create a figs dir if it doesnt exist
+dir.create('figs')
+
 # set up device
 pdf('figs/workflow_schematic.pdf',
     width = 6,
