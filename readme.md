@@ -2,8 +2,4 @@
 
 A reproducible manuscript describing the zoon R package, wirtten in the format of a *Methods in Ecology and Evolution* Applications paper.
 
-On a Linux or OSX machine (or unix-y emulator) with pandoc, latex and R installed, the following should compile the manuscript into a pdf:
-
-```
-bash compile.sh
-```
+In Rstudio the ms.Rmd can be updated with code and text, the rebuild the manuscript click the 'Knit PDF' button (you will need to have knitr installed).

@@ -1,9 +1,11 @@
 ---
-output: pdf_document
+title: "The `zoon` R package for reproducible and shareable species distribution modelling"
+author: "Nick Golding, Tom August, Tim C.D. Lucas, Emiel Van Loon & Greg McInerny"
+date: "4 March 2016"
+output: 
+  pdf_document:
+    fig_caption: yes
 ---
-# The `zoon` R package for reproducible and shareable species distribution modelling
-
-## Nick Golding, Tom August, Tim C.D. Lucas, Emiel Van Loon & Greg McInerny
 
 ### Abstract
 
@@ -36,11 +38,22 @@ This framework facilitates rapid dissemination of novel SDM methodologies by low
 
 Module types (and examples) in a diagram (Figure 1).
 
-![The modular SDM structure encoded by a zoon workflow.
-A) Flow diagram representing the module types.
-B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module').
-C) Chaining and listing modules of the same type.
-D) An example workflow, corresponding to Example 1 below.](./figs/workflow_schematic.pdf)
+```{r, echo = FALSE, fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) An example workflow, corresponding to Example 1 below."}
+
+# set up plotting window
+plot.new()
+par(mar = rep(0, 4))
+plot.window(0:1, 0:1)
+
+# grey rectangle (no background in vector pdf?)
+rect(-1, -1, 2, 2, col = grey(0.9), border = NA)
+
+# text over the top
+text(0.5, 0.5, 'PLACEHOLDER',
+     col = grey(0.3),
+     cex = 3,
+     xpd = NA)
+```
 
 Structure of workflow objects:
 
@@ -71,7 +84,7 @@ Explanation & citation
 
 One of the modules we had to write:
 
-```r
+```{r, eval=FALSE}
 AwesomeModule <- function(.df) {
     something
     return (something else)
@@ -80,7 +93,7 @@ AwesomeModule <- function(.df) {
 
 What the workflow looks like
 
-```r
+```{r, eval=FALSE}
 carruthers_et_al <- workflow(
     occurrence = ...,
     covariate = ...,
@@ -91,7 +104,7 @@ carruthers_et_al <- workflow(
 
 Some tweak we did to it:
 
-```r
+```{r, eval=FALSE}
 carruthers_et_al_interactive <- ReRunWorkflow(
     carruthers_et_al,
     output = InteractiveMap)
@@ -120,7 +133,7 @@ Possible experiments:
 
 One of the modules we had to write (simpler than the MaxLike one!):
 
-```r
+```{r, eval=FALSE}
 CarolinaWrenPO <- function() {
   
   # load maxlike and the dataset into this environment
@@ -143,7 +156,7 @@ CarolinaWrenPO <- function() {
 
 What the workflow looks like:
 
-```r
+```{r, eval=FALSE}
 merow_and_silander <- workflow(
     occurrence = CarolinaWrenPO,
     covariate = ...,
@@ -154,7 +167,7 @@ merow_and_silander <- workflow(
 
 So we ran it again with disc-based spatial stratification:
 
-```r
+```{r, eval=FALSE}
 merow_and_silander_spatial <- ReRunWorkflow(
     merow_and_silander,
     process = Chain(..., PartitionDisc))
