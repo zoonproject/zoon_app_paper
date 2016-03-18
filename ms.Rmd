@@ -28,11 +28,24 @@ Difficult for anyone to compare methods effectively.
 Equally difficult for methods developers to disseminate their advances.
 
 <!-- from Greg: -->
-In 2008, Beale et al. (2008) suggested that “we are currently unable to build useful distribution models for many species”. Using null models, Beale et al. (2008) found that chance associations between climate and species’ distributions could account for the modelled relationships which they then suggested undermined the rationale for SDM. Amongst the replies to this article was a re-analysis by Araujou et al. (2009) that disputed this finding. Beale et al. (2008) put the alternative results to differences in distribution data, climate data and spatial domain, but emphasised the use of different null model distributions. Whilst some code was provided in the original publication by Beale et al. (2008), the following papers did not. The resolution of this very important discussion was hindered by the lack of data and code sharing. 
+In 2008, Beale et al. (2008) suggested that “we are currently unable to build useful distribution models for many species”. 
+Using null models, Beale et al. (2008) found that chance associations between climate and species’ distributions could account for the modelled relationships which they then suggested undermined the rationale for SDM. 
+Amongst the replies to this article was a re-analysis by Araujou et al. (2009) that disputed this finding. 
+Beale et al. (2008) put the alternative results to differences in distribution data, climate data and spatial domain, but emphasised the use of different null model distributions. 
+Whilst some code was provided in the original publication by Beale et al. (2008), the following papers did not. 
+The resolution of this very important discussion was hindered by the lack of data and code sharing. 
 
-The second example comes from the study by Elith et al. (2006), that was exceptional in its scope by comparing “16 modelling methods over 226 species from 6 regions of the world”. This paper provided benchmarks that both figured highly in many researchers selection of method (and software). However, as the data and code is not available this much needed set of benchmarks cannot be updated by the community. For example, when a new modelling method is produced (e.g. GRAF, Golding…) authors cannot compare the outcomes to transparent set of community contributed modelling benchmarks and standards. In this case, the lack of data and code sharing hinder the legacy of one of the key SDM studies to date. 
+The second example comes from the study by Elith et al. (2006), that was exceptional in its scope by comparing “16 modelling methods over 226 species from 6 regions of the world”. 
+This paper provided benchmarks that both figured highly in many researchers selection of method (and software). 
+However, as the data and code is not available this much needed set of benchmarks cannot be updated by the community. 
+For example, when a new modelling method is produced (e.g. GRAF, Golding…) authors cannot compare the outcomes to transparent set of community contributed modelling benchmarks and standards. 
+In this case, the lack of data and code sharing hinder the legacy of one of the key SDM studies to date. 
 
-Thirdly, Soininen and Luoto (2014) “assembled over 4900 published AUC (area under the curve of a receiver operating characteristic plot) values” to examine the predictability of SDM in relation to species traits. Having conducted this labour intensive review they suggested that researchers should “give precise reports of model calibration and evaluation methods” to enable subsequent met analyses. Relatedly, the methodological review of Yackulic et al. (2012) investigated the use of the MAXENT algorithm in 108 articles, and have a similar concern regarding the “transparency and usefulness” in the reporting of SDM. In these studies there is little to no opportunity afforded by the original studies to investigate the sensitivity of the conclusion to choices in model building and data selection. These studies point to a far wider reduction in scientific productivity due to reporting of SDM as ‘closed knowledge’.
+Thirdly, Soininen and Luoto (2014) “assembled over 4900 published AUC (area under the curve of a receiver operating characteristic plot) values” to examine the predictability of SDM in relation to species traits. 
+Having conducted this labour intensive review they suggested that researchers should “give precise reports of model calibration and evaluation methods” to enable subsequent meta-analyses. 
+Relatedly, the methodological review of Yackulic et al. (2012) investigated the use of the MAXENT algorithm in 108 articles, and have a similar concern regarding the “transparency and usefulness” in the reporting of SDM. 
+In these studies there is little to no opportunity afforded by the original studies to investigate the sensitivity of the conclusion to choices in model building and data selection. 
+These studies point to a far wider reduction in scientific productivity due to reporting of SDM as ‘closed knowledge’.
 
 These three scenarios are illustrative of some of the need for the data and modelling aspects of SDM to become more repeatable, reproducible, accessible, modifiable and updateable. Each are crucial examples of the barriers to this science.
 Science has to be this way and written statements of the modelling carried out do not facilitate a productive science. 
@@ -40,24 +53,58 @@ SDM, as a science, is not extensible given current working practices.
 
 ##### Past work and other software - the USP of ZOON and requirements
 
-Most of the SDM users replying to a survey in 200X (Ahmed et al. 2015) were using either MaxEnt or R as the first choice software for their analyses. The software market is much diverse, however, including a variety of software developed specifically for SDM (e.g. MaxEnt (), the BioMod () and dismo () packages for R, SDMtoolbox (Brown 2014), openModeller (), BioEnsembles (), ModEco ()) and software that has been appropriated for SDM studies, such as statistical software (R (), WinBugs (), OpenBugs (), Python()) and other less general software  (Domain (), Canoco (), MARS()). Reproducibility (and the issues discussed above) were not a primary requirement of these software, and whilst some have the capacity for an analysis to be repeated, many do not. Software such as BioMod, OpenModeller, BioEnsembles, ModEco were developed to enable users to carry out analyses with multiple models. The BIOVEL software (De Giovanni et al. 2015) is an exception, sharing many of the general principles of ZOON, such as the increased accessibility to science via community contributed resources and increased sustainability by creating an e-infrastructure for this science. There are other workflow systems that can be used to wrap around SDM analyses (e.g. Kepler, Vis-Trails, Taverna), yet there has not been a large uptake by the community. Perhaps this is because of the unfamiliarity or assumed complexity of these tools. The SDM package (Naimi & Araujo 2016) has some functionality for users to incorporate new modelling methods into their analyses.
+Most of the SDM users replying to a survey in 2015 (Ahmed et al. 2015) were using either MaxEnt or R as the first choice software for their analyses. 
+The software market is much diverse, however, including a variety of software developed specifically for SDM (e.g. MaxEnt (), the BioMod () and dismo () packages for R, SDMtoolbox (Brown 2014), openModeller (), BioEnsembles (), ModEco ()) and software that has been appropriated for SDM studies, such as statistical software (R (), WinBugs (), OpenBugs (), Python()) and other less general software  (Domain (), Canoco (), MARS()). 
+Reproducibility (and the issues discussed above) were not a primary requirement of these software, and whilst some have the capacity for an analysis to be repeated, many do not. 
+Software such as BioMod, OpenModeller, BioEnsembles, ModEco were developed to enable users to carry out analyses with multiple models.
+The BIOVEL software (De Giovanni et al. 2015) is an exception, sharing many of the general principles of ZOON, such as the increased accessibility to science via community contributed resources and increased sustainability by creating an e-infrastructure for this science. 
+There are other workflow systems that can be used to wrap around SDM analyses (e.g. Kepler, Vis-Trails, Taverna), yet there has not been a large uptake by the community. 
+Perhaps this is because of the unfamiliarity or assumed complexity of these tools. 
+The SDM package (Naimi & Araujo 2016) has some functionality for users to incorporate new modelling methods into their analyses.
 
 <!-- The Solution: ZOOOOOON!  -->
 The `zoon` R package encodes SDM analyses as a simple workflow of five steps: obtaining occurrence data, obtaining covariate data, pre-processing these data, fitting a model, and generating outputs.
 Each of these steps is carried out by one or more community-contributed software modules. 
+Firstly, occurrence data must be read into the software package or downloaded from online repositories.
+Occurrence usually takes the form of presence-absence data or presence-only data, though abundance data is also used.
+Secondly, predictor variables or covariates (typically environmental covariates) are required and the values of these covariates, at the locations of the occurrence data, must be extracted.
+Thirdly, a wide variety of processes are often applied to the occurrence and covariate data.
+These processes include data cleaning, data thinning to account for spatial biases, feature selection using PCA or association tests and the splitting of data into training and test sets or cross validation folds.
+Fourthly, once the data has been suitable manipulated a model is fitted to estimate the relationships between the covariates and occurrence data.
+These models include simple statistical models such as GLMs as well as modern, flexible machine-learning methods such as MaxEnt and boosted regression trees.
+Finally, model outputs are needed.
+The predictive power and goodness of fit must be assessed and the model parameters or response curves must be examined.
+The model is likely to be used to predict species occurrence, either in the vicinity of the occurrence data or elsewhere, or into the past or future.
+
+
+This structure defines how `zoon` approaches SDM. 
+For each of these steps, the user selects one or more 'modules' and combined them in a call to `workflow`.
+To combine multiple modules of the same type we provide the `Chain` command.
+For occurrence and covariate modules, this command takes multiple modules and simply combines the data acquired by each module.
+Chained process models are run sequentially.
+For example if a user wants to generate background or pseudo absence data and then split the data into crossvalidation folds, modules implementing these two seperate process would be chained in that order.
+Finally, chained output modules are simply all run seperately allowing the user to create multiple maps and summary figures, calcualte performance metrics and create other model outputs in one workflow.
+Model modules cannot be chained.
+
 This framework facilitates rapid dissemination of novel SDM methodologies by lowering the bar to creating research software.
 `zoon` workflows are re-runnable records of the data, code and results of an entire SDM analysis and can be easily reproduced, scrutinized and extended by the whole research community.
+
+
+
+
+
 
 ZOON allows users to make use of modules whether they are using a ZOON workflow or not. 
 Users can create new modules for any modelling method and integrate it into another analysis. 
 Unlike R itself, there are far reduced overheads on creating a package...
 
+
  
 <!-- How It Works -->
 ### Implementing a `zoon` workflow
 
-Module types (and examples) in a diagram (Figure 1).
 
+Module types (and examples) in a diagram 
 ```{r, echo = FALSE, fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) An example workflow, corresponding to Example 1 below."}
 
 # set up plotting window
@@ -83,13 +130,13 @@ Structure of workflow objects:
 
 Extra stuff workflows do (handle cross validation, run parallel methods/data comparisons).
 
-Things you can do to workflows:
+Things you can do to workflows: 
 
 * visualise the structure
 * execute whole thing from scratch (grabs new data from web)
 * execute from part way through
 
-Include a figure visualising the sturcutre of the workflow object and how it can be adopted in the ChangeWorkflow function (corresponding to an example below?).
+Include a figure visualising the structure of the workflow object and how it can be adopted in the ChangeWorkflow function (corresponding to an example below?).
 
 ### Example Applications
 
