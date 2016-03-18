@@ -1,0 +1,19 @@
+References
+
+Arau´jo et al. (2009) 10.1073/pnas.0813294106.
+
+Beale CM, Lennon JJ, Gimona A (2008) PNAS 105:14908–14912.
+
+Beale CM, Lennon JJ, Gimona A (2009) Proc Natl Acad 10.1073/pnas.0902229106 
+
+Brown J.L. 2014, SDMtoolbox: a python-based GIS toolkit for landscape genetic, biogeographic, and species distribution model analyses. Methods in Ecology and Evolution  DOI: 10.1111/2041-210X.12200
+
+De Giovanni, R., Williams, A. R., Ernst, V. H., Kulawik, R., Fernandez, F. Q. and Hardisty, A. R. 2015. ENM Components: a new set of web service-based workfl ow components for ecological niche modelling. – Ecography 38: 000 – 000 (ver. 0).
+
+Elith, J., Graham, C.H. et al. (2006) Ecography.. 29, 129–151.
+
+Naimi, B. and Ara ú jo, M. B. 2016. sdm: a reproducible and extensible R platform for species distribution modelling. – Ecography 39: 000 – 000 (ver. 0).
+
+Soininen, J. and Luoto, M. (2014), Predictability in species distributions: a global analysis across organisms and ecosystems. Global Ecology and Biogeography, 23: 1264–1274.
+
+Yackulic, C. B., Chandler, R., Zipkin, E. F., Royle, J. A., Nichols, J. D., Campbell Grant, E. H., Veran, S. (2013), Presence-only modelling using MAXENT: when can we trust the inferences?. Methods in Ecology and Evolution, 4: 236–243. doi: 10.1111/2041-210x.12004
