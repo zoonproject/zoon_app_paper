@@ -7,6 +7,8 @@ csl: mee.csl
 output: 
   pdf_document:
     fig_caption: yes
+    includes:  
+      in_header: latex_preamble.tex
 ---
 
 # Abstract
@@ -271,7 +273,7 @@ Feng_Papes <- workflow(
 The resulting workflow contains all the code required to re-run the workflow, the input data and the results of executing each module.
 The object `Feng_Papes` could therefore be saved as a binary file and shared as a reproducible representation of this research.
 
-Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model:
+Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure \ref{fig:interactive}.
 
 ```{r, eval=FALSE}
 Feng_Papes_interactive <- ReRunWorkflow(
@@ -279,7 +281,7 @@ Feng_Papes_interactive <- ReRunWorkflow(
     output = Chain(PrintMap, InteractiveMap, ResponseCurve))
 ```
 
-![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.](./figs/interactive_map.png)
+![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.\label{fig:interactive}](./figs/interactive_map.png)
 
 <!-- add the original and the response curves to this figure too -->
 

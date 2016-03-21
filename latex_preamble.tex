@@ -1,0 +1,12 @@
+% force figures to stay where they are defined
+% solution from:
+% http://stackoverflow.com/questions/16626462/figure-position-in-markdown-when-converting-to-pdf-with-knitr-and-pandoc
+
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+  \expandafter\origfigure\expandafter[H]
+} {
+  \endorigfigure
+}
