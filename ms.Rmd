@@ -179,6 +179,9 @@ Things you can do to workflows:
 * execute whole thing from scratch (grabs new data from web)
 * execute from part way through
 
+`zoon` provides functionality to quickly update an existing workflow object (even one created by someone else) by switching out modules.
+
+
 Include a figure visualising the structure of the workflow object and how it can be adopted in the ChangeWorkflow function (corresponding to an example below?).
 
 #### Building modules
@@ -228,40 +231,59 @@ Workflow objects created by these analyses can be accessed at [http://figshare.c
 We encourage readers to download, interrogate and alter these workflows for themselves.
 Full code and metadata for all of the modules used in the examples below, can be found at [https://github.com/zoonproject/modules/R](https://github.com/zoonproject/modules/R)
 
-#### Example 1. Modelling the distribution of ???
+#### Example 1. Modelling the potential distribution of nine-banded armadillo in the USA
 
-??? constructed a species distribution model for ??? using ???.
+@Feng2015 constructed a MaxEnt species distribution model for nine-banded armadillo in the USA using presence-only data on the species' current distribution, and the bioclim [] set of environmental correlates.
+This model was then used to predict areas in the Americas which may be suitable for the species to become established. 
 
-Such a model can be quickly and easily re-constructed as a `zoon` workflow using modules which are already available in the software repository:
+Such a model can be quickly and easily re-constructed as a `zoon` workflow using modules available in the ZOON module repository.
+@Feng2015 used a combination of occurrence data from GBIF, and additional occurrence data manually collected from the published literature.
+Unfortunately the latter data have not been made publically available, so here we use only data from GBIF.
+If the the additional data had been made available it would be straightforward to incorporate them, for example using the `LocalOccurrenceData` module.
+
+<!--
+covariates Feng & Papes used:
+1    annual mean temperature
+2    mean diurnal range
+3    isothermality
+4    temperature seasonality
+6    minimum temperature of the coldest month
+9    mean temperature of the driest quarter
+10   mean temperature of the warmest quarter
+12   annual precipitation
+15   precipitation seasonality
+-->
 
 ```{r, eval=FALSE}
-carruthers_et_al <- workflow(
-    occurrence = ...,
-    covariate = ...,
-    process = ...,
-    model = ...,
-    output = ...)
+Feng_Papes <- workflow(
+    occurrence = SpOcc('Dasypus novemcinctus',
+                       extent = c(-130, -20, -60, 60)),
+    covariate = Bioclim(extent = c(-130, -20, -60, 60),
+                        layers = c(1:4, 6, 9, 10, 12, 15)),
+    process = Chain(TidyGBIF, # some sort of data cleaning?
+                    BufferBackground, # background w/in 2 degrees of occurrences
+                    MESSMask),  # mask out areas beyond extremes in train data
+    model = MaxEnt,
+    output = PrintMap)  # They plotted at 5% omission error level
 ```
 
-The resulting workflow contains all the code required to re-run the workflow, and the results of executing each module.
-`zoon` provides functionality to quickly update an existing workflow object (even one created by someone else) by switching out modules.
+
+The resulting workflow contains all the code required to re-run the workflow, the input data and the results of executing each module.
+The object `Feng_Papes` could therefore be saved as a binary file and shared as a reproducible representation of this research.
 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model:
 
 ```{r, eval=FALSE}
-carruthers_et_al_interactive <- ReRunWorkflow(
-    carruthers_et_al,
-    output = Chain(InteractiveMap, ResponseCurve))
+Feng_Papes_interactive <- ReRunWorkflow(
+    Feng_Papes,
+    output = Chain(PrintMap, InteractiveMap, ResponseCurve))
 ```
 
 ![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.](./figs/interactive_map.png)
 
-<!-- add response curves output here -->
+<!-- add the original and the response curves to this figure too -->
 
-`zoon` users can inspect existing workflows using these and a range of other *output* modules, or create and share their own output modules.
-
-
-#### Example 2. Evaluating the MaxLike model
+#### Example 2. Evaluating MaxLike
 
 @Royle2012 proposed a model for fitting SDMs to presence-only data, which they suggest is able to estimate the absolute (rather than relative) probability of species presence in each grid cell.
 This model and the associated claims have been the subject of several research articles evaluating the model against both real-world and simulated datasets [@Fitzpatrick2013;@Merow2014;@Hastie2013;@Phillips2013].
