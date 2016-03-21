@@ -85,6 +85,12 @@ There is, however still a signifiact technical barrier to those wishing to incor
 ### The ZOON project
 
 The ZOON project takes a different approach, instead defining only the core architecture of workflows, and interfacing with an open repository of community-contributed software modules.
+Users can create new modules for any modelling method and integrate it into another analysis. 
+
+Similarly to programming languages such as R and Python, facilitating wider development of software will enable the whole research community to develop the software that it requires, rather than rely on the developers of the software they use to do it for them.
+Unlike software packages for programming languages however, the ZOON project enforces a modular structure that ensures interoperability between contributed software modules.
+This also helps to lower the bar for creating modules (each module is simply an R function with a set of required inputs and outputs) and facilitates automated testing of modules ot ensure software quality .
+
 This paper introduces version 0.4-22 of the `zoon` R package, which encodes the majority of this functionality.
 First, we describe the modular structure of zoon workflows and demonstrate how completed `zoon` workflows can be shared, evaluated and extended.
 Then we illustrate these concepts, and the contribution we hope `zoon` will make to SDM research, by recreating and extending two recent SDM analyses using `zoon` workflows.
@@ -98,6 +104,8 @@ Versions 0.4-22 and later of the `zoon` R package can be installed directly from
 
 The `zoon` R package encodes SDM analyses as a simple workflow of five steps: obtaining occurrence data, obtaining covariate data, pre-processing these data, fitting a model, and generating outputs.
 Each of these steps is carried out by one or more community-contributed software modules.
+For each of these steps, the user selects one or more 'modules' and combined them in a call to `workflow`.
+
 
 Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow.
 
@@ -139,8 +147,9 @@ for (i in 1:4) {
 * *Model* - Once the data has been suitable manipulated a model is fitted to estimate the relationships between the covariates and occurrence data. These models include simple statistical models such as GLMs as well as modern, flexible machine-learning methods such as MaxEnt and boosted regression trees.
 * *Output* - The predictive power and goodness of fit must be assessed and the model parameters or response curves must be examined. The model is likely to be used to predict species occurrence, either in the vicinity of the occurrence data or elsewhere, or into the past or future.
 
-This structure defines how `zoon` approaches SDM. 
-For each of these steps, the user selects one or more 'modules' and combined them in a call to `workflow`.
+
+#### Lists and Chains
+
 To combine multiple modules of the same type we provide the `Chain` command.
 For occurrence and covariate modules, this command takes multiple modules and simply combines the data acquired by each module.
 Chained process models are run sequentially.
@@ -148,20 +157,13 @@ For example if a user wants to generate background or pseudo absence data and th
 Finally, chained output modules are simply all run seperately allowing the user to create multiple maps and summary figures, calcualte performance metrics and create other model outputs in one workflow.
 Model modules cannot be chained.
 
-This framework facilitates rapid dissemination of novel SDM methodologies by lowering the bar to creating research software.
-`zoon` workflows are re-runnable records of the data, code and results of an entire SDM analysis and can be easily reproduced, scrutinized and extended by the whole research community.
-
-
-
-
-
-
-ZOON allows users to make use of modules whether they are using a ZOON workflow or not. 
-Users can create new modules for any modelling method and integrate it into another analysis. 
-Unlike R itself, there are far reduced overheads on creating a package...
+Add something on lists!
 
 
 ### Inspecting, sharing and extending a `zoon` workflow
+
+`zoon` workflows are re-runnable records of the data, code and results of an entire SDM analysis and can be easily reproduced, scrutinized and extended by the whole research community.
+
 
 Structure of workflow objects:
 
@@ -179,6 +181,46 @@ Things you can do to workflows:
 
 Include a figure visualising the structure of the workflow object and how it can be adopted in the ChangeWorkflow function (corresponding to an example below?).
 
+#### Building modules
+
+Modules are simply R function definitions, with a set of required inputs and outputs.
+For example, the`Bioclim` module, which uses the `raster` R package [@raster] to download the widely used bioclim [] covariate layers in the correct format, is defined as:
+
+```{r, eval=FALSE}
+Bioclim <- function (extent = c(-180, 180, -90, 90),
+                     resolution = 10,
+                     layers = 1:19) {
+    
+    if(!(resolution %in% c(2.5, 5, 10))){
+      stop('only 2.5, 5 and 10 degree resolutions are supported currently')
+    }
+  
+    if (length(layers) < 1 |
+        length(layers) > 19 |
+        !all(layers %in% 1:19)) {
+      stop ('layers must be a vector of integers between 1 and 19 indicating layers to obtain')
+    }
+
+    stopifnot(length(extent) == 4)
+    stopifnot(all(is.numeric(extent)))
+
+    world <- getData('worldclim', var = 'bio', res = resolution)
+    world <- world[[layers]]
+    cropped <- crop(world, extent(extent))
+    return (cropped)
+  }
+```
+
+This function meets the minimal requirements of a *covariate* module (see Figure \ref{fig:workflows} Panel B); returning a `Raster*` object of the correct dimensions.
+
+As long as a valid module function is defined in an R session, it can be used in workflows in combination with modules downloaded from the ZOON module repository.
+Whilst this makes it easy to develop modules locally, the strength of `zoon` comes from the ability to upload modules to the online repository so that others can access them.
+
+To do this, it first is necessary to provide additional metadata including the module tile and description, module type, author name and definitions for any non-mandatory arguments.
+`zoon` provides the function `BuildModule()` to facilitate entering this metadata and checking that it matches the module.
+
+The `zoon` vignette *Building modules* provides a detailed tutorial for building modules of each type.
+
 ### Example Applications
 
 We demonstrate the `zoon` R package by recreating two SDM analyses from published research articles and extending them.
@@ -190,7 +232,7 @@ Full code and metadata for all of the modules used in the examples below, can be
 
 ??? constructed a species distribution model for ??? using ???.
 
-Such a model can be re-constructed as a `zoon` workflow using modules which are already available in the software repository:
+Such a model can be quickly and easily re-constructed as a `zoon` workflow using modules which are already available in the software repository:
 
 ```{r, eval=FALSE}
 carruthers_et_al <- workflow(
@@ -201,49 +243,55 @@ carruthers_et_al <- workflow(
     output = ...)
 ```
 
-The resulting workflow contains all the c
-Some tweak we did to it:
+The resulting workflow contains all the code required to re-run the workflow, and the results of executing each module.
+`zoon` provides functionality to quickly update an existing workflow object (even one created by someone else) by switching out modules.
 
-
+Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model:
 
 ```{r, eval=FALSE}
 carruthers_et_al_interactive <- ReRunWorkflow(
     carruthers_et_al,
-    output = InteractiveMap)
+    output = Chain(InteractiveMap, ResponseCurve))
 ```
 
-![The interactive map module overlay the raw data and predicted distribution, allowing users to interactivly explore thier results.](./figs/interactive_map.png)
+![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.](./figs/interactive_map.png)
 
-Some plottable results of this analysis 
+<!-- add response curves output here -->
 
-#### Repeating a MEE methods comparison 
+`zoon` users can inspect existing workflows using these and a range of other *output* modules, or create and share their own output modules.
 
-Proposed paper:
 
->Merow & Silander (2014) A comparison of Maxlike and Maxent for modelling species distributions. *Methods in Ecology and Evolution*
+#### Example 2. Evaluating the MaxLike model
 
-This is a method that saw a lot of discussion and for which more experiments could be useful.
+@Royle2012 proposed a model for fitting SDMs to presence-only data, which they suggest is able to estimate the absolute (rather than relative) probability of species presence in each grid cell.
+This model and the associated claims have been the subject of several research articles evaluating the model against both real-world and simulated datasets [@Fitzpatrick2013;@Merow2014;@Hastie2013;@Phillips2013].
 
+In this example we illustrate how `zoon` can help contribute to discussions such as these by enabling rapid evaluation of a new method against a variety of datasets and test procedures.
+
+For this example, it was necessary to create three new modules: two to load the presence/absence and presence-only Carolina Wren datasets from @Royle2012; and one to implement the MaxLike model.
+
+<!--
 Possible experiments:
 * evaluating with different criteria (e.g. deviance or pseudo-r-squared which measure calibration capacity)
 * fitting the same models with GBIF data and evaluating against the BBS PA data,
 * fitting/evaluating on spatially-stratified holdout data
 * fitting the models with other species
-
 (choose only one of these)
+-->
 
-
-One of the modules we had to write (simpler than the MaxLike one!):
+All of these have now been uploaded to the ZOON modules repository (under the names `CarolinaWrenPO`, `CarolinaWrenPA`, and `MaxLike`), though we diusplay the code required for the module `CarolinaWrenPO` here as an illustration of the minimal overhead required in writing `zoon` software modules:
 
 ```{r, eval=FALSE}
 CarolinaWrenPO <- function() {
   
-  # load maxlike and the dataset into this environment
+  # load maxlike package (installing if it isn't in the library)
   zoon::GetPackage('maxlike')
+  
+  # load the dataset from the maxlike package
   data(carw, envir = environment())
   occ <- na.omit(carw.data$pa.data)
 
-  # keep only presences
+  # keep only presence records
   occ <- occ[occ$y == 1, ]
   
   # build the occurrence dataset and return
@@ -255,6 +303,13 @@ CarolinaWrenPO <- function() {
   
 }
 ```
+
+This function meets the requirements of an *occurrence* module; providing as output a dataframe with the required columns and datatypes.
+
+
+
+
+We can run automated checks on this module
 
 What the workflow looks like:
 
