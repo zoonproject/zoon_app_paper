@@ -111,14 +111,26 @@ For each of these steps, the user selects one or more 'modules' and combined the
 
 Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow.
 
-```{r, echo = FALSE, fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\\label{fig:workflows}"}
+```{r, echo = FALSE, fig.height = 9, fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\\label{fig:workflows}"}
 
-# four panel plot, no margins
-par(mar = c(1, 1, 2, 1),
-    mfrow = c(2, 2))
+# four panel plot
+par(mfrow = c(2, 2))
 
+#plot the saved image in the first panel
+library(raster)
+r <- brick('figs/workflow_basic.png')
+par(mar = c(1, 1, 2, 1))
+plotRGB(r, maxpixels = Inf)
+
+# add a panel letter
+# this is an awful hack and completely contingent on the screenshot size :/
+text(40, 980, labels = LETTERS[1],
+      xpd = NA,
+     cex = 1.2)  
+
+par(mar = c(1, 1, 2, 1))
 # placeholder plots for each panel
-for (i in 1:4) {
+for (i in 2:4) {
   
   # set up plotting window
   plot.new()
