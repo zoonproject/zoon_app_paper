@@ -24,10 +24,7 @@ output:
 5. We demonstrate `zoon` by recreating SDM analyses from two published research articles as zoon workflows, which readers can interrogate and extend.
 
 
-```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
-opts_chunk$set(fig.path = 'figs/')
 
-```
 
 # Introduction
 
@@ -119,48 +116,7 @@ Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow.
 
 
 
-```{r plotzoonoverview, echo = FALSE, fig.height = 9, fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\\label{fig:workflows}"}
-
-# four panel plot
-par(mfrow = c(2, 2))
-
-#plot the saved image in the first panel
-library(raster)
-r <- brick('figs/workflow_basic.png')
-par(mar = c(1, 1, 2, 1))
-plotRGB(r, maxpixels = Inf)
-
-# add a panel letter
-# this is an awful hack and completely contingent on the screenshot size :/
-text(40, 980, labels = LETTERS[1],
-      xpd = NA,
-     cex = 1.2)  
-
-par(mar = c(1, 1, 2, 1))
-# placeholder plots for each panel
-for (i in 2:4) {
-  
-  # set up plotting window
-  plot.new()
-  plot.window(0:1, 0:1)
-
-  # grey rectangle (no background in vector pdf?)
-  rect(-1, -1, 2, 2, col = grey(0.9), border = NA)
-
-  # text over the top
-  text(0.5, 0.5, 'PLACEHOLDER',
-       col = grey(0.3),
-       cex = -13,
-       xpd = NA)
-  
-  # add a panel letter
-  mtext(text = LETTERS[i],
-        side = 3,
-        line = 0.5,
-        adj = 0)  
-}
-```
-
+![The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\label{fig:workflows}](figs/plotzoonoverview-1.png) 
 
 #### Module types
 
@@ -237,7 +193,8 @@ Include a figure visualising the structure of the workflow object and how it can
 Modules are simply R function definitions, with a set of required inputs and outputs.
 For example, the`Bioclim` module, which uses the `raster` R package [@raster] to download the widely used bioclim [] covariate layers in the correct format, is defined as:
 
-```{r bioclimmodule, eval = FALSE}
+
+```r
 Bioclim <- function (extent = c(-180, 180, -90, 90),
                      resolution = 10,
                      layers = 1:19) {
@@ -307,15 +264,11 @@ Notes:
 
 -->
 
-```{r loadzoon, eval = TRUE, echo = FALSE, cache = FALSE}
-# Keep cache = FALSE. Not supposed to cache chunks with library()
-#  I assume we want this not echoed.
-library(zoon)
-
-```
 
 
-```{r fengworkflow, eval = TRUE, results = 'hide', message = FALSE}
+
+
+```r
 Feng_Papes <- workflow(occurrence = SpOcc('Dasypus novemcinctus',
                                           extent = c(-130, -20, -60, 60)),
                         covariate = Bioclim(extent = c(-130, -20, -60, 60),
@@ -326,8 +279,9 @@ Feng_Papes <- workflow(occurrence = SpOcc('Dasypus novemcinctus',
                                           Crossvalidate(k = 5)),
                             model = MaxEnt,
                            output = Chain(PerformanceMeasures, PrintMap))
-
 ```
+
+![plot of chunk fengworkflow](figs/fengworkflow-1.png) 
 
 
 The resulting workflow contains all the code required to re-run the workflow, the input data and the results of executing each module.
@@ -335,7 +289,8 @@ The object `Feng_Papes` could therefore be saved as a binary file and shared as 
 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure \ref{fig:interactive}.
 
-```{r fengChangeWorkflow, eval = FALSE}
+
+```r
 Feng_Papes_interactive <- ChangeWorkflow(
     Feng_Papes,
     output = Chain(PrintMap, InteractiveMap, ResponseCurve))
@@ -365,7 +320,8 @@ Possible experiments:
 
 All of these have now been uploaded to the ZOON modules repository (under the names `CarolinaWrenPO`, `CarolinaWrenPA`, and `MaxLike`), though we diusplay the code required for the module `CarolinaWrenPO` here as an illustration of the minimal overhead required in writing `zoon` software modules:
 
-```{r carolinamodule, eval = FALSE}
+
+```r
 CarolinaWrenPO <- function() {
   
   # load maxlike package (installing if it isn't in the library)
@@ -397,7 +353,8 @@ We can run automated checks on this module
 
 What the workflow looks like:
 
-```{r merowworkflow, eval = FALSE}
+
+```r
 merow_and_silander <- workflow(
     occurrence = CarolinaWrenPO,
     covariate = ...,
@@ -408,7 +365,8 @@ merow_and_silander <- workflow(
 
 So we ran it again with disc-based spatial stratification:
 
-```{r mewoChangeWorkflow, eval = FALSE}
+
+```r
 merow_and_silander_spatial <- ChangeWorkflow(
     merow_and_silander,
     process = Chain(..., PartitionDisc))
