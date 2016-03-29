@@ -116,7 +116,23 @@ Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow.
 
 
 
+
+```
+## Loading required package: sp
+## 
+## Attaching package: 'raster'
+## 
+## The following objects are masked from 'package:MASS':
+## 
+##     area, select
+## 
+## The following object is masked from 'package:magrittr':
+## 
+##     extract
+```
+
 ![The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\label{fig:workflows}](figs/plotzoonoverview-1.png) 
+
 
 #### Module types
 
@@ -219,7 +235,7 @@ Bioclim <- function (extent = c(-180, 180, -90, 90),
   }
 ```
 
-This function meets the minimal requirements of a *covariate* module (see Figure \ref{fig:workflows} Panel B); returning a `Raster*` object of the correct dimensions.
+This function meets the minimal requirements of a *covariate* module (see Figure \ref{fig:workflows} Panel B); returning a `Raster\*` object of the correct dimensions.
 
 As long as a valid module function is defined in an R session, it can be used in workflows in combination with modules downloaded from the ZOON module repository.
 Whilst this makes it easy to develop modules locally, the strength of `zoon` comes from the ability to upload modules to the online repository so that others can access them.
@@ -274,8 +290,8 @@ Feng_Papes <- workflow(occurrence = SpOcc('Dasypus novemcinctus',
                         covariate = Bioclim(extent = c(-130, -20, -60, 60),
                                             layers = c(1:4, 6, 9, 10, 12, 15)),
                           process = Chain(Clean, # Remove rows w/ impossible, unlikely or missing lat lon.
+                                          MESSMask,  # Still to be implemented. mask out areas beyond extremes in train data
                                           Background(n = 1000, bias = 200), #background w/in 200km of occurrences
-                                          # MESSMask),  # Still to be implemented. mask out areas beyond extremes in train data
                                           Crossvalidate(k = 5)),
                             model = MaxEnt,
                            output = Chain(PerformanceMeasures, PrintMap))
@@ -293,8 +309,32 @@ Next, we update the workflow to produce an interactive map enabling anyone to in
 ```r
 Feng_Papes_interactive <- ChangeWorkflow(
     Feng_Papes,
-    output = Chain(PrintMap, InteractiveMap, ResponseCurve))
+    output = Chain(PerformanceMeasures, PrintMap, InteractiveMap, ResponseCurve))
 ```
+
+```
+## Model performance measures:
+## auc :  0.783354371201496
+## kappa :  0.346864882641832
+## omissions :  0.416549789621318
+## sensitivity :  0.583450210378682
+## specificity :  0.83
+## proportionCorrect :  0.66199426568971
+##  
+## Loading required package: leaflet
+## Loading required package: htmlwidgets
+## Loading required package: viridis
+## Loading required package: rgdal
+## rgdal: version: 1.1-1, (SVN revision 572)
+##  Geospatial Data Abstraction Library extensions to R successfully loaded
+##  Loaded GDAL runtime: GDAL 1.10.1, released 2013/08/26
+##  Path to GDAL shared files: /usr/share/gdal/1.10
+##  Loaded PROJ.4 runtime: Rel. 4.8.0, 6 March 2012, [PJ_VERSION: 480]
+##  Path to PROJ.4 shared files: (autodetected)
+##  Linking to sp version: 1.2-1
+```
+
+![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-1.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-2.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-3.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-4.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-5.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-6.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-7.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-8.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-9.png) ![plot of chunk fengChangeWorkflow](figs/fengChangeWorkflow-10.png) 
 
 ![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.\label{fig:interactive}](./figs/interactive_map.png)
 
