@@ -321,8 +321,8 @@ Feng_Papes <- workflow(occurrence = SpOcc('Dasypus novemcinctus',
                         covariate = Bioclim(extent = c(-130, -20, -60, 60),
                                             layers = c(1:4, 6, 9, 10, 12, 15)),
                           process = Chain(Clean, # Remove rows w/ impossible, unlikely or missing lat lon.
+                                          MESSMask,  # Still to be implemented. mask out areas beyond extremes in train data
                                           Background(n = 1000, bias = 200), #background w/in 200km of occurrences
-                                          # MESSMask),  # Still to be implemented. mask out areas beyond extremes in train data
                                           Crossvalidate(k = 5)),
                             model = MaxEnt,
                            output = Chain(PerformanceMeasures, PrintMap))
@@ -335,10 +335,10 @@ The object `Feng_Papes` could therefore be saved as a binary file and shared as 
 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure \ref{fig:interactive}.
 
-```{r fengChangeWorkflow, eval = FALSE}
+```{r fengChangeWorkflow, eval = TRUE}
 Feng_Papes_interactive <- ChangeWorkflow(
     Feng_Papes,
-    output = Chain(PrintMap, InteractiveMap, ResponseCurve))
+    output = Chain(PerformanceMeasures, PrintMap, InteractiveMap, ResponseCurve))
 ```
 
 ![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.\label{fig:interactive}](./figs/interactive_map.png)
