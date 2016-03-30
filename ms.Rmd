@@ -25,7 +25,7 @@ output:
 
 
 ```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
-opts_chunk$set(fig.path = 'figs/', message = FALSE, dev = c('pdf', 'png'))
+opts_chunk$set(fig.path = 'figs/', message = FALSE, dev = c('pdf', 'png'), cache = TRUE)
 
 ```
 
@@ -132,7 +132,7 @@ plotRGB(r, maxpixels = Inf)
 
 # add a panel letter
 # this is an awful hack and completely contingent on the screenshot size :/
-text(40, 980, labels = LETTERS[1],
+text(40, 940, labels = LETTERS[1],
       xpd = NA,
      cex = 1.2)  
 
