@@ -25,7 +25,7 @@ output:
 
 
 ```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
-opts_chunk$set(fig.path = 'figs/', message = FALSE)
+opts_chunk$set(fig.path = 'figs/', message = FALSE, dev = c('pdf', 'png'))
 
 ```
 
