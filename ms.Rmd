@@ -316,16 +316,17 @@ library(zoon)
 
 
 ```{r fengworkflow, eval = TRUE, results = 'hide', message = FALSE}
-Feng_Papes <- workflow(occurrence = SpOcc('Dasypus novemcinctus',
-                                          extent = c(-130, -20, -60, 60)),
-                        covariate = Bioclim(extent = c(-130, -20, -60, 60),
-                                            layers = c(1:4, 6, 9, 10, 12, 15)),
-                          process = Chain(Clean, # Remove rows w/ impossible, unlikely or missing lat lon.
-                                          MESSMask,  # Still to be implemented. mask out areas beyond extremes in train data
-                                          Background(n = 1000, bias = 200), #background w/in 200km of occurrences
-                                          Crossvalidate(k = 5)),
-                            model = MaxEnt,
-                           output = Chain(PerformanceMeasures, PrintMap))
+Feng_Papes <- 
+  workflow(occurrence = SpOcc('Dasypus novemcinctus',
+                              extent = c(-130, -20, -60, 60)),
+            covariate = Bioclim(extent = c(-130, -20, -60, 60),
+                                layers = c(1:4, 6, 9, 10, 12, 15)),
+              process = Chain(Clean, 
+                              MESSMask,  
+                              Background(n = 1000, bias = 200), 
+                              Crossvalidate(k = 5)),
+                model = MaxEnt,
+               output = Chain(PerformanceMeasures, PrintMap))
 
 ```
 
@@ -338,7 +339,10 @@ Next, we update the workflow to produce an interactive map enabling anyone to in
 ```{r fengChangeWorkflow, eval = TRUE, fig.show = 'hide'}
 Feng_Papes_interactive <- ChangeWorkflow(
     Feng_Papes,
-    output = Chain(PerformanceMeasures, PrintMap, InteractiveMap, ResponseCurve))
+    output = Chain(PerformanceMeasures, 
+                   PrintMap, 
+                   InteractiveMap, 
+                   ResponseCurve))
 ```
 
 ![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.\label{fig:interactive}](./figs/interactive_map.png)
