@@ -339,12 +339,12 @@ The object `Feng_Papes` could therefore be saved as a binary file and shared as 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure \ref{fig:interactive}.
 
 ```{r fengChangeWorkflow, eval = TRUE, fig.show = 'hide'}
-Feng_Papes_interactive <- ChangeWorkflow(
-    Feng_Papes,
-    output = Chain(PerformanceMeasures, 
-                   PrintMap, 
-                   InteractiveMap, 
-                   ResponseCurve))
+Feng_Papes_interactive <- 
+  ChangeWorkflow(workflow = Feng_Papes,
+                   output = Chain(PerformanceMeasures, 
+                                  PrintMap, 
+                                  InteractiveMap, 
+                                  ResponseCurve))
 ```
 
 ![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.\label{fig:interactive}](./figs/interactive_map.png)
