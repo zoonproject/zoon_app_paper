@@ -25,7 +25,7 @@ output:
 
 
 ```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
-opts_chunk$set(fig.path = 'figs/')
+opts_chunk$set(fig.path = 'figs/', message = FALSE)
 
 ```
 
@@ -335,7 +335,7 @@ The object `Feng_Papes` could therefore be saved as a binary file and shared as 
 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure \ref{fig:interactive}.
 
-```{r fengChangeWorkflow, eval = TRUE}
+```{r fengChangeWorkflow, eval = TRUE, fig.show = 'hide'}
 Feng_Papes_interactive <- ChangeWorkflow(
     Feng_Papes,
     output = Chain(PerformanceMeasures, PrintMap, InteractiveMap, ResponseCurve))
