@@ -320,7 +320,7 @@ library(zoon)
 ```{r fengworkCaptions, eval = TRUE, echo = FALSE}
 fengworkcap <- '
   Map of the presence data (red), background data (black) and the MaxEnt relative probability of occurrence (darker blue showing higher probability of occurrence).
-  White areas are masked due to being marine or due the MESS mask [@Elith2010]
+  White areas are masked due to being marine in the marine environment or due to the MESS mask [@Elith2010]
 '
 
 
