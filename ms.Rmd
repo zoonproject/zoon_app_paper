@@ -348,7 +348,7 @@ The object `Feng_Papes` could therefore be saved as a binary file and shared as 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and  predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure \ref{fig:interactive}.
 
 ```{r fengChangeWorkflow, eval = TRUE, fig.show = 'hide'}
-Feng_Papes_interactive <- 
+Feng_Papes_Interactive <- 
   ChangeWorkflow(workflow = Feng_Papes,
                    output = Chain(PerformanceMeasures, 
                                   PrintMap, 
@@ -378,7 +378,7 @@ Possible experiments:
 (choose only one of these)
 -->
 
-All of these have now been uploaded to the ZOON modules repository (under the names `CarolinaWrenPO`, `CarolinaWrenPA`, and `MaxLike`), though we diusplay the code required for the module `CarolinaWrenPO` here as an illustration of the minimal overhead required in writing `zoon` software modules:
+All of these have now been uploaded to the ZOON modules repository (under the names `CarolinaWrenPO`, `CarolinaWrenPA`, and `MaxLike`), though we display the code required for the module `CarolinaWrenPO` here as an illustration of the minimal overhead required in writing `zoon` software modules:
 
 ```{r carolinamodule, eval = FALSE}
 CarolinaWrenPO <- function() {
@@ -407,24 +407,23 @@ This function meets the requirements of an *occurrence* module; providing as out
 
 
 
-
 We can run automated checks on this module
 
 What the workflow looks like:
 
 ```{r merowworkflow, eval = FALSE}
-merow_and_silander <- workflow(
+Merow_Silander <- workflow(
     occurrence = CarolinaWrenPO,
     covariate = ...,
     process = ...,
-    model = list(MaxEnt, MaxLike),
+    model = list(LogisticRegression, MaxEnt, MaxLike),
     output = ...)
 ```
 
 So we ran it again with disc-based spatial stratification:
 
 ```{r mewoChangeWorkflow, eval = FALSE}
-merow_and_silander_spatial <- ChangeWorkflow(
+Merow_Silander_Spatial <- ChangeWorkflow(
     merow_and_silander,
     process = Chain(..., PartitionDisc))
 ```
