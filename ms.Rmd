@@ -411,13 +411,54 @@ We can run automated checks on this module
 
 What the workflow looks like:
 
-```{r merowworkflow, eval = FALSE}
+```{r merowpreamblel, eval = TRUE, echo = FALSE}
+
+# Load the data into the global environment
+data(carw, envir = environment())
+
+
+rl <- lapply(carw.data$raster.data, function(x) {
+   m <- matrix(x, nrow=carw.data$dim[1], ncol=carw.data$dim[2],
+               byrow=TRUE)
+   r <- raster(m)
+   extent(r) <- c(-124.83, -66.67, 24.61, 49.41)
+   r
+})
+
+# Stack and name them
+CarolinaRasters <- stack(rl[[1]], rl[[2]], rl[[3]], rl[[4]], rl[[5]], rl[[6]])
+names(CarolinaRasters) <- names(carw.data$raster.data)
+
+
+
+
+```
+
+```{r merowWorkingCopy, eval = TRUE}
+
 Merow_Silander <- workflow(
-    occurrence = CarolinaWrenPO,
-    covariate = ...,
-    process = ...,
-    model = list(LogisticRegression, MaxEnt, MaxLike),
-    output = ...)
+    occurrence = Chain(LocalOccurrenceData('occurrenceType = 'presence' ),
+                       LocalOccurrenceData(occurrenceType = 'presence/absence', externalValidation = TRUE)),
+     covariate = LocalRasterData('CarolinaRasters'),
+       process = Chain(Transform(trans = 'square', replace = FALSE), 
+                       Background(n = 10000)),
+         model = list(LogisticRegression, MaxEnt, MaxLike),
+        output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap)
+
+
+```
+
+
+```{r merowworkflow, eval = FALSE}
+
+Merow_Silander <- workflow(
+    occurrence = Chain(LocalOccurrenceData(occurrenceType = 'presence' ),
+                       LocalOccurrenceData(occurrenceType = 'presence/absence', externalValidation = TRUE)),
+     covariate = LocalRasterData('CarolinaRasters'),
+       process = Chain(Transform(trans = 'square', replace = FALSE), 
+                       Background(n = 10000)),
+         model = list(LogisticRegression, MaxEnt, MaxLike),
+        output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap, Coefficients)
 ```
 
 So we ran it again with disc-based spatial stratification:
