@@ -314,6 +314,8 @@ Notes:
 #  I assume we want this not echoed.
 library(zoon)
 
+set.seed(1633)
+
 ```
 
 
@@ -334,7 +336,7 @@ Feng_Papes <-
                                 layers = c(1:4, 6, 9, 10, 12, 15)),
               process = Chain(Clean, 
                               MESSMask,  
-                              Background(n = 1000, bias = 200), 
+                              Background(n = 10000, bias = 200), 
                               Crossvalidate(k = 5)),
                 model = MaxEnt,
                output = Chain(PerformanceMeasures, PrintMap))
