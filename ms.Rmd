@@ -24,7 +24,7 @@ output:
 5. We demonstrate `zoon` by recreating SDM analyses from two published research articles as zoon workflows, which readers can interrogate and extend.
 
 
-```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
+```{r knitrOpts, echo = FALSE, cache = FALSE, eval = FALSE}
 opts_chunk$set(fig.path = 'figs/', message = FALSE, dev = c('pdf', 'png'), cache = TRUE)
 
 ```
@@ -35,29 +35,16 @@ opts_chunk$set(fig.path = 'figs/', message = FALSE, dev = c('pdf', 'png'), cache
 
 SDM boom & growth of methods literature [@Barbosa2015]
 
-... reproducibility crisis in SDM.
+Like many areas of quantitative science, Species Distribution Modelling SDM has grown rapidly - fuelled by the availability of diverse modelling software and data. Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” (Araújo & Peterson XXXX). Most of the software that enables SDM research, and that of other computational sub-disciplines, focuses on the analytical tasks of science (such as modelling and statistics) rather than tasks that are essential to the scientific enterprise, such as communication and producing reproducible outputs. 
 
-<!-- from Greg, will need trimming down -->
-In 2008, @Beale2008 suggested that “we are currently unable to build useful distribution models for many species”. 
-Using null models, @Beale2008 found that chance associations between climate and species’ distributions could account for the modelled relationships which they then suggested undermined the rationale for SDM. 
-Amongst the replies to this article was a re-analysis by @Araujo2009 that disputed this finding. 
-@Beale2008 put the alternative results to differences in distribution data, climate data and spatial domain, but emphasised the use of different null model distributions. 
-Whilst some code was provided in the original publication by @Beale2008, the following papers did not. 
-The resolution of this very important discussion was hindered by the lack of data and code sharing. 
+This has presented computational science with a very modern version of the reproducibility problem as computational research is largely inaccessible (). If research materials and outputs are shared, they are rarely in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. Fig Share, Git Hub). The ZOӦN R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules. The module-workflow structure offers a format by which scientists can more easily to create and share components of their analysis, and then access, modify, reuse and combine the components of others (see below and Figure 1). 
 
-The second example comes from the study by @Elith2006, that was exceptional in its scope by comparing “16 modelling methods over 226 species from 6 regions of the world”. 
-This paper provided benchmarks that both figured highly in many researchers selection of method (and software). 
-However, as the data and code is not available this much needed set of benchmarks cannot be updated by the community. 
-For example, when a new modelling method is produced (e.g. GRAF, Golding…) authors cannot compare the outcomes to transparent set of community contributed modelling benchmarks and standards. 
-In this case, the lack of data and code sharing hinder the legacy of one of the key SDM studies to date. 
+To date, the lack of sharing has reduced the capacity for innovation and validation in SDM, as well as its capacity for self-correction (). For example, a fundamental dispute over the ability of SDM to detect environmental associations (Beale et al. 2008, Araujou et al. 2009, Beale et al. 2009) was left unresolved as only code in the original publication was published (Beale et al. 2008). Without the resources being made open, the critical differences in these analysis are assumed rather than proven. 
 
-Thirdly, @Soininen2014 “assembled over 4900 published AUC (area under the curve of a receiver operating characteristic plot) values” to examine the predictability of SDM in relation to species traits. 
-Having conducted this labour intensive review they suggested that researchers should “give precise reports of model calibration and evaluation methods” to enable subsequent meta-analyses. 
-Relatedly, the methodological review of @Yackulic2013 investigated the use of the MAXENT algorithm in 108 articles, and have a similar concern regarding the “transparency and usefulness” in the reporting of SDM. 
-In these studies there is little to no opportunity afforded by the original studies to investigate the sensitivity of the conclusion to choices in model building and data selection. 
-These studies point to a far wider reduction in scientific productivity due to reporting of SDM as ‘closed knowledge’.
+A second example comes from Elith et al. (2006), who reported a study of exceptional scope(“16 modelling methods over 226 species from 6 regions of the world”). The modelling benchmarks that were reported have been highly influential, yet cannot be updated as the code and data were not shared. The community cannot update or modify the benchmarks when new modelling method is produced (e.g. GRAF, Golding…). A third example comes from meta-analyses () and methodological reviews (), which require laborious searches of publications in the absence of shared code and modelling outputs. These findings cannot be turned into reanalyses that would yield truly informative methodological conclusions. 
 
 These three scenarios are illustrative of some of the need for the data and modelling aspects of SDM to become more repeatable, reproducible, accessible, modifiable and updateable. Each are crucial examples of the barriers to this science.
+
 Science has to be this way and written statements of the modelling carried out do not facilitate a productive science. 
 SDM, as a science, is not extensible given current working practices. 
 
