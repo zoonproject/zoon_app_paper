@@ -28,6 +28,7 @@ output:
 # set up knitr options
 knitr::opts_chunk$set(fig.path = 'figs/',
                message = FALSE,
+               warning = FALSE,
                dev = c('png'),
                cache = TRUE)
 ```
@@ -44,15 +45,23 @@ options("rasterDataDir" = raster_dir)
 
 <!-- The Problem -->
 
-SDM boom & growth of methods literature [@Barbosa2015]
+Like many areas of quantitative science, Species Distribution Modelling SDM has grown rapidly [@Barbosa2015] - fuelled by the availability of diverse modelling software and data.
+Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” (Araújo & Peterson XXXX).
+Most of the software that enables SDM research, and that of other computational sub-disciplines, focuses on the analytical tasks of science (such as modelling and statistics) rather than tasks that are essential to the scientific enterprise, such as communication and producing reproducible outputs. 
 
-Like many areas of quantitative science, Species Distribution Modelling SDM has grown rapidly - fuelled by the availability of diverse modelling software and data. Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” (Araújo & Peterson XXXX). Most of the software that enables SDM research, and that of other computational sub-disciplines, focuses on the analytical tasks of science (such as modelling and statistics) rather than tasks that are essential to the scientific enterprise, such as communication and producing reproducible outputs. 
+This has presented computational science with a very modern version of the reproducibility problem as computational research is largely inaccessible ().
+If research materials and outputs are shared, they are rarely in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. Figshare, GitHub).
+The ZOON R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules.
+The module-workflow structure offers a format by which scientists can more easily to create and share components of their analysis, and then access, modify, reuse and combine the components of others (see below and Figure 1). 
 
-This has presented computational science with a very modern version of the reproducibility problem as computational research is largely inaccessible (). If research materials and outputs are shared, they are rarely in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. Fig Share, Git Hub). The ZOON R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules. The module-workflow structure offers a format by which scientists can more easily to create and share components of their analysis, and then access, modify, reuse and combine the components of others (see below and Figure 1). 
+To date, the lack of sharing has reduced the capacity for innovation and validation in SDM, as well as its capacity for self-correction ().
+For example, a fundamental dispute over the ability of SDM to detect environmental associations (Beale et al. 2008, Araujou et al. 2009, Beale et al. 2009) was left unresolved as only code in the original publication was published (Beale et al. 2008). Without the resources being made open, the critical differences in these analysis are assumed rather than proven. 
 
-To date, the lack of sharing has reduced the capacity for innovation and validation in SDM, as well as its capacity for self-correction (). For example, a fundamental dispute over the ability of SDM to detect environmental associations (Beale et al. 2008, Araujou et al. 2009, Beale et al. 2009) was left unresolved as only code in the original publication was published (Beale et al. 2008). Without the resources being made open, the critical differences in these analysis are assumed rather than proven. 
-
-A second example comes from Elith et al. (2006), who reported a study of exceptional scope(“16 modelling methods over 226 species from 6 regions of the world”). The modelling benchmarks that were reported have been highly influential, yet cannot be updated as the code and data were not shared. The community cannot update or modify the benchmarks when new modelling method is produced (e.g. GRAF, Golding…). A third example comes from meta-analyses () and methodological reviews (), which require laborious searches of publications in the absence of shared code and modelling outputs. These findings cannot be turned into reanalyses that would yield truly informative methodological conclusions. 
+A second example comes from Elith et al. (2006), who reported a study of exceptional scope(“16 modelling methods over 226 species from 6 regions of the world”).
+The modelling benchmarks that were reported have been highly influential, yet cannot be updated as the code and data were not shared.
+The community cannot update or modify the benchmarks when new modelling method is produced (e.g. GRAF, Golding…).
+A third example comes from meta-analyses () and methodological reviews (), which require laborious searches of publications in the absence of shared code and modelling outputs.
+These findings cannot be turned into reanalyses that would yield truly informative methodological conclusions. 
 
 These three scenarios are illustrative of some of the need for the data and modelling aspects of SDM to become more repeatable, reproducible, accessible, modifiable and updateable. Each are crucial examples of the barriers to this science.
 
@@ -230,28 +239,12 @@ Include a figure visualising the structure of the workflow object and how it can
 #### Building modules
 
 Modules are simply R function definitions, with a set of required inputs and outputs.
-For example, the`Bioclim` module, which uses the `raster` R package [@raster] to download the widely used bioclim [@Hijmans2005] covariate layers in the correct format, is defined as:
+For example the`Bioclim` module, which uses the `raster` R package [@raster] to download the widely used bioclim [@Hijmans2005] covariate layers in the correct format, is (excluding some error-handling code for brevity) defined as:
 
 ```{r bioclimmodule, eval = FALSE}
 Bioclim <- function (extent = c(-180, 180, -90, 90),
                      resolution = 10,
                      layers = 1:19) {
-    
-    if(!(resolution %in% c(2.5, 5, 10))){
-      stop('only 2.5, 5 and 10 degree resolutions 
-            are supported currently')
-    }
-  
-    if (length(layers) < 1 |
-        length(layers) > 19 |
-        !all(layers %in% 1:19)) {
-      stop ('layers must be a vector of integers between 
-             1 and 19 indicating layers to obtain')
-    }
-
-    stopifnot(length(extent) == 4)
-    stopifnot(all(is.numeric(extent)))
-
     world <- getData('worldclim', var = 'bio', res = resolution)
     world <- world[[layers]]
     cropped <- crop(world, extent(extent))
@@ -314,7 +307,7 @@ set.seed(1633)
 ```
 
 
-```{r fengworkflow, eval = TRUE, dpi = 300, fig.show = 'hide', message = FALSE}
+```{r fengworkflow, eval = TRUE, dpi = 300, fig.show = 'hide', results = 'hide', message = FALSE}
 Feng_Papes <- 
   workflow(occurrence = SpOcc('Dasypus novemcinctus',
                               extent = c(-130, -20, -60, 60)),
