@@ -28,7 +28,7 @@ output:
 # set up knitr options
 opts_chunk$set(fig.path = 'figs/',
                message = FALSE,
-               dev = c('pdf', 'png'),
+               dev = c('png'),
                cache = TRUE)
 
 ```
@@ -124,7 +124,7 @@ The modular SDM structure encoded by a zoon workflow. A) Flow diagram representi
 
  
 
-```{r plotzoonoverview, echo = FALSE, fig.height = 9, fig.cap = pzocap}
+```{r plotzoonoverview, echo = FALSE, fig.height = 9, dpi = 300, fig.cap = pzocap}
 
 # four panel plot
 par(mfrow = c(2, 2))
@@ -324,14 +324,7 @@ set.seed(1633)
 ```
 
 
-```{r fengworkCaptions, eval = TRUE, echo = FALSE}
-fengworkcap <- '
-  Map of the presence data (red), background data (black) and the MaxEnt relative probability of occurrence (darker blue showing higher probability of occurrence).
-  White areas are masked due to being marine in the marine environment or due to the MESS mask [@Elith2010]
-'
-```
-
-```{r fengworkflow, eval = TRUE, results = 'hide', message = FALSE, fig.cap = fengworkcap}
+```{r fengworkflow, eval = TRUE, results = 'hide', fig.show = 'hide', message = FALSE}
 Feng_Papes <- 
   workflow(occurrence = SpOcc('Dasypus novemcinctus',
                               extent = c(-130, -20, -60, 60)),
@@ -345,6 +338,9 @@ Feng_Papes <-
                output = Chain(PerformanceMeasures, PrintMap))
 
 ```
+
+![Map of the presence data (red), background data (black) and the MaxEnt relative probability of occurrence (darker blue showing higher probability of occurrence). White areas are masked due to being marine in the marine environment or due to the MESS mask.\label{fig:fengmap](./figs/fengworkflow-1.png)
+
 
 
 The resulting workflow contains all the code required to re-run the workflow, the input data and the results of executing each module.
@@ -470,7 +466,7 @@ Merow_Silander <- workflow(
 
 So we ran it again with disc-based spatial stratification:
 
-```{r mewoChangeWorkflow, eval = FALSE}
+```{r merowChangeWorkflow, eval = FALSE}
 Merow_Silander_Spatial <- ChangeWorkflow(
     merow_and_silander,
     process = Chain(..., PartitionDisc))
