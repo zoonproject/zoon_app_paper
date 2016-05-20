@@ -1,5 +1,11 @@
+# temp files
 raster_data/*
-output/zoon_applications_paper.pdf
+ms_cache/*
+ms_files/*
+
+# RStudio stuff
 .Rproj.user
 zoon_app_paper.Rproj
+
+# pdf doc
 ms.pdf
