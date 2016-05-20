@@ -1,2 +1,11 @@
-wc10*
-output/zoon_applications_paper.pdf
+# temp files
+raster_data/*
+ms_cache/*
+ms_files/*
+
+# RStudio stuff
+.Rproj.user
+zoon_app_paper.Rproj
+
+# pdf doc
+ms.pdf
