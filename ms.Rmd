@@ -116,9 +116,15 @@ For each of these steps, the user selects one or more 'modules' and combined the
 
 Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow.
 
+```{r plotzoonoverviewcaptions, eval = TRUE, echo = FALSE}
+pzocap <- "
+The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\\label{fig:workflows}
+"
+```
 
+ 
 
-```{r plotzoonoverview, echo = FALSE, fig.height = 9, fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\\label{fig:workflows}"}
+```{r plotzoonoverview, echo = FALSE, fig.height = 9, fig.cap = pzocap}
 
 # four panel plot
 par(mfrow = c(2, 2))
@@ -323,8 +329,6 @@ fengworkcap <- '
   Map of the presence data (red), background data (black) and the MaxEnt relative probability of occurrence (darker blue showing higher probability of occurrence).
   White areas are masked due to being marine in the marine environment or due to the MESS mask [@Elith2010]
 '
-
-
 ```
 
 ```{r fengworkflow, eval = TRUE, results = 'hide', message = FALSE, fig.cap = fengworkcap}
