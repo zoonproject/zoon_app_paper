@@ -4,7 +4,7 @@ author: "Nick Golding, Tom August, Tim C.D. Lucas, Emiel Van Loon & Greg McInern
 date: "21 March 2016"
 bibliography: zoon_app.bib
 csl: mee.csl
-output: 
+output:
   pdf_document:
     fig_caption: yes
     includes:  
@@ -25,8 +25,20 @@ output:
 
 
 ```{r knitrOpts, echo = FALSE, cache = FALSE, eval = FALSE}
-opts_chunk$set(fig.path = 'figs/', message = FALSE, dev = c('pdf', 'png'), cache = TRUE)
+# set up knitr options
+opts_chunk$set(fig.path = 'figs/',
+               message = FALSE,
+               dev = c('pdf', 'png'),
+               cache = TRUE)
 
+```
+
+```{r raster_dir, echo = FALSE, cache = FALSE, eval = TRUE}
+# set a place for the rasters to be downloaded to (to stop them being grabbed
+# again each time)
+raster_dir <- './raster_data'
+if (!dir.exists(raster_dir)) dir.create(raster_dir)
+options("rasterDataDir" = raster_dir)
 ```
 
 # Introduction
@@ -37,7 +49,7 @@ SDM boom & growth of methods literature [@Barbosa2015]
 
 Like many areas of quantitative science, Species Distribution Modelling SDM has grown rapidly - fuelled by the availability of diverse modelling software and data. Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” (Araújo & Peterson XXXX). Most of the software that enables SDM research, and that of other computational sub-disciplines, focuses on the analytical tasks of science (such as modelling and statistics) rather than tasks that are essential to the scientific enterprise, such as communication and producing reproducible outputs. 
 
-This has presented computational science with a very modern version of the reproducibility problem as computational research is largely inaccessible (). If research materials and outputs are shared, they are rarely in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. Fig Share, Git Hub). The ZOӦN R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules. The module-workflow structure offers a format by which scientists can more easily to create and share components of their analysis, and then access, modify, reuse and combine the components of others (see below and Figure 1). 
+This has presented computational science with a very modern version of the reproducibility problem as computational research is largely inaccessible (). If research materials and outputs are shared, they are rarely in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. Fig Share, Git Hub). The ZOON R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules. The module-workflow structure offers a format by which scientists can more easily to create and share components of their analysis, and then access, modify, reuse and combine the components of others (see below and Figure 1). 
 
 To date, the lack of sharing has reduced the capacity for innovation and validation in SDM, as well as its capacity for self-correction (). For example, a fundamental dispute over the ability of SDM to detect environmental associations (Beale et al. 2008, Araujou et al. 2009, Beale et al. 2009) was left unresolved as only code in the original publication was published (Beale et al. 2008). Without the resources being made open, the critical differences in these analysis are assumed rather than proven. 
 
@@ -345,7 +357,7 @@ Feng_Papes_Interactive <-
                                   ResponseCurve))
 ```
 
-![The interactive map module overlay the raw data and predicted distribution, allowing users to interactively explore their results.\label{fig:interactive}](./figs/interactive_map.png)
+![The interactive map module overlays the raw occurrence data and predicted distribution over a global map, allowing users to interactively explore their results.\label{fig:interactive}](./figs/interactive_map.png)
 
 <!-- add the original and the response curves to this figure too -->
 
@@ -403,7 +415,7 @@ What the workflow looks like:
 ```{r merowpreamblel, eval = TRUE, echo = FALSE}
 
 # Load the data into the global environment
-data(carw, envir = environment())
+data(carw, envir = environment(), package = 'maxlike')
 
 
 rl <- lapply(carw.data$raster.data, function(x) {
@@ -423,16 +435,18 @@ names(CarolinaRasters) <- names(carw.data$raster.data)
 
 ```
 
-```{r merowWorkingCopy, eval = TRUE}
+```{r merowWorkingCopy, eval = FALSE}
 
 Merow_Silander <- workflow(
-    occurrence = Chain(LocalOccurrenceData('occurrenceType = 'presence' ),
-                       LocalOccurrenceData(occurrenceType = 'presence/absence', externalValidation = TRUE)),
-     covariate = LocalRasterData('CarolinaRasters'),
-       process = Chain(Transform(trans = 'square', replace = FALSE), 
+    occurrence = Chain(LocalOccurrenceData(occurrenceType = 'presence'),
+                       LocalOccurrenceData(occurrenceType = 'presence/absence',
+                                           externalValidation = TRUE)),
+     covariate = LocalRaster('CarolinaRasters'),
+       process = Chain(Transform(trans = 'square',
+                                 replace = FALSE), 
                        Background(n = 10000)),
          model = list(LogisticRegression, MaxEnt, MaxLike),
-        output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap)
+        output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap))
 
 
 ```
