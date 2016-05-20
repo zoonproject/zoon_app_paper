@@ -24,13 +24,12 @@ output:
 5. We demonstrate `zoon` by recreating SDM analyses from two published research articles as zoon workflows, which readers can interrogate and extend.
 
 
-```{r knitrOpts, echo = FALSE, cache = FALSE, eval = FALSE}
+```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
 # set up knitr options
-opts_chunk$set(fig.path = 'figs/',
+knitr::opts_chunk$set(fig.path = 'figs/',
                message = FALSE,
                dev = c('png'),
                cache = TRUE)
-
 ```
 
 ```{r raster_dir, echo = FALSE, cache = FALSE, eval = TRUE}
@@ -113,18 +112,9 @@ The `zoon` R package encodes SDM analyses as a simple workflow of five steps: ob
 Each of these steps is carried out by one or more community-contributed software modules.
 For each of these steps, the user selects one or more 'modules' and combined them in a call to `workflow`.
 
-
 Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow.
 
-```{r plotzoonoverviewcaptions, eval = TRUE, echo = FALSE}
-pzocap <- "
-The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\\label{fig:workflows}
-"
-```
-
- 
-
-```{r plotzoonoverview, echo = FALSE, fig.height = 9, dpi = 300, fig.cap = pzocap}
+```{r plotzoonoverview, echo = FALSE, fig.show = 'hide', fig.height = 9, dpi = 300}
 
 # four panel plot
 par(mfrow = c(2, 2))
@@ -165,7 +155,7 @@ for (i in 2:4) {
         adj = 0)  
 }
 ```
-
+![The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\label{fig:workflows}](./figs/plotzoonoverview-1.png)
 
 #### Module types
 
@@ -324,7 +314,7 @@ set.seed(1633)
 ```
 
 
-```{r fengworkflow, eval = TRUE, results = 'hide', fig.show = 'hide', message = FALSE}
+```{r fengworkflow, eval = TRUE, dpi = 300, fig.show = 'hide', message = FALSE}
 Feng_Papes <- 
   workflow(occurrence = SpOcc('Dasypus novemcinctus',
                               extent = c(-130, -20, -60, 60)),
@@ -339,9 +329,7 @@ Feng_Papes <-
 
 ```
 
-![Map of the presence data (red), background data (black) and the MaxEnt relative probability of occurrence (darker blue showing higher probability of occurrence). White areas are masked due to being marine in the marine environment or due to the MESS mask.\label{fig:fengmap](./figs/fengworkflow-1.png)
-
-
+![Map of the presence data (red), background data (black) and the MaxEnt relative probability of occurrence (darker blue showing higher probability of occurrence). White areas are masked due to being marine in the marine environment or due to the MESS mask.\label{fig:fengmap}](./figs/fengworkflow-1.png)
 
 The resulting workflow contains all the code required to re-run the workflow, the input data and the results of executing each module.
 The object `Feng_Papes` could therefore be saved as a binary file and shared as a reproducible representation of this research.
