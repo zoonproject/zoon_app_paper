@@ -391,89 +391,30 @@ Possible experiments:
 (choose only one of these)
 -->
 
-All of these have now been uploaded to the ZOON modules repository (under the names `CarolinaWrenPO`, `CarolinaWrenPA`, and `MaxLike`), though we display the code required for the module `CarolinaWrenPO` here as an illustration of the minimal overhead required in writing `zoon` software modules:
-
-```{r carolinamodule, eval = FALSE}
-CarolinaWrenPO <- function() {
-  
-  # load maxlike package (installing if it isn't in the library)
-  zoon::GetPackage('maxlike')
-  
-  # load the dataset from the maxlike package
-  data(carw, envir = environment())
-  occ <- na.omit(carw.data$pa.data)
-
-  # keep only presence records
-  occ <- occ[occ$y == 1, ]
-  
-  # build the occurrence dataset and return
-  data.frame(longitude = occ$Lon,
-             latitude = occ$Lat,
-             value = occ$y,
-             type = 'presence'),
-             fold = 1)
-  
-}
-```
-
-This function meets the requirements of an *occurrence* module; providing as output a dataframe with the required columns and datatypes.
-
-
-
-We can run automated checks on this module
+All of these have now been uploaded to the ZOON modules repository under the names `CarolinaWrenPO`, `CarolinaWrenPA`, `CarolinaWrenRasters` and `MaxLike`.
 
 What the workflow looks like:
 
-```{r merowpreamblel, eval = TRUE, echo = FALSE}
-
-# Load the data into the global environment
-data(carw, envir = environment(), package = 'maxlike')
-
-
-rl <- lapply(carw.data$raster.data, function(x) {
-   m <- matrix(x, nrow=carw.data$dim[1], ncol=carw.data$dim[2],
-               byrow=TRUE)
-   r <- raster(m)
-   extent(r) <- c(-124.83, -66.67, 24.61, 49.41)
-   r
-})
-
-# Stack and name them
-CarolinaRasters <- stack(rl[[1]], rl[[2]], rl[[3]], rl[[4]], rl[[5]], rl[[6]])
-names(CarolinaRasters) <- names(carw.data$raster.data)
-
-
-
-
-```
-
-```{r merowWorkingCopy, eval = FALSE}
-
+```{r merowworkflow, eval = TRUE}
 Merow_Silander <- workflow(
-    occurrence = Chain(LocalOccurrenceData(occurrenceType = 'presence'),
-                       LocalOccurrenceData(occurrenceType = 'presence/absence',
-                                           externalValidation = TRUE)),
-     covariate = LocalRaster('CarolinaRasters'),
-       process = Chain(Transform(trans = 'square',
-                                 replace = FALSE), 
-                       Background(n = 10000)),
-         model = list(LogisticRegression, MaxEnt, MaxLike),
-        output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap))
-
-
+    occurrence = CarolinaWrenPO,
+    covariate = CarolinaWrenRasters,
+    process = Background(n = 10000),
+    model = list(LogisticRegression, MaxEnt, MaxLike),
+    output = Chain(PerformanceMeasures, PrintMap))
 ```
 
 
 ```{r merowworkflow, eval = FALSE}
 
 Merow_Silander <- workflow(
-    occurrence = Chain(LocalOccurrenceData(occurrenceType = 'presence' ),
-                       LocalOccurrenceData(occurrenceType = 'presence/absence', externalValidation = TRUE)),
-     covariate = LocalRasterData('CarolinaRasters'),
-       process = Chain(Transform(trans = 'square', replace = FALSE), 
+    occurrence = CarolinaWrenPO,
+    covariate = CarolinaWrenRasters,
+    process = Chain(Transform(trans = 'square',
+                                 replace = FALSE), 
                        Background(n = 10000)),
-         model = list(LogisticRegression, MaxEnt, MaxLike),
-        output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap, Coefficients)
+    model = list(LogisticRegression, MaxEnt, MaxLike),
+    output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap, Coefficients))
 ```
 
 So we ran it again with disc-based spatial stratification:
