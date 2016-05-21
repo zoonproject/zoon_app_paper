@@ -321,7 +321,8 @@ Feng_Papes_Update <-
 
 # load both images
 r_map <- brick('figs/interactive_map.png')
-r_resp <- brick('figs/fengChangeWorkflow-2.png')
+r_resp <- raster('figs/fengChangeWorkflow-2.png')
+r_resp <- brick(r_resp, r_resp, r_resp)
 
 # set up layout so that heights are the same for both panels
 plot_height <- min(nrow(r_map), nrow(r_resp))
@@ -357,7 +358,8 @@ mtext(text = 'A',
 plot.new()
 
 # plot the response curve
-plotRGB(r_resp, maxpixels = Inf)
+plotRGB(r_resp, maxpixels = Inf,
+        scale = max(maxValue(r_resp)))
 
 # add a panel letter
 mtext(text = 'B',
