@@ -122,51 +122,12 @@ For each of these steps, the user selects one or more 'modules' and combined the
 
 Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow.
 
-```{r plotzoonoverview, echo = FALSE, fig.show = 'hide', fig.height = 9, dpi = 300}
+<!--
+the figures for this panel are generated in powerpoint (I know, I know, but it's quick and easy) and saved in the figs folder.
+the powerpoint file itself is not version controlled, but can be access here: https://www.dropbox.com/s/afjpv8v6na9y56e/diagrams.pptx?dl=0
+-->
 
-# the figures for this panel are generated in powerpoint (I know, I know, but it's quick and easy) and saved in the figs folder.
-# the powerpoint file itself is not version controlled, but can be access here: https://www.dropbox.com/s/afjpv8v6na9y56e/diagrams.pptx?dl=0
-
-# four panel plot
-par(mfrow = c(2, 2))
-
-# plot the saved image in the first panel
-library(raster)
-r <- brick('figs/workflow_basic.png')
-par(mar = c(1, 1, 2, 1))
-plotRGB(r, maxpixels = Inf)
-
-# add a panel letter
-# this is an awful hack and completely contingent on the screenshot size :/
-text(40, 940, labels = LETTERS[1],
-      xpd = NA,
-     cex = 1.2)  
-
-par(mar = c(1, 1, 2, 1))
-# placeholder plots for each panel
-for (i in 2:4) {
-  
-  # set up plotting window
-  plot.new()
-  plot.window(0:1, 0:1)
-
-  # grey rectangle (no background in vector pdf?)
-  rect(-1, -1, 2, 2, col = grey(0.9), border = NA)
-
-  # text over the top
-  text(0.5, 0.5, 'PLACEHOLDER',
-       col = grey(0.3),
-       cex = -13,
-       xpd = NA)
-  
-  # add a panel letter
-  mtext(text = LETTERS[i],
-        side = 3,
-        line = 0.5,
-        adj = 0)  
-}
-```
-![The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the module types. B) The required inputs and outputs for each module types (full details given in the `zoon` vignette 'Building a module'). C) Chaining and listing modules of the same type. D) The structure of a workflow object.\label{fig:workflows}](./figs/plotzoonoverview-1.png)
+![The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the five module types and intermediate objects: df - an occurrence dataframe; ras - a RasterStack object; mod - a ZoonModel object; ? - any user-defined inputs or outputs. B) The flow diagram implied by chaining modules of the same type. C) The flow diagram implied by listing modules of the same type. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the `zoon` vignette 'Building a module'. \label{fig:workflows}](./figs/diagrams.png)
 
 #### Module types
 
@@ -398,7 +359,7 @@ All of these have now been uploaded to the ZOON modules repository under the nam
 
 What the workflow looks like:
 
-```{r merowworkflow, eval = TRUE}
+```{r merowworkflowtemp, eval = TRUE}
 Merow_Silander <- workflow(
     occurrence = CarolinaWrenPO,
     covariate = CarolinaWrenRasters,
