@@ -124,6 +124,9 @@ Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow.
 
 ```{r plotzoonoverview, echo = FALSE, fig.show = 'hide', fig.height = 9, dpi = 300}
 
+# the figures for this panel are generated in powerpoint (I know, I know, but it's quick and easy) and saved in the figs folder.
+# the powerpoint file itself is not version controlled, but can be access here: https://www.dropbox.com/s/afjpv8v6na9y56e/diagrams.pptx?dl=0
+
 # four panel plot
 par(mfrow = c(2, 2))
 
