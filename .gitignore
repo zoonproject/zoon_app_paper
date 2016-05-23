@@ -2,6 +2,7 @@
 raster_data/*
 ms_cache/*
 ms_files/*
+spThin.R
 
 # RStudio stuff
 .Rproj.user
