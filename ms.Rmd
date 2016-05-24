@@ -255,7 +255,7 @@ Feng_Papes <-
                               Background(n = 10000, bias = 200), 
                               Crossvalidate(k = 5)),
                 model = MaxEnt,
-               output = PrintMap)
+               output = PrintMap(points = FALSE))
 ```
 
 This module plots a static map of the predicted distribution, and the underlying data.
@@ -435,7 +435,7 @@ Merow_Silander <- workflow(
     covariate = CarolinaWrenRasters,
     process = Background(n = 10000),
     model = list(LogisticRegression, MaxEnt, MaxLike),
-    output = Chain(PerformanceMeasures, PrintMap))
+    output = Chain(PerformanceMeasures, PrintMap(points = FALSE)))
 ```
 
 
@@ -448,7 +448,7 @@ Merow_Silander <- workflow(
                                  replace = FALSE), 
                        Background(n = 10000)),
     model = list(LogisticRegression, MaxEnt, MaxLike),
-    output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap, Coefficients))
+    output = Chain(PerformanceMeasures, PointBiserialCorr, PrintMap(points = FALSE), Coefficients))
 ```
 
 So we ran it again with disc-based spatial stratification:
