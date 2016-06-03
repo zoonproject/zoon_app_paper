@@ -1,3 +1,21 @@
+<<<<<<< HEAD
 .Rproj.user
 .Rhistory
 .RData
+=======
+# temp files
+raster_data/*
+ms_cache/*
+ms_files/*
+spThin.R
+
+# RStudio stuff
+.Rproj.user
+zoon_app_paper.Rproj
+
+# pdf doc
+ms.pdf
+
+# powerpoint doc for generating figures
+figs/diagrams.pptx
+>>>>>>> 00764768d757080a3c5c4c022e3ffbbfd0b0fd2f
