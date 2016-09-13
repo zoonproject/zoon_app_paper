@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-.Rproj.user
-.Rhistory
-.RData
-=======
 # temp files
 raster_data/*
 ms_cache/*
@@ -18,4 +13,3 @@ ms.pdf
 
 # powerpoint doc for generating figures
 figs/diagrams.pptx
->>>>>>> 00764768d757080a3c5c4c022e3ffbbfd0b0fd2f

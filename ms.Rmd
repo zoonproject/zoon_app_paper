@@ -6,7 +6,7 @@ csl: mee.csl
 output:
   pdf_document:
     fig_caption: yes
-    includes:  
+    includes:
       in_header: latex_preamble.tex
 ---
 
