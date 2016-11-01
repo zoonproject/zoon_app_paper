@@ -52,7 +52,7 @@ If research materials and outputs are shared, they are rarely disseminated in a 
 The `zoon` R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules.
 The module-workflow structure enables scientists to more easily to create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1). 
 
-A lack of sharing reduces the capacity for innovation and validation in SDM, as well as its capacity to be a "self-correcting process" [@roysoc_report].
+A lack of sharing reduces the capacity for innovation and validation in SDM, as well as its capacity to be a "self-correcting process" [@Boulton2012].
 For example, a fundamental dispute over the ability of SDM to detect environmental associations [@Beale2008, @Araujo2009, @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
 Without the resources being made open the critical differences in these analytical steps are assumed rather than proven. 
 
