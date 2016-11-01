@@ -6,7 +6,7 @@ csl: mee.csl
 output:
   pdf_document:
     fig_caption: yes
-    includes:  
+    includes:
       in_header: latex_preamble.tex
 ---
 
@@ -226,7 +226,7 @@ This model was then used to predict areas in the Americas which may be suitable 
 Such a model can be quickly and easily re-constructed as a `zoon` workflow using modules available in the ZOON module repository.
 @Feng2015 used a combination of occurrence data from GBIF, and additional occurrence data manually collected from the published literature.
 Unfortunately the latter data have not been made publically available, so here we use only data from GBIF.
-If the the additional data had been made available it would be straightforward to incorporate them, for example using the `LocalOccurrenceData` module.
+If the additional data had been made available it would be straightforward to incorporate them, for example using the `LocalOccurrenceData` module.
 
 ```{r loadzoon, eval = TRUE, echo = FALSE, cache = FALSE}
 # Keep cache = FALSE. Not supposed to cache chunks with library()
@@ -355,7 +355,7 @@ spThin <- function (.data, thin = 50) {
   zoon::GetPackage('spThin')
   
   # get dataframe & index to presence data
-  df <- .data$df
+  df <- na.omit(.data$df)
   pres_idx <- which(df$type == 'presence')
   
   # prepare presence data subset and apply thinning
@@ -371,7 +371,7 @@ spThin <- function (.data, thin = 50) {
   
   # get index to rows in sub_df, update the full dataset and return
   pres_keep_idx <- rownames(th[[1]])
-  .data$df <- rbind(df[pres_idx[pres_keep_idx], ],
+  .data$df <- rbind(df[pres_idx,][pres_keep_idx, ],
                     df[-pres_idx, ])
   return (.data)
 }
@@ -379,7 +379,7 @@ spThin <- function (.data, thin = 50) {
 
 To convert this code into a ZOON module, we need to write it to a standalone file (named `spThin.R`) with the metadata required to build the module documentation. The `zoon` function `BuildModule()` helps with this step, and can also run checks to make sure we got everything right:
 
-```{r buildmodule, eval = TRUE, results = 'hide'} 
+```{r buildmodule, eval = TRUE, results = 'hide', fig.keep = 'none'} 
 BuildModule(object = spThin,
             type = 'process',
             title = 'Spatial thinning of Presence-only Data',
@@ -399,7 +399,7 @@ BuildModule(object = spThin,
             check = TRUE)
 ```
 
-This module can now be shared so that others can use it in their ZOON workflows. The bexst way of sharing it is via the `zoon` modules repository. Modules can uploaded there, via the module submission system at [URL TBD].
+This module can now be shared so that others can use it in their ZOON workflows. The best way of sharing it is via the `zoon` modules repository. Modules can uploaded there, via the module submission system at [URL TBD].
 
 #### Example 3. Evaluating MaxLike
 
