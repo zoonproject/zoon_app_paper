@@ -91,19 +91,15 @@ Of course, R users could point to the R environment itself, but the stringent re
 
 The ZOON project takes a different approach, instead defining only the core architecture of workflows, and interfacing with an open repository of community-contributed software modules.
 Users can create new modules for any modelling method and integrate it into another analysis. 
-
 Similarly to programming languages such as R and Python, facilitating wider development of software will enable the whole research community to develop the software that it requires, rather than rely on the developers of the software they use to do it for them.
 Unlike software packages for programming languages however, the ZOON project enforces a modular structure that ensures interoperability between contributed software modules.
-This also helps to lower the bar for creating modules (each module is simply an R function with a set of required inputs and outputs) and facilitates automated testing of modules ot ensure software quality .
-
-This paper introduces version 0.4-22 of the `zoon` R package, which can be dowloaded from CRAN and which encodes the majority of this functionality. First, we describe the modular structure of zoon workflows and demonstrate how completed `zoon` workflows can be shared, evaluated and extended.
-Then we illustrate these concepts, and the contribution we hope `zoon` will make to SDM research, by recreating and extending two recent SDM analyses using `zoon` workflows.
+This also helps to lower the bar for creating modules (each module is simply an R function with a set of required inputs and outputs) and facilitates automated testing of modules ot ensure software quality.
 
 # The `zoon` R package
 
 The `zoon` R package encodes SDM analyses as a simple workflow of five key steps, with each step encoded as one or more software modules. Users combine these modules via a call to the `workflow` function, which executes each module in turn, before returning a `zoonWorkflow` object - a shareable, extensible and fully reproducible documentation of the SDM analysis. Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow comprising the five module types and illustrates how multiple modules may be combined at each stage. The module types and module combination options are described in more detail below.
 
-<!— link to powerpoint doc: https://www.dropbox.com/s/afjpv8v6na9y56e/diagrams.pptx?dl=0-->
+<!— link to powerpoint doc: https://www.dropbox.com/s/p7rqww2v0h3a7np/diagrams.pptx?dl=0-->
 
 ![The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the five module types and intermediate objects: df - an occurrence dataframe; ras - a RasterStack object; mod - a ZoonModel object; ? - any user-defined inputs or outputs. B) The flow diagram implied by chaining modules of the same type. C) The flow diagram implied by listing modules of the same type. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the `zoon` vignette 'Building a module'. \label{fig:workflows}](./figs/diagrams.png)
 
@@ -111,7 +107,7 @@ The `zoon` R package encodes SDM analyses as a simple workflow of five key steps
 
 #### Module types
 
-The five module types, corresponding to the five key steps of an SDM anaysis are:
+The five module types, corresponding to the five key steps of an SDM analysis are:
 
 <!— needs work—>
 
