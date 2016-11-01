@@ -11,5 +11,5 @@ zoon_app_paper.Rproj
 # pdf doc
 ms.pdf
 
-# powerpoint doc for generating figures
-figs/diagrams.pptx
+# powerpoint docs for generating figures
+*.pptx
