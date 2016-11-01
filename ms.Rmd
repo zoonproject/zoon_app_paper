@@ -82,9 +82,9 @@ There is scope for incorporating new techniques but not necessarily a straight f
 The BIOVEL workflow environment [@DeGiovanni2015] is an exception in terms of reproducibility, sharing many of the general principles of ZOON.
 Adoption of workflow environments (e.g. Kepler, Vis-Trails, Taverna) is low however, presumably due to the users’ unfamiliarity, and the requirement of embedding R within a workflow environment rather than embedding a workflow system within R.
 
-Examples of subject specific frameworks are found within the Bioinformatics community, for example the Bioconductor infrastructure that uses R (@Gentleman2004, https://www.bioconductor.org/), and BioJS, a repository for JavaScript components (@Corpas2014, https://www.biojs.net/).
+Examples of subject specific frameworks are found within the Bioinformatics community, for example the Bioconductor infrastructure that uses R (@Gentleman2004, www.bioconductor.org), and BioJS, a repository for JavaScript components (@Corpas2014, www.biojs.net).
 Both software aim to increase the compatibility and sharing of computational tools in order to increase the reuse and robustness of tools.
-In terms of robustness, the CHASTE project for cardiac modelling (@Mirams2013, http://www.cs.ox.ac.uk/chaste/) has developed into a model repository that offers community benchmarks for the last 50 years of cardiac modelling [@Cooper2016].
+In terms of robustness, the CHASTE project for cardiac modelling (@Mirams2013, www.cs.ox.ac.uk/chaste) has developed into a model repository that offers community benchmarks for the last 50 years of cardiac modelling [@Cooper2016].
 These frameworks increase the access, usability and robustness of ultimately scientific research.
 Of course, R users could point to the R environment itself, but the stringent requirements of R packages are likely to prevent much of the SDM community from sharing code in a discoverable or usable format.
 
@@ -238,7 +238,7 @@ set.seed(1633)
 ```
 
 
-```{r fengworkflow, eval = TRUE, dpi = 300, fig.show = "hide", results = "hide", message = FALSE, fig.height = 9, fig.width = 9}
+```{r fengworkflow, eval = TRUE, dpi = 600, fig.show = "hide", results = "hide", message = FALSE, fig.height = 9, fig.width = 9}
 FengPapes <- 
   workflow(occurrence = SpOcc('Dasypus novemcinctus',
                               extent = c(-130, -20, -60, 60)),
@@ -435,7 +435,7 @@ All of these have now been uploaded to the ZOON modules repository under the nam
 
 What the workflow looks like:
 
-```{r merowworkflowtemp, eval = TRUE}
+```{r merowworkflowtemp, dpi = 600, eval = TRUE}
 Merow_Silander <- workflow(
     occurrence = CarolinaWrenPO,
     covariate = CarolinaWrenRasters,
@@ -445,7 +445,7 @@ Merow_Silander <- workflow(
 ```
 
 
-```{r merowworkflow, eval = FALSE}
+```{r merowworkflow,dpi = 600, eval = FALSE}
 
 Merow_Silander <- workflow(
     occurrence = CarolinaWrenPO,
@@ -459,7 +459,7 @@ Merow_Silander <- workflow(
 
 So we ran it again with disc-based spatial stratification:
 
-```{r merowChangeWorkflow, eval = FALSE}
+```{r merowChangeWorkflow, dpi = 600, eval = FALSE}
 Merow_Silander_Spatial <- ChangeWorkflow(
     merow_and_silander,
     process = Chain(..., PartitionDisc))
@@ -468,7 +468,7 @@ Merow_Silander_Spatial <- ChangeWorkflow(
 ### Future developments
 
 Reproducibility, open-data and open-science are topics that receive ever more attention all across science.
-Journals [@McNutt2016] and funders [@EC2016] are moving towards openly shared data and code resources as a requirement, as was set out in the executive order issued by Barak Obama in 2013 (https://www.whitehouse.gov/the-press-office/2013/05/09/executive-order-making-open-and-machine-readable-new-default-government-).
+Journals [@McNutt2016] and funders [@EC2016] are moving towards openly shared data and code resources as a requirement, as was set out in the executive order issued by US President Barack Obama in 2013 [@Obama2013].
 These trends strongly suggest researchers must at least find ways of documenting and disseminating code and data, if not ways that enable end users. Numerous platforms for publishing analytical outputs exist (e.g. GitHub, FigShare, Dryad, CRAN), but end users will still face the demands of locating, deciphering and managing different resources across different platforms.
 Then, the real challenge of open and reproducible science, that has an increased capacity for innovation, is the challenge of increasing the usability of code and data.
 
