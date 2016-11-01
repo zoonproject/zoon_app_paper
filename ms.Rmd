@@ -43,21 +43,21 @@ options("rasterDataDir" = raster_dir)
 # Introduction
 
 Like many areas of quantitative science Species Distribution Modelling (SDM) has grown rapidly [@Barbosa2015] fueled by the availability of diverse modelling software and data.
-Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” (Araújo & Peterson XXXX).
+Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” [@Araujo2012].
 Most SDM software, and that enabling other other computational sub-disciplines, focus on  analytical tasks (such as modelling and statistics) rather than enabling scientists to produce reproducible and modifiable analyses that are essential to the scientific enterprise. 
 
 Computational sciences are then presented with a modern version of the reproducibility problem as computational research is largely inaccessible let alone reusable.
 If research materials and outputs are shared, they are rarely disseminated in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. Figshare, GitHub).
 The ZOON R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules.
-The module-workflow structure enables scientists to more easily to create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1). 
+The module-workflow structure enables scientists to more easily to create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure \ref{fig:workflows}). 
 
 A lack of sharing reduces the capacity for innovation and validation in SDM, as well as its capacity to be a "self-correcting process" [@roysoc_report].
-For example, a fundamental dispute over the ability of SDM to detect environmental associations (Beale et al. 2008, Araujou et al. 2009, Beale et al. 2009) was left unresolved as only the original publication shared their analytical code (Beale et al. 2008).
+For example, a fundamental dispute over the ability of SDM to detect environmental associations [@Beale2008,@Araujo2009,@Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
 Without the resources being made open the critical differences in these analytical steps are assumed rather than proven. 
 
-A second example comes from Elith et al. (2006), who reported a study of exceptional scope(“16 modelling methods over 226 species from 6 regions of the world”).
+A second example comes from [@Elith2006], who reported a study of exceptional scope(“16 modelling methods over 226 species from 6 regions of the world”).
 The modelling benchmarks that were reported have been highly influential, yet cannot be updated or modified when new modelling methods are produced as the code and data were not shared.
-A third example comes from meta-analyses [] and methodological reviews [@Yackulic?], which rely on laborious searches through text publications in the absence of shared code and modelling outputs.
+A third example comes from meta-analyses [] and methodological reviews [@Yackulic2013], which rely on laborious searches through text publications in the absence of shared code and modelling outputs.
 SDM then has limited abilities to derive truly informative methodological conclusions that can be acted upon. 
 
 These three examples broadly illustrate why the data and models underpinning SDM need to become more repeatable, reproducible, accessible, modifiable and updateable.
@@ -67,12 +67,12 @@ Thus while many software are pitched as being ‘easy to use’ or ‘user frien
 This paper introduces version 0.4-22 of the `ZOON` R package, which enables users to address issues of compatibility, accessibility, sharing and reproducibility for their SDM analyses.
 Firstly, we describe the modular structure of ZOON workflows and demonstrate how completed workflows can be shared, evaluated and extended.
 We then illustrate these concepts, and the potential contributions of ZOON to SDM research, by recreating and extending two recent SDM analyses using `zoon` workflows.
-To assist users a number of tutorials are provided on the github repository and as vignettes distributed with zoon – including  guides on creating workflows and modules, as well as full technical details for module developers.
+To assist users a number of tutorials are provided on the GitHub repository and as vignettes distributed with zoon – including  guides on creating workflows and modules, as well as full technical details for module developers.
 
 ### Reproducible software projects
 
-Most of the SDM users replying to a survey in 2015 (Ahmed et al. 2015) were using either MaxEnt [@Phillips2006] or R [@R] as the first choice software for their analyses (also see @Touchon2016). 
-The software market is diverse, however, including a variety of software developed specifically for SDM (e.g. MaxEnt [@Phillips2006], the BioMod and BioMod2 [Thuiller2009] and dismo [@Hijmans?] packages for R, SDMtoolbox [@Brown2014], openModeller [@deSouzaMunoz2009], BioEnsembles [@Diniz-Filho2009], ModEco [@Guo2010]) and software that has been appropriated for SDM studies, such as statistical software (WinBugs and OpenBugs [@Lunn2000]) and other, more general ecological software  (Domain [Carpenter1993], Canoco [@TerBraak2002]). 
+Most of the SDM users replying to a survey in 2015 [@Ahmed2015] were using either MaxEnt [@Phillips2006] or R [@R] as the first choice software for their analyses (also see @Touchon2016). 
+The software market is diverse, however, including a variety of software developed specifically for SDM (e.g. MaxEnt [@Phillips2006], the BioMod and BioMod2 [@Thuiller2009] and dismo [@dismo] packages for R, SDMtoolbox [@Brown2014], openModeller [@deSouza2011], BioEnsembles [@Diniz2009], ModEco [@Guo2010]) and software that has been appropriated for SDM studies, such as statistical software (WinBugs and OpenBugs [@Lunn2000]) and other, more general ecological software  (Domain [@Carpenter1993], Canoco [@TerBraak2002]).
 
 Of the SDM software for multi model comparisons (e.g. OpenModeller, BioEnsembles, ModEco), BioMod (as an open-source R package) has the greatest potential to be modified and re-appropriated.
 In essence, BioMod is an SDM environment accessed from R, rather than necessarily being a SDM tool kit for R.
@@ -81,9 +81,9 @@ There is scope for incorporating new techniques but not necessarily a straight f
 The BIOVEL workflow environment [@DeGiovanni2015] is an exception in terms of reproducibility, sharing many of the general principles of ZOON.
 Adoption of workflow environments (e.g. Kepler, Vis-Trails, Taverna) is low however, presumably due to the users’ unfamiliarity, and the requirement of embedding R within a workflow environment rather than embedding a workflow system within R.
 
-Examples of subject specific frameworks are found within the Bioinformatics community, for example the Bioconductor infrastructure that uses R (Gentleman et al. 2004, https://www.bioconductor.org/), and BioJS, a repository for JavaScript components (Corpas et al. 2014, https://www.biojs.net/).
+Examples of subject specific frameworks are found within the Bioinformatics community, for example the Bioconductor infrastructure that uses R (@Gentleman2004, https://www.bioconductor.org/), and BioJS, a repository for JavaScript components (@Corpas2014, https://www.biojs.net/).
 Both software aim to increase the compatibility and sharing of computational tools in order to increase the reuse and robustness of tools.
-In terms of robustness, the CHASTE project for cardiac modelling (Mirams et al. 2013, http://www.cs.ox.ac.uk/chaste/) has developed into a model repository that offers community benchmarks for the last 50 years of cardiac modelling (Cooper et al. 2016).
+In terms of robustness, the CHASTE project for cardiac modelling (@Mirams2013, http://www.cs.ox.ac.uk/chaste/) has developed into a model repository that offers community benchmarks for the last 50 years of cardiac modelling [@Cooper2016].
 These frameworks increase the access, usability and robustness of ultimately scientific research.
 Of course, R users could point to the R environment itself, but the stringent requirements of R packages are likely to prevent much of the SDM community from sharing code in a discoverable or usable format.
 
@@ -405,8 +405,7 @@ In this example we illustrate how `zoon` can help contribute to discussions such
 
 For this example, it was necessary to create three new modules: two to load the presence/absence and presence-only Carolina Wren datasets from @Royle2012; and one to implement the MaxLike model.
 
-<!--
-Possible experiments:
+<!-- Possible experiments:
 * evaluating with different criteria (e.g. deviance or pseudo-r-squared which measure calibration capacity)
 * fitting the same models with GBIF data and evaluating against the BBS PA data,
 * fitting/evaluating on spatially-stratified holdout data
@@ -451,11 +450,11 @@ Merow_Silander_Spatial <- ChangeWorkflow(
 ### Future developments
 
 Reproducibility, open-data and open-science are topics that receive ever more attention all across science.
-Journals (McNutt 2016) and funders (European Commission 2016) are moving towards openly shared data and code resources as a requirement, as was set out in the executive order issued by Barak Obama in 2013 (https://www.whitehouse.gov/the-press-office/2013/05/09/executive-order-making-open-and-machine-readable-new-default-government-).
+Journals [@McNutt2016] and funders [@EC2016] are moving towards openly shared data and code resources as a requirement, as was set out in the executive order issued by Barak Obama in 2013 (https://www.whitehouse.gov/the-press-office/2013/05/09/executive-order-making-open-and-machine-readable-new-default-government-).
 These trends strongly suggest researchers must at least find ways of documenting and disseminating code and data, if not ways that enable end users. Numerous platforms for publishing analytical outputs exist (e.g. GitHub, FigShare, Dryad, CRAN), but end users will still face the demands of locating, deciphering and managing different resources across different platforms.
 Then, the real challenge of open and reproducible science, that has an increased capacity for innovation, is the challenge of increasing the usability of code and data.
 
-However, “scientific software is developed either by domain scientists who have little training in user interface (UI) or experience (UX) design, or by software engineers who build broad systems that do not suit the niche needs or practices of domain scientists” (Thomer et al. 2016).
+However, “scientific software is developed either by domain scientists who have little training in user interface (UI) or experience (UX) design, or by software engineers who build broad systems that do not suit the niche needs or practices of domain scientists” [@Thomer2016].
 Then, there is a need for environments that can address niche needs (e.g. of a modelling discipline such as SDM) and that address usability issues for diverse outputs produced by diverse scientists.
 The SDM community is large enough to warrant a discipline specific platform such as zoon.
 The zoon framework offers a new opportunity for the SDM community to develop community modelling benchmarks, and resolve scientific and methodological questions in ways that the current culture of publishing cannot achieve.
@@ -463,9 +462,9 @@ It may be that zoon can also be used for other modelling activities that have si
 
 During the development of ZOON we have improvised a user-centred, participatory design process that builds on our prior experiences with software development and soliciting user feedback at 3 stages.
 An ideation workshop set the initial requirements before any code was written, and two further workshops have allowed users input on an initial prototype distributed via GitHub and then a stable R package.
-This is by no means a full UX approach (Pavelin et al. 2012), but it has directly informed the design. 
+This is by no means a full UX approach [@Pavelin2012], but it has directly informed the design. 
 Continued user engagement will be vital to developing a critical mass of zoon modules that can incentivise modellers to contribute to community resources that enable evidence-based decisions about best practice.
-An important step would be the publication of a large model inter-comparison within the zoon environment, such as that produced by Elith et al. (2006) or more recently in Beaumont et al. (2016).
+An important step would be the publication of a large model inter-comparison within the zoon environment, such as that produced by @Elith2006 or more recently in @Beaumont2016.
 At present, studies such as these might be considered as ‘closed knowledge’ even if they were reproducible from the publication.
 In order to facilitate a user –friendly approach to distributed working, future work will include the development of an online interface for accessing a repository of contributed modules and modifying workflows.
 This interface might also host methodological discourse and openly evaluate proposed best practices in SDM.
