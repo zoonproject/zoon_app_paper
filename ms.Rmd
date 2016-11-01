@@ -71,19 +71,21 @@ To assist users a number of tutorials are provided on the github repository and 
 
 ### Reproducible software projects
 
-Most of the SDM users replying to a survey in 2015 (Ahmed et al. 2015) were using either MaxEnt or R as the first choice software for their analyses. 
-The software market is much diverse, however, including a variety of software developed specifically for SDM (e.g. MaxEnt (), the BioMod () and dismo () packages for R, SDMtoolbox (Brown 2014), openModeller (), BioEnsembles (), ModEco ()) and software that has been appropriated for SDM studies, such as statistical software (R (), WinBugs (), OpenBugs (), Python()) and other less general software  (Domain (), Canoco (), MARS()). 
+Most of the SDM users replying to a survey in 2015 (Ahmed et al. 2015) were using either MaxEnt [@Phillips2006] or R [@R] as the first choice software for their analyses (also see @Touchon2016). 
+The software market is diverse, however, including a variety of software developed specifically for SDM (e.g. MaxEnt [@Phillips2006], the BioMod and BioMod2 [Thuiller2009] and dismo [@Hijmans?] packages for R, SDMtoolbox [@Brown2014], openModeller [@deSouzaMunoz2009], BioEnsembles [@Diniz-Filho2009], ModEco [@Guo2010]) and software that has been appropriated for SDM studies, such as statistical software (WinBugs and OpenBugs [@Lunn2000]) and other, more general ecological software  (Domain [Carpenter1993], Canoco [@TerBraak2002]). 
 
-Reproducibility (and the issues discussed above) were not a primary requirement of these software, and whilst some have the capacity for an analysis to be repeated, many do not. 
-Software such as BioMod, OpenModeller, BioEnsembles, ModEco were developed to enable users to carry out analyses with multiple models.
+Of the SDM software for multi model comparisons (e.g. OpenModeller, BioEnsembles, ModEco), BioMod (as an open-source R package) has the greatest potential to be modified and re-appropriated.
+In essence, BioMod is an SDM environment accessed from R, rather than necessarily being a SDM tool kit for R.
+The R package called sdm [@Naimi2016] implements a variety of analytical functionality in a simplifying framework.
+There is scope for incorporating new techniques but not necessarily a straight forward system for sharing those contributions.
+The BIOVEL workflow environment [@DeGiovanni2015] is an exception in terms of reproducibility, sharing many of the general principles of ZOON.
+Adoption of workflow environments (e.g. Kepler, Vis-Trails, Taverna) is low however, presumably due to the users’ unfamiliarity, and the requirement of embedding R within a workflow environment rather than embedding a workflow system within R.
 
-The BIOVEL software [@DeGiovanni2015] is an exception, sharing many of the general principles of ZOON, such as the increased accessibility to science via community contributed resources and increased sustainability by creating an e-infrastructure for this science.
-There are other workflow systems that can be used to wrap around SDM analyses (e.g. Kepler, Vis-Trails, Taverna), yet there has not been a large uptake by the community.
-Perhaps this is because of the unfamiliarity or assumed complexity of these tools.
-
-The SDM package [@Naimi2016] implements a number of modern SDM approaches in a simple modular framework.
-This package also has some functionality for users to incorporate new modelling methods into their analyses.
-There is, however still a signifiact technical barrier to those wishing to incorporate their methods, and to share them more widely.
+Examples of subject specific frameworks are found within the Bioinformatics community, for example the Bioconductor infrastructure that uses R (Gentleman et al. 2004, https://www.bioconductor.org/), and BioJS, a repository for JavaScript components (Corpas et al. 2014, https://www.biojs.net/).
+Both software aim to increase the compatibility and sharing of computational tools in order to increase the reuse and robustness of tools.
+In terms of robustness, the CHASTE project for cardiac modelling (Mirams et al. 2013, http://www.cs.ox.ac.uk/chaste/) has developed into a model repository that offers community benchmarks for the last 50 years of cardiac modelling (Cooper et al. 2016).
+These frameworks increase the access, usability and robustness of ultimately scientific research.
+Of course, R users could point to the R environment itself, but the stringent requirements of R packages are likely to prevent much of the SDM community from sharing code in a discoverable or usable format.
 
 ### The ZOON project
 
