@@ -28,6 +28,7 @@ output:
 knitr::opts_chunk$set(fig.path = 'figs/',
                message = FALSE,
                warning = FALSE,
+               fig.align = 'center',
                dev = c('png'),
                cache = TRUE)
 ```
@@ -49,10 +50,10 @@ Most SDM software, and that enabling other other computational sub-disciplines, 
 Computational sciences are then presented with a modern version of the reproducibility problem as computational research is largely inaccessible let alone reusable.
 If research materials and outputs are shared, they are rarely disseminated in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. Figshare, GitHub).
 The ZOON R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules.
-The module-workflow structure enables scientists to more easily to create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure \ref{fig:workflows}). 
+The module-workflow structure enables scientists to more easily to create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1). 
 
 A lack of sharing reduces the capacity for innovation and validation in SDM, as well as its capacity to be a "self-correcting process" [@roysoc_report].
-For example, a fundamental dispute over the ability of SDM to detect environmental associations [@Beale2008,@Araujo2009,@Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
+For example, a fundamental dispute over the ability of SDM to detect environmental associations [@Beale2008, @Araujo2009, @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
 Without the resources being made open the critical differences in these analytical steps are assumed rather than proven. 
 
 A second example comes from [@Elith2006], who reported a study of exceptional scope(“16 modelling methods over 226 species from 6 regions of the world”).
@@ -97,11 +98,15 @@ This also helps to lower the bar for creating modules (each module is simply an 
 
 # The `zoon` R package
 
-The `zoon` R package encodes SDM analyses as a simple workflow of five key steps, with each step encoded as one or more software modules. Users combine these modules via a call to the `workflow` function, which executes each module in turn, before returning a `zoonWorkflow` object - a shareable, extensible and fully reproducible documentation of the SDM analysis. Figure \ref{fig:workflows} illustrates the structure of a `zoon` workflow comprising the five module types and illustrates how multiple modules may be combined at each stage. The module types and module combination options are described in more detail below.
+The `zoon` R package encodes SDM analyses as a simple workflow of five key steps, with each step encoded as one or more software modules. Users combine these modules via a call to the `workflow` function, which executes each module in turn, before returning a `zoonWorkflow` object - a shareable, extensible and fully reproducible documentation of the SDM analysis. Figure 1 illustrates the structure of a `zoon` workflow comprising the five module types and illustrates how multiple modules may be combined at each stage. The module types and module combination options are described in more detail below.
 
 <!— link to powerpoint doc: https://www.dropbox.com/s/p7rqww2v0h3a7np/diagrams.pptx?dl=0-->
 
-![The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the five module types and intermediate objects: df - an occurrence dataframe; ras - a RasterStack object; mod - a ZoonModel object; ? - any user-defined inputs or outputs. B) The flow diagram implied by chaining modules of the same type. C) The flow diagram implied by listing modules of the same type. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the `zoon` vignette 'Building a module'. \label{fig:workflows}](./figs/diagrams.png)
+```{r, echo = FALSE, out.width = "350px", fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the five module types and intermediate objects: df - an occurrence dataframe; ras - a RasterStack object; mod - a ZoonModel object; ? - any user-defined inputs or outputs. B) The flow diagram implied by chaining modules of the same type. C) The flow diagram implied by listing modules of the same type. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the `zoon` vignette 'Building a module'."}
+knitr::include_graphics("figs/diagrams.png")
+```
+
+
 
 ####
 
