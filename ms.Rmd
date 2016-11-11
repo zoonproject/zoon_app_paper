@@ -42,7 +42,7 @@ options("rasterDataDir" = raster_dir)
 
 # Introduction
 
-Like many areas of quantitative science, Species Distribution Modelling SDM has grown rapidly [@Barbosa2015] - fuelled by the availability of diverse modelling software and data.
+Like many areas of quantitative science, Species Distribution Modelling (SDM) has grown rapidly [@Barbosa2015] - fuelled by the availability of diverse modelling software and data.
 Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” (Araújo & Peterson XXXX).
 Most of the software that enables SDM research, and that of other computational sub-disciplines, focuses on the analytical tasks of science (such as modelling and statistics) rather than tasks that are essential to the scientific enterprise, such as communication and producing reproducible outputs. 
 
@@ -81,7 +81,7 @@ Equally difficult for methods developers to disseminate their advances.
 ### Reproducible software projects
 
 Most of the SDM users replying to a survey in 2015 (Ahmed et al. 2015) were using either MaxEnt or R as the first choice software for their analyses. 
-The software market is much diverse, however, including a variety of software developed specifically for SDM (e.g. MaxEnt (), the BioMod () and dismo () packages for R, SDMtoolbox (Brown 2014), openModeller (), BioEnsembles (), ModEco ()) and software that has been appropriated for SDM studies, such as statistical software (R (), WinBugs (), OpenBugs (), Python()) and other less general software  (Domain (), Canoco (), MARS()). 
+The software market is much more diverse, however, including a variety of software developed specifically for SDM (e.g. MaxEnt (), the BioMod () and dismo () packages for R, SDMtoolbox (Brown 2014), openModeller (), BioEnsembles (), ModEco ()) and software that has been appropriated for SDM studies, such as statistical software (R (), WinBugs (), OpenBugs (), Python()) and other less general software  (Domain (), Canoco (), MARS()). 
 
 Reproducibility (and the issues discussed above) were not a primary requirement of these software, and whilst some have the capacity for an analysis to be repeated, many do not. 
 Software such as BioMod, OpenModeller, BioEnsembles, ModEco were developed to enable users to carry out analyses with multiple models.
@@ -96,12 +96,12 @@ There is, however still a signifiact technical barrier to those wishing to incor
 
 ### The ZOON project
 
-The ZOON project takes a different approach, instead defining only the core architecture of workflows, and interfacing with an open repository of community-contributed software modules.
+The ZOON project takes a different approach, defining only the core architecture of workflows, and interfacing with an open repository of community-contributed software modules.
 Users can create new modules for any modelling method and integrate it into another analysis. 
 
 Similarly to programming languages such as R and Python, facilitating wider development of software will enable the whole research community to develop the software that it requires, rather than rely on the developers of the software they use to do it for them.
 Unlike software packages for programming languages however, the ZOON project enforces a modular structure that ensures interoperability between contributed software modules.
-This also helps to lower the bar for creating modules (each module is simply an R function with a set of required inputs and outputs) and facilitates automated testing of modules ot ensure software quality .
+This also helps to lower the bar for creating modules (each module is simply an R function with a set of required inputs and outputs) and facilitates automated testing of modules to ensure software quality.
 
 This paper introduces version 0.4-22 of the `zoon` R package, which can be dowloaded from CRAN and which encodes the majority of this functionality. First, we describe the modular structure of zoon workflows and demonstrate how completed `zoon` workflows can be shared, evaluated and extended.
 Then we illustrate these concepts, and the contribution we hope `zoon` will make to SDM research, by recreating and extending two recent SDM analyses using `zoon` workflows.
@@ -128,7 +128,7 @@ The five module types, corresponding to the five key steps of an SDM anaysis are
 - *Model* - Once the data has been suitable manipulated a model is fitted to estimate the relationships between the covariates and occurrence data. These models include simple statistical models such as GLMs as well as modern, flexible machine-learning methods such as MaxEnt and boosted regression trees.
 - *Output* - The predictive power and goodness of fit must be assessed and the model parameters or response curves must be examined. The model is likely to be used to predict species occurrence, either in the vicinity of the occurrence data or elsewhere, or into the past or future.
 
-#### Lists and Chains
+#### Lists, Chains and Replicates
 
 <!— needs work—>
 
@@ -147,6 +147,17 @@ To divide a `zoon` workflow into multiple parallel analyses the `list` function 
 
 The complete workflow, with multiple modules defined with the `Chain` function and parallel analyses being defined with the `list` function can be visualised by calling `plot` with the workflow object as it's argument.
 This displays the names of all modules and the broader structure of the workflow as well as displaying which modules are not available in the online repository (Figure ).
+
+```{r plotworkflow, eval = TRUE, echo = FALSE, fig.height = 4, fig.width = 9, dpi = 300}
+
+work <- workflow(occurrence = UKAnophelesPlumbeus,
+                 covariate  = UKAir,
+                 process    = Chain(Background(n = 70), Crossvalidate(k = 5)),
+                 model      = list(LogisticRegression, RandomForest, QuickGRaF),
+                 output     = PerformanceMeasures)
+
+plot(work)
+```
 
 ### Inspecting, sharing and extending a `zoon` workflow
 
