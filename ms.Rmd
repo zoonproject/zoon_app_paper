@@ -48,7 +48,7 @@ Like many areas of quantitative science Species Distribution Modelling (SDM) has
 Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” [@Araujo2012].
 Most SDM software, and that enabling other other computational sub-disciplines, focus on  analytical tasks (such as modelling and statistics) rather than enabling scientists to produce reproducible and modifiable analyses that are essential to the scientific enterprise.
 
-Computational sciences are then presented with a modern version of the reproducibility problem as computational research is largely inaccessible let alone reusable.
+Computational sciences are then presented with a modern version of the reproducibility problem [reference?] as computational research is largely inaccessible let alone reusable.
 If research materials and outputs are shared, they are rarely disseminated in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. figshare, GitHub).
 The `zoon` R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules.
 The module-workflow structure enables scientists to more easily to create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1). 
@@ -86,7 +86,7 @@ Adoption of workflow environments (e.g. Kepler, Vis-Trails, Taverna) is low howe
 Examples of subject specific frameworks are found within the Bioinformatics community, for example the Bioconductor infrastructure that uses R (@Gentleman2004, `bioconductor.org`), and BioJS, a repository for JavaScript components (@Corpas2014, `biojs.net`).
 Both software aim to increase the compatibility and sharing of computational tools in order to increase the reuse and robustness of tools.
 In terms of robustness, the CHASTE project for cardiac modelling (@Mirams2013, `cs.ox.ac.uk/chaste`) has developed into a model repository that offers community benchmarks for the last 50 years of cardiac modelling [@Cooper2016].
-These frameworks increase the access, usability and robustness of ultimately scientific research.
+These frameworks increase the access, usability and robustness of scientific research.
 Of course, R users could point to the R environment itself, but the stringent requirements of R packages are likely to prevent much of the SDM community from sharing code in a discoverable or usable format.
 
 ### The Zoon Project
@@ -97,7 +97,7 @@ Users can create new modules for any modelling method and integrate it into anot
 Similarly to programming languages such as R and Python, facilitating wider development of software will enable the whole research community to develop the software that it requires, rather than rely on the developers of the software they use to do it for them.
 
 Unlike software packages for programming languages however, The Zoon Project enforces a modular structure that ensures interoperability between contributed software modules.
-This also helps to lower the bar for creating modules (each module is simply an R function with a set of required inputs and outputs) and facilitates automated testing of modules ot ensure software quality.
+This also helps to lower the bar for creating modules (each module is simply an R function with a set of required inputs and outputs) and facilitates automated testing of modules to ensure software quality.
 
 # The `zoon` R package
 
@@ -121,7 +121,7 @@ The five module types, corresponding to the five key steps of an SDM analysis ar
 
 - *Occurrence* - Usually presence-absence data or presence-only data, though abundance data is also used.
 - *Covariates* - Predictor variables or covariates (typically environmental covariates) are required and the values of these covariates, at the locations of the occurrence data, must be extracted.
-- *Process* - Processes  applied to the occurrence and covariate data. These processes include data cleaning, data thinning to account for spatial biases, feature selection using PCA or association tests and the splitting of data into training and test sets or cross validation folds.
+- *Process* - Processes applied to the occurrence and covariate data. These processes include data cleaning, data thinning to account for spatial biases, feature selection using PCA or association tests and the splitting of data into training and test sets or cross validation folds.
 - *Model* - Once the data has been suitable manipulated a model is fitted to estimate the relationships between the covariates and occurrence data. These models include simple statistical models such as GLMs as well as modern, flexible machine-learning methods such as MaxEnt and boosted regression trees.
 - *Output* - The predictive power and goodness of fit must be assessed and the model parameters or response curves must be examined. The model is likely to be used to predict species occurrence, either in the vicinity of the occurrence data or elsewhere, or into the past or future.
 
@@ -140,9 +140,9 @@ Many SDM analyses require running similar workflow in parallel.
 In applied settings this may be running the same analysis for multiple species.
 In methodological work, it is important to compare new methods or models to benchmarks.
 To divide a `zoon` workflow into multiple parallel analyses the `list` function is used.
-`list` can be used to split the analysis at any point: listing multiple occurrence modules together will run the workflow on different occurrence datasets while listing multiple model modules will fit different models to a shared, identical dataset but then apply output modules to each model separately.
+`list` can be used to split the analysis at any point: listing multiple occurrence modules together will run the workflow on different occurrence datasets while listing multiple model modules will fit different models to a shared, identical dataset but then apply output modules to each model separately. In cases where modules containing randomness need to be run many times - such as running a workflow with hundreds of simulated datasets - `replicate` can be used. This simply creates a `list` of the specified module, repeated a given number of times. 
 
-The complete workflow, with multiple modules defined with the `Chain` function and parallel analyses being defined with the `list` function can be visualised by calling `plot` with the workflow object as it's argument.
+The complete workflow, with multiple modules defined with the `Chain` function and parallel analyses being defined with the `list` or `replicate` function can be visualised by calling `plot` with the workflow object as it's argument.
 This displays the names of all modules and the broader structure of the workflow as well as displaying which modules are not available in the online repository (Figure ).
 
 ```{r plotworkflow, eval = TRUE, echo = FALSE, fig.height = 4, fig.width = 9, dpi = 300}
@@ -174,7 +174,6 @@ A workflow is reproducible, reusable and alterable by way of the functions `Reru
 Using `RerunWorkflow` a workflow object can be run from scratch or from part way though the analysis to avoid computationally slow steps.
 `ChangeWorkflow` takes as it's arguments a workflow object and new selections for any or all of the workflow steps.
 The workflow is then rerun from the first altered step.
-
 
 
 Things you can do to workflows: 
@@ -209,6 +208,8 @@ The `zoon` vignette *Building modules* provides a detailed tutorial for building
 
 <!-- to do -->
 
+All modules, created by the zoon authors or contributed by others, have documentation explaining their methods and how they are used. This documentation is easily accessed in R by using the function `ModuleHelp`. This function fetched the documentation from the module repository. 
+
 ##### Cross-validation
 
 <!— needs work—>
@@ -221,7 +222,7 @@ After models are fitted to these subsets of the data, they are also fitted to th
 
 ##### Sharing workflows
 
-`zoon` provides the `ZoonFigshare` function to facilitate sharing a completed workflow object from within R, via the free web platform figshare. `ZoonFigshare` takes a workflow object and some minimal metadata and uploads the workflow as an RData object to the user's figshare profile, for others to download, inspect and modify.
+`zoon` provides the `ZoonFigshare` function to facilitate sharing a completed workflow object from within R, via the free web platform figshare. `ZoonFigshare` takes a workflow object and some minimal metadata and uploads the workflow as an RData object, along with a metadata text file, to the user's figshare profile for others to download, inspect and modify.
 
 
 
@@ -263,7 +264,8 @@ FengPapes <-
                               Background(n = 10000, bias = 200), 
                               Crossvalidate(k = 5)),
                 model = MaxEnt,
-               output = PrintMap(points = FALSE))
+               output = PrintMap(points = FALSE,
+                                 threshold = 0.05))
 ```
 
 This module plots a static map of the predicted distribution, and the underlying data.
