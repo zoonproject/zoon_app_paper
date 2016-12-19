@@ -12,11 +12,19 @@ output:
 
 # Abstract
 
-1. The rapid growth of species distribution modelling (SDM) as an ecological discipline has resulted in a large and diverse set of methods and software for constructing and evaluating SDMs. The disjointed nature of the current SDM research environment hinders evaluation of new methods, synthesis of current knowledge, and the dissemination of new methods to SDM users.
-2. The zoon R package aims to overcome these problems by providing a modular framework for constructing SDM workflows. zoon modules are interoperable snippets of R code, each carrying out an SDM method, that zoon combines into a single analysis.
-3. Rather than defining these modules, zoon instead draws modules from an open, version-controlled online repository.  zoon makes it easy for SDM researchers to contribute modules to this repository, enabling others to rapidly add deploy new methods into their own workflow, or to compare a competing methods.
-4. The workflows returned by zoon are re-runnable records of the data, code and results of an entire SDM analysis. these can be easily reproduced, scrutinized and extended by the whole SDM research community.
-5. We introduce zoon, explain how it works and demonstrate how it can be used to construct a complete SDM analyses, create and disseminate a new software module, and perform a methodological comparison study. 
+1. The rapid growth of species distribution modelling (SDM) as an ecological discipline has resulted in a large and diverse set of methods and software for constructing and evaluating SDMs.
+The disjointed nature of the current SDM research environment hinders evaluation of new methods, synthesis of current knowledge, and the dissemination of new methods to SDM users.
+
+2. The zoon R package aims to overcome these problems by providing a modular framework for constructing reproducible SDM workflows.
+zoon modules are interoperable snippets of R code, each carrying out an SDM method, that zoon combines into a single analysis object.
+
+3. Rather than defining these modules, zoon instead draws modules from an open, version-controlled online repository.
+zoon makes it easy for SDM researchers to contribute modules to this repository, enabling others to rapidly deploy new methods in their own workflows, or to compare alternative methods.
+
+4. Each workflow object created by zoon is a re-runnable record of the data, code and results of an entire SDM analysis.
+This can then be easily shared, scrutinized, reproduced and extended by the whole SDM research community.
+
+5. We explain how zoon works and demonstrate how it can be used to construct a complete reproducible SDM analyses, create and share a new module, and perform a methodological comparison study. 
 
 
 ```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
@@ -39,33 +47,37 @@ options("rasterDataDir" = raster_dir)
 
 # Introduction
 
-
-Like many areas of quantitative science Species Distribution Modelling (SDM) has grown rapidly [@Barbosa2015] fueled by the availability of diverse modelling software and data.
+Like many areas of quantitative science species distribution modelling (SDM) has grown rapidly, fueled by the availability of diverse modelling software and data [@Barbosa2015].
 Over the last 20 years, SDM has developed into a very large research community and vast literature, and is now one of “the most widely-reviewed topics in the ecological literature” [@Araujo2012].
-Most SDM software, and that enabling other other computational sub-disciplines, focus on  analytical tasks (such as modelling and statistics) rather than enabling scientists to produce reproducible and modifiable analyses that are essential to the scientific enterprise.
+As in other computational sub-disciplines, most SDM software focusses on analytical tasks such as constructing models, rather than enabling scientists to share software, and to produce reproducible and modifiable analyses that are essential to the scientific enterprise.
 
-Computational sciences are then presented with a modern version of the reproducibility problem [reference?] as computational research is largely inaccessible let alone reusable.
-If research materials and outputs are shared, they are rarely disseminated in a readily modifiable or extensible format despite the great potential for distributing these resources digitally (e.g. figshare, GitHub).
-The `zoon` R package aims to address these issues for Species Distribution Modelling by allowing users to encode SDM analyses as workflows comprised of independently executable modules.
-The module-workflow structure enables scientists to more easily to create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1). 
+Consequently, computational sciences like SDM suffer from a modern version of the reproducibility problem, as computational research is largely inaccessible, let alone reusable [reference?].
+When SDM research materials have been shared, they have rarely been disseminated in a format that enables them to be readily modified or adapted.
+This is despite the many available methods for distributing these resources digitally, e,g, via services such as Figshare and GitHub.
 
-A lack of sharing reduces the capacity for innovation and validation in SDM, as well as its capacity to be a "self-correcting process" [@Boulton2012].
+A lack of sharing reduces the capacity for innovation and validation in SDM, as well as its capacity to be a self-correcting process [@Boulton2012].
 For example, a fundamental dispute over the ability of SDM to detect environmental associations [@Beale2008, @Araujo2009, @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
-Without the resources being made open the critical differences in these analytical steps are assumed rather than proven. 
+Because the resources required to scrutinize and test each piece of research were not shared, the critical analytical differences between these conflicting studies remain unclear. 
 
-A second example comes from [@Elith2006], who reported a study of exceptional scope (“16 modelling methods over 226 species from 6 regions of the world”).
-The modelling benchmarks that were reported have been highly influential, yet cannot be updated or modified when new modelling methods are produced as the code and data were not shared.
-A third example comes from meta-analyses [] and methodological reviews [@Yackulic2013], which rely on laborious searches through text publications in the absence of shared code and modelling outputs.
-SDM then has limited abilities to derive truly informative methodological conclusions that can be acted upon. 
+The inability to share code and data also prevents broad-scale methodological comparisons.
+The landmark SDM modelling comparison of @Elith2006 has been highly influential in SDM research, having been cited over xxx times.
+However in the decade since that study was published there have been no comparisons of a similar scope, despite a rapid increase in the number of available methods for fitting and evaluating SDMs.
+The community's inability to repeat this comprehensive analysis is due to both lack of access to the original data and the difficulty in learning and applying the many different pieces of software for model fitting.
+Consequently, we currently have a very poor understanding of how different models perform for SDM under different circumstances.
 
-These three examples broadly illustrate why the data and models underpinning SDM need to become more repeatable, reproducible, accessible, modifiable and updateable.
-A productive science relies on the accumulation of knowledge that can be reused and appropriated to advance understanding and resolve methodological issues.
-Thus while many software are pitched as being ‘easy to use’ or ‘user friendly’, this is infrequently the case for the secondary user.
+Our inability to synthesise findings across the SDM literature is bolstered by the discontinuous nature of collaboration in SDM research.
+Most SDM researchers collaborate with researchers who use the same SDM software [@Ahmed2015].
+This limits dissemination of new methods throughout the SDM community due to the need to switch software.
+The existence of these research silos may also hinder dissemination of methodological findings, and contribute to widespread misunderstanding about how apply and interpret different modelling approaches [@Yackulic2013].
 
-This paper introduces version 0.4-22 of the `zoon` R package, which enables users to address issues of compatibility, accessibility, sharing and reproducibility for their SDM analyses.
-Firstly, we describe the modular structure of `zoon` workflows and demonstrate how completed workflows can be shared, evaluated and extended.
-We then illustrate these concepts, and the potential contributions of `zoon` to SDM research, by recreating and extending two recent SDM analyses using `zoon` workflows.
-To assist users a number of tutorials are provided on the GitHub repository and as vignettes distributed with `zoon` – including  guides on creating workflows and modules, as well as full technical details for module developers.
+In order to overcome these problems, the data and models underpinning SDM need to become more accessible, reproducible and modifiable.
+This can be achieved by faciliting access to methods developed across the whole research community [open science reference?], and making it easier to share and modify fully reproducible research objects [open science reference?].
+The zoon R package aims to address these issues for SDM by allowing users to encode entire SDM analyses as reproducible workflows comprised of independently executable, community-contributed modules.
+The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1). 
+
+This paper introduces version 0.4-22 of the zoon R package.
+Firstly, we describe the modular structure of zoon workflows and how they can be constructed, shared, reproduced and modified.
+We then illustrate how these concepts enable better SDM research by reproducing a published SDM analysis; converting a recently proposed method into a zoon module; and extending a published methodological comparison.
 
 ### Reproducible software projects
 
@@ -500,6 +512,7 @@ In order to facilitate a user –friendly approach to distributed working, futur
 This interface might also host methodological discourse and openly evaluate proposed best practices in SDM.
 In sum, we hope that the `zoon` R package represents a step towards a more reproducible ecosystem of SDM software.  
 
+To assist users a number of tutorials are provided on the GitHub repository and as vignettes distributed with `zoon` – including  guides on creating workflows and modules, as well as full technical details for module developers.
 
 ### References
 
