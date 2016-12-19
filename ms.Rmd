@@ -12,15 +12,11 @@ output:
 
 # Abstract
 
-1. The diverse array of software and methodological research available for species distribution modelling (SDM) hinders independent evaluation of new methods and their dissemination to SDM users.  
-
-2. The `zoon` R package encodes SDM analyses as a simple, but fully reproducible workflow of five steps: obtaining occurrence data, obtaining covariate data, pre-processing these data, fitting a model, and generating outputs.
-
-3. Each of these steps is carried out by one or more community-contributed software modules maintained in a version-controlled online repository and built upon existing SDM code form R-packages and the research community.
-
-4. `zoon` workflows are re-runnable records of the data, code and results of an entire SDM analysis and can be easily reproduced, scrutinized and extended by the whole research community.
-
-5. We demonstrate `zoon` by recreating SDM analyses from two published research articles as `zoon` workflows, which readers can interrogate and extend.
+1. The rapid growth of species distribution modelling (SDM) as an ecological discipline has resulted in a large and diverse set of methods and software for constructing and evaluating SDMs. The disjointed nature of the current SDM research environment hinders evaluation of new methods, synthesis of current knowledge, and the dissemination of new methods to SDM users.
+2. The zoon R package aims to overcome these problems by providing a modular framework for constructing SDM workflows. zoon modules are interoperable snippets of R code, each carrying out an SDM method, that zoon combines into a single analysis.
+3. Rather than defining these modules, zoon instead draws modules from an open, version-controlled online repository.  zoon makes it easy for SDM researchers to contribute modules to this repository, enabling others to rapidly add deploy new methods into their own workflow, or to compare a competing methods.
+4. The workflows returned by zoon are re-runnable records of the data, code and results of an entire SDM analysis. these can be easily reproduced, scrutinized and extended by the whole SDM research community.
+5. We introduce zoon, explain how it works and demonstrate how it can be used to construct a complete SDM analyses, create and disseminate a new software module, and perform a methodological comparison study. 
 
 
 ```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
@@ -267,7 +263,7 @@ FengPapes <-
            model = MaxEnt,
            output = PrintMap(points = FALSE,
                              threshold = 0.05,
-                             xlim = c(-130,-70),
+                             xlim = c(-130, -70),
                              ylim = c(20, 50)))
 
 ```
