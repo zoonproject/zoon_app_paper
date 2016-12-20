@@ -47,76 +47,43 @@ options("rasterDataDir" = raster_dir)
 
 # Introduction
 
-Like many areas of quantitative science species distribution modelling (SDM) has grown rapidly, fueled by the availability of diverse modelling software and data [@Barbosa2015].
-Over the last 20 years, SDM has developed into a very large research community and vast literature.
-SDM is now one of “the most widely-reviewed topics in the ecological literature” [@Araujo2012] and the growth of this literature is accelerating [@Barbosa2015].
+Species distribution modelling (SDM) has grown rapidly over the last 20 years.
+It is now one of “the most widely-reviewed topics in the ecological literature” [@Araujo2012] and the growth of this literature is still accelerating [@Barbosa2015].
+The SDM software market is similarly large and diverse [@Ahmed2015].
+Whilst most SDM users rely either on the MaxEnt standalone application [@Phillips2006] or the R programming language [@R] as the first choice software for their analyses [@Ahmed2015], there are many competing SDM-specific R packages, each implementing different approaches to fitting SDMs [@Thuiller2009; @dismo; @Naimi2016], as well as a range of alternative standalone applications.
 
-The SDM software market is similarly diverse [@Ahmed2015].
-It comprises many software packages developed specifically for SDM such as the BioMod, BioMod2 [@Thuiller2009], dismo [@dismo] and sdm [@Naimi2016] R packages, the SDMtoolbox python package [@Brown2014] and GUI applications including MaxEnt [@Phillips2006], openModeller [@deSouza2011], BioEnsembles [@Diniz2009] and ModEco [@Guo2010].
-A range of other software has also been appropriated for SDM studies, such as statistical software including WinBugs and OpenBugs [@Lunn2000], and more general ecological software such as Domain [@Carpenter1993], Canoco [@TerBraak2002].
-However most SDM users replying to a survey in 2015 [@Ahmed2015] used either MaxEnt [@Phillips2006] or R [@R] as the first choice software for their analyses.
-As in other computational sub-disciplines, most SDM software focusses on analytical tasks such as constructing models, rather than enabling scientists to share software, and to produce reproducible and modifiable analyses that are essential to the scientific enterprise.
+As a result, the SDM community is divided into research silos, with groups of researchers collaborating primarily with others who use the same software, even within specific R packages [@Ahmed2015], presenting a barrier to disseminating new SDM findings and methods.
+This is compounded by the almost all available SDM software being focussed on analytical tasks such as constructing models, rather than enabling scientists to produce analyses that others can reproduce and modify.
+The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review and synthesis of research findings across studies, as well as its capacity to be a self-correcting process [@Boulton2012].
 
-Consequently, computational sciences like SDM suffer from a modern version of the reproducibility problem, as computational research is largely inaccessible, let alone reusable [reference?].
-When SDM research materials have been shared, they have rarely been disseminated in a format that enables them to be readily modified or adapted.
-This is despite the many available methods for distributing these resources digitally, e,g, via services such as Figshare and GitHub.
-
-A lack of sharing reduces the capacity for innovation and validation in SDM, as well as its capacity to be a self-correcting process [@Boulton2012].
 For example, a fundamental dispute over the ability of SDM to detect environmental associations [@Beale2008, @Araujo2009, @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
-Because the resources required to scrutinize and test each piece of research were not shared, the critical analytical differences between these conflicting studies remain unclear. 
+Similarly, in the past decade the SDM community has failed to carry out any large scale comparisons of SDM methods, still relying on the work of @Elith2006 to make decisions, despite the development of hundreds of new methods as well as improved evaluation procedures [@Roberts2016].
+The community's inability to repeat this comprehensive analysis is due to both lack of access to comparable data and the difficulty in learning and applying the many different pieces of software for model fitting.
 
-The inability to share code and data also prevents broad-scale methodological comparisons.
-The landmark SDM modelling comparison of @Elith2006 has been highly influential in SDM research, having been cited over xxx times.
-However in the decade since that study was published there have been no comparisons of a similar scope, despite a rapid increase in the number of available methods for fitting and evaluating SDMs.
-The community's inability to repeat this comprehensive analysis is due to both lack of access to the original data and the difficulty in learning and applying the many different pieces of software for model fitting.
-Consequently, we currently have a very poor understanding of how different models perform for SDM under different circumstances.
+The SDM community's inability to compare models and repeat analyses has left the field unable to decisively answer even basic questions about how best to do SDM.
+It may also have contributed to widespread misunderstandings about how apply and interpret different modelling approaches [@Yackulic2013].
+In order to overcome these problems, the data and methods underpinning SDM research need to be made more accessible, reproducible and modifiable by the whole research community.
+This can be achieved by faciliting access to methods[open science reference?], and making it easier to share and modify fully reproducible research objects [open science reference?].
 
-Our inability to synthesise findings across the SDM literature is bolstered by the discontinuous nature of collaboration in SDM research.
-Most SDM researchers collaborate with researchers who use the same SDM software [@Ahmed2015].
-This limits dissemination of new methods throughout the SDM community due to the need to switch software.
-The existence of these research silos may also hinder dissemination of methodological findings, and contribute to widespread misunderstanding about how apply and interpret different modelling approaches [@Yackulic2013].
-
-In order to overcome these problems, the data and models underpinning SDM need to become more accessible, reproducible and modifiable.
-This can be achieved by faciliting access to methods developed across the whole research community [open science reference?], and making it easier to share and modify fully reproducible research objects [open science reference?].
-The zoon R package aims to address these issues for SDM by allowing users to encode entire SDM analyses as reproducible workflows comprised of independently executable, community-contributed modules.
+The zoon R package has been developed specifically to improve reproducibility and comparability of SDM in R by allowing users to encode entire SDM analyses as reproducible workflows of independently executable, community-contributed modules.
 The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1).
-
-By constrast with existing software, zoon has been custom-built to improve reproducibility of SDM research in R.
-The modular nature of zoon workflows will be familiar to users of other SDM R packages, such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016].
-zoon differs from these packages in that zoon modules are drawn from an open repository that any SDM user can contribute to, and zoon makes it easy for SDM users who are not expert R developers to contribute.
-zoon's focus on reproducibile and modifiable workflows also shares similarities with general-purpose workflow systems such as Taverna [@] and its extensions for biodiversity research via the BIOVEL system [@DeGiovanni2015,@DeGiovanni2016].
-However unlike these workflow environments in which users may embed R code, zoon embeds an SDM-centric workflow system within R.
-zoon therefore provides the benefits of workflow systems to SDM users without them needing to learn complex workflow systems.
+Whilst zoon's modular nature is similar to other SDM R packages such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016], zoon instead pulls each module from an open repository that any SDM user can contribute to, and makes it easy for non-developers to contribute modules.
+zoon's focus on reproducibile and modifiable workflows is inspired by workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2015; @DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
 
 # The zoon R package
 
-This paper introduces version 0.4-22 of the zoon R package.
+This paper introduces version 0.5-3 of the zoon R package.
 We describe the modular structure of zoon workflows and how they can be constructed, shared, reproduced and modified.
-We then illustrate how these concepts enable better SDM research by reproducing a published SDM analysis; converting a recently proposed method into a zoon module; and extending a published methodological comparison.
+We then illustrate how these concepts enable better SDM research by reproducing a published SDM analysis; converting a recently proposed method into a zoon module; and performing a methodological comparison.
 
 #### Module types
 
 The zoon R package encodes SDM analyses as a simple workflow of five key steps, with each step encoded as one or more software modules. Users combine these modules via a call to the `workflow` function, which executes each module in turn, before returning a `zoonWorkflow` object - a shareable, extensible and fully reproducible documentation of the SDM analysis. Figure 1 illustrates the structure of a zoon workflow comprising the five module types and illustrates how multiple modules may be combined at each stage. The module types and module combination options are described in more detail below.
 
-<!— link to powerpoint doc: https://www.dropbox.com/s/p7rqww2v0h3a7np/diagrams.pptx?dl=0-->
-
 ```{r flow_diagram, echo = FALSE, out.width = "375px", fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Flow diagram representing the five module types and intermediate objects: df - an occurrence dataframe; ras - a RasterStack object; mod - a ZoonModel object; ? - any user-defined inputs or outputs. B) The flow diagram implied by chaining modules of the same type. C) The flow diagram implied by listing modules of the same type. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the zoon vignette 'Building a module'."}
 knitr::include_graphics("figs/diagrams.png")
 ```
 
-
-
-The five module types, corresponding to the five key steps of an SDM analysis are:
-
-<!— remove this, it's covered in the figure —>
-
-- *Occurrence* - Usually presence-absence data or presence-only data, though abundance data is also used.
-- *Covariates* - Predictor variables or covariates (typically environmental covariates) are required and the values of these covariates, at the locations of the occurrence data, must be extracted.
-- *Process* - Processes applied to the occurrence and covariate data. These processes include data cleaning, data thinning to account for spatial biases, feature selection using PCA or association tests and the splitting of data into training and test sets or cross validation folds.
-- *Model* - Once the data has been suitable manipulated a model is fitted to estimate the relationships between the covariates and occurrence data. These models include simple statistical models such as GLMs as well as modern, flexible machine-learning methods such as MaxEnt and boosted regression trees.
-- *Output* - The predictive power and goodness of fit must be assessed and the model parameters or response curves must be examined. The model is likely to be used to predict species occurrence, either in the vicinity of the occurrence data or elsewhere, or into the past or future.
-
-Users can query the modules hosted on the repository from their R session using the function `GetModuleList()`, and pull up the documentation for any module in the repository with `ModuleHelp()`.
 
 #### Lists, Chains and Replicates
 
