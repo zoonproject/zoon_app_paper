@@ -81,21 +81,12 @@ This can be achieved by faciliting access to methods developed across the whole 
 The zoon R package aims to address these issues for SDM by allowing users to encode entire SDM analyses as reproducible workflows comprised of independently executable, community-contributed modules.
 The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1).
 
-### Comparison with existing software
-
-The modular nature of zoon workflows will be familiar to users of other SDM R packages, such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016].
-Whilst BioMod2 modules and sdm modules are created by the developers of those packages and contained in the software itself,zoon's modules are drawn from an open repository that any SDM user can contribute to.
-zoon makes module writing easy for SDM users who are not expert R developers, and provides functionality to help document, test and upload modules to the repository.
-zoon workflows are also designed as reproducible research objects which can be shared, inspected, re-run and modified by swapping in new modules.
-
-This focus on reproducibile and modifiable workflows shares similarities with general-purpose workflow systems such as Kepler [@], Vis-Trails [@], Taverna [@].
-The Taverna platform has recently been extended for biodiversity research via the BIOVEL system [@DeGiovanni2015] and provides some SDM functionality via its ENM Components [@DeGiovanni2016].
-However adoption of these workflow environments in the SDM research community is low.
-Presumably this is due to SDM users’ unfamiliarity with workflow software and the limited number of methods already implemented.
-This hurdle is created by requiring users to embed R code within a workflow software, rather than embedding a workflow system within R.
-
 By constrast with existing software, zoon has been custom-built to improve reproducibility of SDM research in R.
-By providing a single, extensible access point to various SDM software, it is designed to facilitate a more connected and effective SDM research community.
+The modular nature of zoon workflows will be familiar to users of other SDM R packages, such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016].
+zoon differs from these packages in that zoon modules are drawn from an open repository that any SDM user can contribute to, and zoon makes it easy for SDM users who are not expert R developers to contribute.
+zoon's focus on reproducibile and modifiable workflows also shares similarities with general-purpose workflow systems such as Taverna [@] and its extensions for biodiversity research via the BIOVEL system [@DeGiovanni2015,@DeGiovanni2016].
+However unlike these workflow environments in which users may embed R code, zoon embeds an SDM-centric workflow system within R.
+zoon therefore provides the benefits of workflow systems to SDM users without them needing to learn complex workflow systems.
 
 # The zoon R package
 
