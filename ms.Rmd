@@ -1,6 +1,6 @@
 ---
 title: "The zoon R package for reproducible and shareable species distribution modelling"
-author: "Nick Golding, Tom August, Tim C.D. Lucas, Emiel Van Loon & Greg McInerny"
+author: "Nick Golding, Tom August, Tim C.D. Lucas, David K. Gavaghan, Emiel Van Loon & Greg McInerny"
 bibliography: zoon_app.bib
 csl: mee.csl
 output:
@@ -415,7 +415,7 @@ Modules can be uploaded to the zoon modules repository via the online submission
 The popular MaxEnt SDM model has recently been shown to be equivalent to a Poisson point process model [@Renner2013], and to be closely approximated by a logistic regression model with weights applied to background datapoints [@Warton2010; @Fithian2013; @Renner2015].
 Given this close correspondence between MaxEnt and logistic regression, @Renner2013 and others have suggested that MaxEnt's superior predictive performance [@Elith2006] is most likely due to the array of features (candidate covariate transformations) it constructs and its use of regularisation to prevent overfitting.
 
-zoon enables us to investigate this hypothesis by fitting MaxEnt models with and without regularisation and feature construction.
+zoon enables us to investigate this hypothesis by easily comparing MaxEnt models fitted with and without regularisation and feature construction.
 We fit MaxEnt with both the usual java implementation as well as the downweighted logistic regression approximation provided in the `maxnet` R package [@maxnet].
 We also compare these models with a standard logistic regression model which does not apply the downweighting step.
 The following workflow fits these models to a previously published presence-background data on the Caroline wren in the USA [@Royle2012; @maxlike], maps their predictions (Figure 3) and evaluates the predictive performance of each model against the full presence-absence dataset by AUC.
@@ -466,9 +466,9 @@ perflist <- maxnet_comparison$report[seq(2, 12, by = 2)]
 AUCs <- sapply(perflist, function(x) x$auc)
 names(AUCs) <- c('MaxEnt',
                  'MaxNet',
-                 'MaxNet (no regularization)',
-                 'MaxNet (linear features)',
-                 'MaxNet (linear features and no regularization)',
+                 'MaxNet with no regularisation',
+                 'MaxNet with only linear features',
+                 'MaxNet with only linear features and no regularisation',
                  'Logistic regression')
 AUCs <- round(AUCs, digits = 4)
 ```
@@ -478,6 +478,8 @@ The AUC statistics calculated against the presence-absence data were:
 cat(paste(names(AUCs), AUCs, collapse = '; '))
 cat('.')
 ```
+As expected, MaxEnt and MaxNet (the logistic regression approximation) generated similar predictions and had similar predictice performance.
+Likewise, once the regularisation and features of MaxNet were switched off, both the predictions and performance were very similar to Logistic regression.
 
 Readers interested in a more comprehensive comparison, or in exploring the response curves can easily reproduce and modify the analysis either by editing and re-running the above code block or by downloading the workflow object and using the `ChangeWorkflow` function.
 
