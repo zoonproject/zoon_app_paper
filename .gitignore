@@ -13,3 +13,6 @@ ms.pdf
 
 # powerpoint docs for generating figures
 *.pptx
+
+# the maxent executable
+maxent.jar
