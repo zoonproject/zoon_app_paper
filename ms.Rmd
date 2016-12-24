@@ -404,8 +404,8 @@ Given this close correspondence between MaxEnt and logistic regression, @Renner2
 zoon enables us to investigate this hypothesis by easily comparing MaxEnt models fitted with and without regularisation and feature construction.
 We fit MaxEnt with both the usual java implementation as well as the downweighted logistic regression approximation provided in the `maxnet` R package [@maxnet].
 We also compare these models with a standard logistic regression model which does not apply the downweighting step.
-The following workflow fits these models to a previously published presence-background data on the Caroline wren in the USA [@Royle2012; @maxlike], maps their predictions (Figure 3) and evaluates the predictive performance of each model against the full presence-absence dataset by AUC.
-Note that setting the regularisation constant in the `maxnet` package to 0 caused numerical errors, so we use a very small value instead.
+The following workflow fits these models to a previously published presence-background data on the Caroline wren in the USA [ @maxlike], maps their predictions (Figure 3) and evaluates the predictive performance of each model against the full presence-absence dataset by AUC.
+Note that setting the regularisation constant in the `maxnet` package to zero caused numerical errors, so we use a very small value instead.
 
 ```{r maxnet_comparison, dpi = 600, fig.show = "hide", eval = TRUE, out.height = 600, out.width = 600}
 maxnet_comparison <- workflow(
