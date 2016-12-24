@@ -96,7 +96,7 @@ mosquito1 <- workflow(occurrence = UKAnophelesPlumbeus,
                       output     = InteractiveMap)
 ```
 
-## Lists, Chains and Replicates
+## Chains, Lists and Replicates
 
 Many SDM analyses apply more than one method in one of the five SDM steps, for example to combine multiple covariates and processing steps, to compare various models on the same dataset, or to run the same procedure for several species.
 zoon enables these more complex workflows by enabling users to pass multiple modules of each type via the `list`, `Chain` and `Replicate` functions.
@@ -126,7 +126,7 @@ Some steps in SDM analyses are stochastic and need to be run multiple times; `Re
 The following workflow uses a chain to standardise the covariate rasters as well as generating background records, and uses a list to fit three different models: MaxEnt, Boosted Regression Trees (GBM) and RandomForest.
 The results of the three models are then returned in three Shiny apps allowing the user to interactively explore the occurrence and covariate data, model summaries and prediction maps.
 
-```{r workflow2, eval = TRUE, echo = TRUE, fig.height = 4, fig.width = 9, dpi = 300}
+```{r workflow2, eval = FALSE, echo = TRUE}
 mosquito2 <- workflow(occurrence = UKAnophelesPlumbeus,
                       covariate  = UKBioclim,
                       process    = Chain(Background(n = 500),
@@ -137,36 +137,43 @@ mosquito2 <- workflow(occurrence = UKAnophelesPlumbeus,
                       output     = Appify)
 ```
 
-## Inspecting, sharing and extending a zoon workflow
+### Sharing workflows
 
-A `zoonWorkflow` object
-Structure of workflow objects:
+The `zoonWorkflow` object returned by `workflow` contains all of the data, code and results used in each stage of the analysis.
+The object is therefore a self-contained representation of an entire analysis which can be saved as a binary `RData` object, archived, shared with colleagues or uploaded to the web.
+Anyone else may then load the object into their R session, load the zoon R package, and investigate the analysis.
 
-* code (call and modules used)
-* output of each module; data, results and intermediate steps
-* recording the session info and package and module versions
+zoon provides the `ZoonFigshare` function to facilitate sharing a completed workflow object from within R, via the free web platform figshare. `ZoonFigshare` takes a workflow object and some minimal metadata and uploads the workflow as an RData object, along with a metadata text file, to the user's figshare profile for others to download, inspect and modify.
 
-zoon workflows are re-runnable records of the data, code and results of an entire SDM analysis and can be easily reproduced, scrutinized and extended by the whole research community.
-A zoon workflow returns an object of class `zoonWorkflow`.
-This object contains all the information needed to reproduce the analysis.
-This includes the original call, a record of the packages and modules used and their versions when the analysis was run as well as all the data and fitted models.
+### Exploring workflows
 
-A workflow is reproducible, reusable and alterable by way of the functions `RerunWorkflow` and `ChangeWorkflow`.
-Using `RerunWorkflow` a workflow object can be run from scratch or from part way though the analysis to avoid computationally slow steps.
-`ChangeWorkflow` takes as it's arguments a workflow object and new selections for any or all of the workflow steps.
-The workflow is then rerun from the first altered step.
+`zoonWorkflow` objects are simply R lists containing the outputs from each module in the workflow, as well as the modules used, their versions and arguments and information about the R session in which the workflow was run.
 
+The overall structure of a `zoonWorkflow` object can be inspected and visualised using the provided `print` and `plot` methods.
+The outputs and intermediate steps of the analysis can be extracted directly from the `zoonWorkflow` object, or by using the utility functions `Occurrence`, `Covariate`, `Process`, `Model` and `Output` to extract the outputs of each analytical stage.
+These functions return either the single R object outputted by each module, or list of objects when a list of modules was used in the workflow.
 
-Things you can do to workflows: 
+### Reproducing and extending workflows
 
-* visualise the structure
-* execute whole thing from scratch (grabs new data from web)
-* execute from part way through
+Given a `zoonWorkflow` object, the analysis can be repeated in its entirety using the zoon function `RerunWorkflow`.
+This function can therefore be used to rapidly update an analysis whenever the underlying occurrence or covariate data aree updated.
+`RerunWorkflow` can also run from a specific stage of the workflow, for example using the previously downloaded data stored in the object but re-running an output module to generate a plot.
 
-zoon provides functionality to quickly update an existing workflow object (even one created by someone else) by switching out modules.
+Workflows can similarly be modified and re-run by replacing or adding modules in one or more of the five analytical steps using the function `ChangeWorkflow`.
+`ChangeWorkflow` only re-runs the channged modules and those downstream; the stored outputs of earlier modules are re-used rather than re-running them.
 
+This functionality therefore enables researchers to explore and alter existing workflows, such as from a published analysis, without having to re-run computationally expensive models or re-download datasets that may have changed in the interim. See example 2 below for a demonstration of this functionality.
 
-Include a figure visualising the structure of the workflow object and how it can be adopted in the ChangeWorkflow function (corresponding to an example below?).
+### Exploring available modules
+
+zoon modules are not distributed with the zoon R packages, but are instead downloaded on-the-fly for the online module repository.
+New modules uploaded to the repository therefore become instantly available to zoon users, without having to update the R package.
+zoon can query the currently available modules of each type via the function `GetModuleList`.
+
+All zoon modules on the repository are accompanied by documentation and metadata, similarly to R's helpfiles.
+The documentation for any module on the repository can be accessed from R using the function `ModuleHelp`.
+zoon also provides a function `ZoonCitation` to provide citation information; similarly to the `citation` function provided with R for citing R packages.
+A web service for interactive exploration of available modules and their documentation will also be made available soon.
 
 #### Building modules
 
@@ -180,17 +187,7 @@ zoon provides the function `BuildModule` to facilitate entering this metadata an
 
 The zoon vignette *Building modules* provides a detailed tutorial for building modules of each type.
 
-
-
-#### Additional features
-
-##### Accessing module documentation
-
-<!-- to do -->
-
-All modules, created by the zoon authors or contributed by others, have documentation explaining their methods and how they are used. This documentation is easily accessed in R by using the function `ModuleHelp`. This function fetched the documentation from the module repository. 
-
-##### Cross-validation
+### Cross-validation
 
 <!— needs work—>
 
@@ -199,10 +196,6 @@ Process modules are used to split the data into a training and test set or into 
 The same test/train splits will be used for each analysis if the multiple models or methods are being used so that model performance measures are comparable.
 Furthermore, the test/train splits are saved along with the workflow so that other researchers adding to a workflow can make fair comparisons. 
 After models are fitted to these subsets of the data, they are also fitted to the entire dataset as this will provide the best models for predictions from further new data.
-
-##### Sharing workflows
-
-zoon provides the `ZoonFigshare` function to facilitate sharing a completed workflow object from within R, via the free web platform figshare. `ZoonFigshare` takes a workflow object and some minimal metadata and uploads the workflow as an RData object, along with a metadata text file, to the user's figshare profile for others to download, inspect and modify.
 
 
 
@@ -409,7 +402,7 @@ BuildModule(object = spThin,
 This module can now be shared so that others can use it in their zoon workflows.
 Modules can be uploaded to the zoon modules repository via the online submission system at [URL TBD].
 
-#### Example 3. What makes MaxEnt effective
+#### Example 3. Unpacking MaxEnt
 
 The popular MaxEnt SDM model has recently been shown to be equivalent to a Poisson point process model [@Renner2013], and to be closely approximated by a logistic regression model with weights applied to background datapoints [@Warton2010; @Fithian2013; @Renner2015].
 Given this close correspondence between MaxEnt and logistic regression, @Renner2013 and others have suggested that MaxEnt's superior predictive performance [@Elith2006] is most likely due to the array of features (candidate covariate transformations) it constructs and its use of regularisation to prevent overfitting.
@@ -478,7 +471,7 @@ for (i in 1:6) {
 
 ```
 
-```{r maxnet_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Prediction of the distribution of the Carolina wren from 5 different models, produced by the workflow `maxnet\\_comparison'. A) MaxEnt without threshold features. B) MaxNet with default settings. C) MaxNet without regularisation. D) MaxNet with only linear features. E) MaxNet without regularisation and only linear features. F) Logistic regression. MaxNet with full features but no regularisation (C) gave the most local complexity, indicative of overfitting to the data. The models with only linear features (D-F) had a broader distribution, indicative of underfitting. Differences between MaxNet with linear features and no  regularisation (E) and logistic regression (F) are due to the simple downweighting applied to data in the former."}
+```{r maxnet_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Prediction of the distribution of the Carolina wren from 5 different models, produced by the workflow `maxnet\\_comparison'. A) MaxEnt without threshold features. B) MaxNet with default settings. C) MaxNet without regularisation. D) MaxNet with only linear features. E) MaxNet without regularisation and only linear features. F) Logistic regression. MaxNet with full features but no regularisation (C) gave the most local complexity, indicative of overfitting to the data. The models with only linear features (D-F) had a broader distribution, indicative of underfitting. Differences between MaxNet with linear features and no  regularisation (E) and logistic regression (F) are due to the downweighting applied to background data in the former."}
 knitr::include_graphics("figs/maxnet_plotting-1.png")
 ```
 
