@@ -63,7 +63,7 @@ The community's inability to repeat this comprehensive analysis is due to both l
 The SDM community's inability to compare models and repeat analyses has left the field unable to decisively answer even basic questions about how best to do SDM.
 It may also have contributed to widespread misunderstandings about how apply and interpret different modelling approaches [@Yackulic2013].
 In order to overcome these problems, the data and methods underpinning SDM research need to be made more accessible, reproducible and modifiable by the whole research community.
-This can be achieved by faciliting access to methods[open science reference?], and making it easier to share and modify fully reproducible research objects [open science reference?].
+This can be achieved if technologies enable and encourage sharing of research as fully reproducible objects [@Peng2011], in ways that suit the diversity of users involved in SDM [@Ahmed2015].
 
 The zoon R package has been developed specifically to improve reproducibility and comparability of SDM in R by allowing users to encode entire SDM analyses as reproducible workflows of independently executable, community-contributed modules.
 The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1).
@@ -72,7 +72,7 @@ zoon's focus on reproducibile and modifiable workflows is inspired by workflow s
 
 This paper introduces version 0.5-3 of the zoon R package.
 We describe the modular structure of zoon workflows and how they can be constructed, shared, reproduced and modified.
-We then illustrate how these concepts enable better SDM research by reproducing a published SDM analysis; converting a recently proposed method into a zoon module; and performing a methodological comparison.
+We then illustrate how these concepts enable better SDM research by reproducing a published SDM analysis; converting a recently proposed method into a zoon module; and performing a reproducible methodological comparison.
 
 # Building a workflow
 
@@ -175,29 +175,15 @@ The documentation for any module on the repository can be accessed from R using 
 zoon also provides a function `ZoonCitation` to provide citation information; similarly to the `citation` function provided with R for citing R packages.
 A web service for interactive exploration of available modules and their documentation will also be made available soon.
 
-#### Building modules
 
-Modules are simply R function definitions, with a set of required inputs and outputs.
+### Cross-validation and external validation
 
-As long as a valid module function is defined in an R session, it can be used in workflows in combination with modules downloaded from the zoon module repository.
-Whilst this makes it easy to develop modules locally, the strength of zoon comes from the ability to upload modules to the online repository so that others can access them.
-
-To do this, it first is necessary to provide additional metadata including the module tile and description, module type, author name and definitions for any non-mandatory arguments.
-zoon provides the function `BuildModule` to facilitate entering this metadata and checking that it matches the module.
-
-The zoon vignette *Building modules* provides a detailed tutorial for building modules of each type.
-
-### Cross-validation
-
-<!— needs work—>
-
-`workflow` sensibly handles cross-validation.
-Process modules are used to split the data into a training and test set or into multiple folds so that each fold in turn will be held back and used as the test for the predictive ability of any fitted models.
-The same test/train splits will be used for each analysis if the multiple models or methods are being used so that model performance measures are comparable.
-Furthermore, the test/train splits are saved along with the workflow so that other researchers adding to a workflow can make fair comparisons. 
-After models are fitted to these subsets of the data, they are also fitted to the entire dataset as this will provide the best models for predictions from further new data.
-
-
+`workflow` handles cross-validation and external validation internally, storing this information in the datframe of occurrence records.
+*Occurrence* or *process* modules can be used to assign records to one or more cross-validation folds (positive integers indicating different hold-out groups) or to an external validation dataset (indicated by a zero).
+At the *model* stage, `workflow` fits a separate model for each cross-validation fold then makes and stores predictions for the hold-out datapoints, as well as fitting a model using the whole dataset.
+In all model fitting, records flagged for external validation are omitted.
+These cross-validation predictions can then be subsequently analysed by *output* modules to estimate out-of sample predictive performance.
+Predictions can be also be made from the full model to an external validation dataset and evaluated.
 
 ### Example Applications
 
@@ -224,7 +210,7 @@ set.seed(1633)
 ```
 
 
-```{r fengworkflow, eval = TRUE, dpi = 600, fig.show = "hide", results = "hide", message = FALSE, fig.height = 9, fig.width = 9}
+```{r fengworkflow, eval = TRUE, dpi = 600, fig.show = "hide", results = "hide", message = FALSE, fig.height = 7, fig.width = 9}
 FengPapes <- 
   workflow(occurrence = SpOcc('Dasypus novemcinctus',
                               extent = c(-130, -20, -60, 60)),
@@ -304,6 +290,7 @@ layout(mat)
 # plot static map
 plotRGB(r_map1, maxpixels = Inf)
 
+
 # add a panel letter
 mtext(text = 'A',
         side = 3,
@@ -334,6 +321,7 @@ mtext(text = 'C',
         side = 3,
         line = -1.5,
         adj = 0)  
+
 ```
 
 ```{r feng_papes_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Outputs of the workflow objects `FengPapes' and `FengPapesUpdate'. A) Map of the presence data (red), background data (black) and the MaxEnt relative probability of occurrence generated by the `PrintMap' module in the workflow `FengPapes' which encodes a whole published analysis. White areas are masked due to being in the sea or outside the MESS mask. B) A response curve produced by the `ResponseCurve' module for the first covariate, bio1 in the workflow `FengPapesUpdate', which modifies the original analysis workflow. C) A screenshot of the interactive map produced by the `InteractiveMap' modules in the workflow `FengPapesUpdate', displaying raw occurrence data and predicted distribution over a global map, allowing users to interactively explore their results. Any SDM analysis distributed as a zoon workflow can be easily be explored and scrutinized by modifying its output modules using the function `ChangeWorkflow'."}
