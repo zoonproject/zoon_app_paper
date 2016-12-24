@@ -1,6 +1,13 @@
 ---
 title: "The zoon R package for reproducible and shareable species distribution modelling"
-author: "Nick Golding, Tom August, Tim C.D. Lucas, David K. Gavaghan, Emiel Van Loon & Greg McInerny"
+author: 
+  - Nick Golding$^1$, Tom August$^2$, Tim C.D. Lucas$^3$, David K. Gavaghan$^4$, Emiel Van Loon$^5$ & Greg McInerny$^6$
+  - $^1$ School of BioSciences, University of Melbourne, Parkville VIC, Australia
+  - $^2$ [please fill in]
+  - $^3$ [please fill in]
+  - $^4$ [please fill in]
+  - $^5$ [please fill in]
+  - $^6$ [please fill in]
 bibliography: zoon_app.bib
 csl: mee.csl
 output:
@@ -236,7 +243,7 @@ The object `FengPapes` could therefore be saved as a binary file and shared as a
 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure 2, panels B and C.
 
-```{r fengChangeWorkflow, eval = TRUE, fig.show = "hide", fig.height = 9}
+```{r fengChangeWorkflow, eval = TRUE, fig.show = "hide", fig.height = 9, fig.width = 7.5}
 FengPapesUpdate <- 
   ChangeWorkflow(workflow = FengPapes,
                    output = Chain(ResponseCurve(cov = 1),
@@ -289,7 +296,6 @@ layout(mat)
 
 # plot static map
 plotRGB(r_map1, maxpixels = Inf)
-
 
 # add a panel letter
 mtext(text = 'A',
