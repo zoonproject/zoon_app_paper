@@ -31,7 +31,7 @@ zoon makes it easy for SDM researchers to contribute modules to this repository,
 4. Each workflow object created by zoon is a re-runnable record of the data, code and results of an entire SDM analysis.
 This can then be easily shared, scrutinized, reproduced and extended by the whole SDM research community.
 
-5. We explain how zoon works and demonstrate how it can be used to construct a complete reproducible SDM analyses, create and share a new module, and perform a methodological comparison study. 
+5. We explain how zoon works and demonstrate how it can be used to construct a completely reproducible SDM analyses, create and share a new module, and perform a methodological comparison study. 
 
 
 ```{r knitrOpts, echo = FALSE, cache = FALSE, eval = TRUE}
@@ -63,7 +63,7 @@ As a result, the SDM community is divided into research silos, with groups of re
 This is compounded by the almost all available SDM software being focussed on analytical tasks such as constructing models, rather than enabling scientists to produce analyses that others can reproduce and modify.
 The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review and synthesis of research findings across studies, as well as its capacity to be a self-correcting process [@Boulton2012].
 
-For example, a fundamental dispute over the ability of SDM to detect environmental associations [@Beale2008, @Araujo2009, @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
+For example, a fundamental dispute over the ability of SDMs to detect environmental associations [@Beale2008, @Araujo2009, @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
 Similarly, in the past decade the SDM community has failed to carry out any large scale comparisons of SDM methods, still relying on the work of @Elith2006 to make decisions, despite the development of hundreds of new methods as well as improved evaluation procedures [@Roberts2016].
 The community's inability to repeat this comprehensive analysis is due to both lack of access to comparable data and the difficulty in learning and applying the many different pieces of software for model fitting.
 
@@ -72,12 +72,12 @@ It may also have contributed to widespread misunderstandings about how apply and
 In order to overcome these problems, the data and methods underpinning SDM research need to be made more accessible, reproducible and modifiable by the whole research community.
 This can be achieved if technologies enable and encourage sharing of research as fully reproducible objects [@Peng2011], in ways that suit the diversity of users involved in SDM [@Ahmed2015].
 
-The zoon R package has been developed specifically to improve reproducibility and comparability of SDM in R by allowing users to encode entire SDM analyses as reproducible workflows of independently executable, community-contributed modules.
+The zoon R package has been developed specifically to improve reproducibility and comparability of SDMs in R by allowing users to encode entire SDM analyses as reproducible workflows of independently executable, community-contributed modules.
 The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1).
 Whilst zoon's modular nature is similar to other SDM R packages such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016], zoon instead pulls each module from an open repository that any SDM user can contribute to, and makes it easy for non-developers to contribute modules.
 zoon's focus on reproducibile and modifiable workflows is inspired by workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2015; @DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
 
-This paper introduces version 0.5-3 of the zoon R package.
+This paper introduces version 0.5.3 of the zoon R package.
 We describe the modular structure of zoon workflows and how they can be constructed, shared, reproduced and modified.
 We then illustrate how these concepts enable better SDM research by reproducing a published SDM analysis; converting a recently proposed method into a zoon module; and performing a reproducible methodological comparison.
 
@@ -113,7 +113,7 @@ zoon enables these more complex workflows by enabling users to pass multiple mod
 `Chain` runs multiple modules of the same type *sequentially*, as illustrated in Figure 1C.
 For example, in a presence-only analysis a chain of two process modules could be used to generate background data and then to standardise the covariate rasters using the presence/background dataset.
 Chains can also be applied to occurrence or covariate modules, to combine multiple datasets (e.g. occurrences from different databases) into one.
-Chaining output modules simply runs each module separately, allowing the user to create multiple maps and summary figures, calcualte performance metrics and create other model outputs in one workflow.
+Chaining output modules simply runs each module separately, allowing the user to create multiple maps and summary figures, calculate performance metrics and create other model outputs in one workflow.
 Model modules are the only module type that may not be chained, since their outputs and inputs are always different.
 
 ### list
@@ -126,7 +126,7 @@ Listing output modules has the same effect as chaining them, each module is appl
 ### Replicate
 
 Some steps in SDM analyses are stochastic and need to be run multiple times; `Replicate` enables this by generating a list with one module repeated a given number of times.
-`Replicate` could be used to run the same workflow for hundreds of simulated occurrence or covariate datasets, to generate multiple bootstraps for modelling, or to fit models with stochastic elements
+`Replicate` could be used to run the same workflow for hundreds of simulated occurrence or covariate datasets, to generate multiple bootstraps for modelling, or to fit models with stochastic elements.
 
 ###
 
@@ -163,23 +163,24 @@ These functions return either the single R object outputted by each module, or l
 ### Reproducing and extending workflows
 
 Given a `zoonWorkflow` object, the analysis can be repeated in its entirety using the zoon function `RerunWorkflow`.
-This function can therefore be used to rapidly update an analysis whenever the underlying occurrence or covariate data aree updated.
-`RerunWorkflow` can also run from a specific stage of the workflow, for example using the previously downloaded data stored in the object but re-running an output module to generate a plot.
+This function can therefore be used to rapidly update an analysis whenever the underlying occurrence or covariate data (from an online repository for example) are updated.
+Used in this way the function is equivalent to copying the authors original source code.
+`RerunWorkflow` can also run from a specific stage of the workflow, for example using the previously downloaded data stored in the object but re-running an output module to recreate a plot.
 
 Workflows can similarly be modified and re-run by replacing or adding modules in one or more of the five analytical steps using the function `ChangeWorkflow`.
-`ChangeWorkflow` only re-runs the channged modules and those downstream; the stored outputs of earlier modules are re-used rather than re-running them.
+`ChangeWorkflow` only re-runs the changed modules and those downstream; the stored outputs of earlier modules are re-used rather than re-running them.
 
-This functionality therefore enables researchers to explore and alter existing workflows, such as from a published analysis, without having to re-run computationally expensive models or re-download datasets that may have changed in the interim. See example 2 below for a demonstration of this functionality.
+This functionality therefore enables researchers to explore and alter existing workflows, such as from a published analysis, without having to re-run computationally expensive models or re-download datasets that may have changed in the interim. See Example 2 below for a demonstration of this functionality.
 
 ### Exploring available modules
 
-zoon modules are not distributed with the zoon R packages, but are instead downloaded on-the-fly for the online module repository.
+zoon modules are not distributed with the zoon R packages, but are instead downloaded on-the-fly from the online module repository.
 New modules uploaded to the repository therefore become instantly available to zoon users, without having to update the R package.
 zoon can query the currently available modules of each type via the function `GetModuleList`.
 
 All zoon modules on the repository are accompanied by documentation and metadata, similarly to R's helpfiles.
 The documentation for any module on the repository can be accessed from R using the function `ModuleHelp`.
-zoon also provides a function `ZoonCitation` to provide citation information; similarly to the `citation` function provided with R for citing R packages.
+zoon also provides a function `ZoonCitation` to provide citation information, similarly to the `citation` function provided with R for citing R packages.
 A web service for interactive exploration of available modules and their documentation will also be made available soon.
 
 
@@ -336,7 +337,7 @@ knitr::include_graphics("figs/combinefengupdate-1.png")
 
 #### Example 2. Building a spatial thinning module
 
-@Aiello-Lammens2015 proposed an approach for dealing with spatial sampling bias in presence-only data by `thinning' the presence data, and provide an R package `spThin` to implement their procedure [@spThin].
+@Aiello-Lammens2015 proposed an approach for dealing with spatial sampling bias in presence-only data by 'thinning' the presence data, and provide an R package `spThin` to implement their procedure [@spThin].
 We can incorporate this approach in a workflow, by defining a simple *process* module that adapts the zoon data into the spThin format, uses this package to apply the algorithm, and converts data back into zoon's expected format again:
 
 ```{r spthinmodule, eval = TRUE}
@@ -505,7 +506,7 @@ By providing a common interface for SDM and the capacity to create and share met
 zoon was both conceived and developed based on input from users.
 Continuing and expanding user engagement will be vital to forming a critical mass of ecologists creating and using zoon modules in their research.
 To assist users a number of tutorials on using zoon and developing modules are provided on the zoonproject GitHub repository and as vignettes distributed with zoon.
-We intend to supplement these with a gallery of research examples and forum whereby the community can discuss and evaluate best SDM practice in a eproducible way.
+We intend to supplement these with a gallery of research examples and a forum where the community can discuss and evaluate best SDM practice in a reproducible way.
 
 ### References
 
