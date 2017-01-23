@@ -1,9 +1,9 @@
 ---
 title: "The zoon R package for reproducible and shareable species distribution modelling"
 author: 
-  - Nick Golding$^1$, Tom August$^2$, Tim C.D. Lucas$^3$, David K. Gavaghan$^4$, Emiel Van Loon$^5$ & Greg McInerny$^6$
+  - Nick Golding$^1$, Tom A. August$^2$, Tim C.D. Lucas$^3$, David K. Gavaghan$^4$, Emiel Van Loon$^5$ & Greg McInerny$^6$
   - $^1$ School of BioSciences, University of Melbourne, Parkville VIC, Australia
-  - $^2$ [please fill in]
+  - $^2$ NERC Centre for Ecology & Hydrology, Crowmarsh Gifford, Maclean Building, Wallingford, OX10 8BB, UK
   - $^3$ Oxford Big Data Institute, Li Ka Shing Centre for Health Information and Discovery Nuffield Department of Medicine, University of Oxford, Oxford, U.K.
   - $^4$ [please fill in]
   - $^5$ [please fill in]
@@ -60,10 +60,10 @@ The SDM software market is similarly large and diverse [@Ahmed2015].
 Whilst most SDM users rely either on the MaxEnt standalone application [@Phillips2006] or the R programming language [@R] as the first choice software for their analyses [@Ahmed2015], there are many competing SDM-specific R packages, each implementing different approaches to fitting SDMs [@Thuiller2009; @dismo; @Naimi2016], as well as a range of alternative standalone applications.
 
 As a result, the SDM community is divided into research silos, with groups of researchers collaborating primarily with others who use the same software, even within specific R packages [@Ahmed2015], presenting a barrier to disseminating new SDM findings and methods.
-This is compounded by the almost all available SDM software being focussed on analytical tasks such as constructing models, rather than enabling scientists to produce analyses that others can reproduce and modify.
-The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review and synthesis of research findings across studies, as well as its capacity to be a self-correcting process [@Boulton2012].
+This is compounded since almost all available SDM software are focussed on analytical tasks such as constructing models, rather than enabling scientists to produce analyses that others can reproduce and modify.
+The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review, synthesis of research findings across studies, and reduces its capacity to be a self-correcting process [@Boulton2012].
 
-For example, a fundamental dispute over the ability of SDMs to detect environmental associations [@Beale2008, @Araujo2009, @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
+For example, a fundamental dispute over the ability of SDMs to detect environmental associations [@Beale2008; @Araujo2009; @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
 Similarly, in the past decade the SDM community has failed to carry out any large scale comparisons of SDM methods, still relying on the work of @Elith2006 to make decisions, despite the development of hundreds of new methods as well as improved evaluation procedures [@Roberts2016].
 The community's inability to repeat this comprehensive analysis is due to both lack of access to comparable data and the difficulty in learning and applying the many different pieces of software for model fitting.
 
