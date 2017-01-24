@@ -15,6 +15,7 @@ output:
     fig_caption: yes
     includes:
       in_header: latex_preamble.tex
+    highlight: null
 ---
 
 # Abstract
