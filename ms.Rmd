@@ -195,7 +195,7 @@ A web service for interactive exploration of available modules and their documen
 
 ### Example Applications
 
-Next we demonstrate how zoon can be used in practice for running SDMs, creating and sharing new modules, and performing a methods comparison. The workflow objects created by these analyses can be accessed at [`figshare.com/articles/zoon_applications_paper_workflows`](http://figshare.com/articles/zoon_applications_paper_workflows).
+Next we demonstrate how zoon can be used in practice for running SDMs, creating and sharing new modules, and performing a methods comparison. The workflow objects created by these analyses can be accessed at [`figshare.com/articles/zoon_applications_paper_workflows/4597792`](http://figshare.com/articles/zoon_applications_paper_workflows/4597792).
 We encourage readers to download, interrogate and alter these workflows for themselves.
 
 #### Example 1. Modelling the potential distribution of nine-banded armadillo
