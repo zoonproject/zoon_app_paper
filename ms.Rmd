@@ -238,13 +238,13 @@ FengPapes <-
 ```
 
 This workflow plots a static map of the predicted distribution.
-This map is shown in Figure 2A and corresponds to figure 3 in @Feng2015.
+This map is shown in Figure 2A and corresponds to Figure 3 in @Feng2015.
 The resulting workflow contains all the code required to re-run the workflow, the input data and the results of executing each module.
 The object `FengPapes` could therefore be saved as a binary file and shared as a reproducible representation of this research.
 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure 2, panels B and C.
 
-```{r fengChangeWorkflow, eval = TRUE, fig.show = "hide", fig.height = 9, fig.width = 7.5}
+```{r fengChangeWorkflow, eval = TRUE, fig.show = "hide", fig.height = 9, fig.width = 7.5, dev.args = list(pointsize = 16)}
 FengPapesUpdate <- 
   ChangeWorkflow(workflow = FengPapes,
                    output = Chain(ResponseCurve(cov = 1),
@@ -327,12 +327,16 @@ plotRGB(r_map, maxpixels = Inf)
 mtext(text = 'C',
         side = 3,
         line = -1.5,
-        adj = 0)  
+        adj = 0)
 ```
 
+\newpage
+\blandscape
 ```{r feng_papes_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Outputs of the workflow objects `FengPapes' and `FengPapesUpdate'. A) Map of the MaxEnt predicted distribution, with a 5\\% omission rate threshold, by the `PrintMap' module in the workflow `FengPapes' which encodes the core of a published analysis. B) A response curve produced by the `ResponseCurve' module for the first covariate, bio1 in the workflow `FengPapesUpdate', which modifies the original analysis workflow. C) A screenshot of the interactive map produced by the `InteractiveMap' modules in the workflow `FengPapesUpdate', displaying raw occurrence data and predicted distribution over a global map, allowing users to interactively explore their results. White areas are masked due to being in the MESS mask. Any SDM analysis distributed as a zoon workflow can be easily be explored and scrutinized by modifying its output modules using the function `ChangeWorkflow'."}
 knitr::include_graphics("figs/combinefengupdate-1.png")
 ```
+\elandscape
+\newpage
 
 #### Example 2. Building a spatial thinning module
 
