@@ -1,13 +1,13 @@
 ---
 title: "The zoon R package for reproducible and shareable species distribution modelling"
 author: 
-  - Nick Golding$^1$, Tom A. August$^2$, Tim C.D. Lucas$^3$, David J. Gavaghan$^4$, Emiel Van Loon$^5$ & Greg McInerny$^6$
+  - Nick Golding$^1$, Tom A. August$^2$, Tim C.D. Lucas$^3$, David J. Gavaghan$^4$, E. Emiel van Loon$^5$ & Greg McInerny$^6$
   - $^1$ School of BioSciences, University of Melbourne, Parkville VIC, Australia
   - $^2$ NERC Centre for Ecology & Hydrology, Crowmarsh Gifford, Maclean Building, Wallingford, OX10 8BB, UK
-  - $^3$ Oxford Big Data Institute, Li Ka Shing Centre for Health Information and Discovery Nuffield Department of Medicine, University of Oxford, Oxford, U.K.
+  - $^3$ Oxford Big Data Institute, Li Ka Shing Centre for Health Information and Discovery Nuffield Department of Medicine, University of Oxford, Oxford, UK
   - $^4$ Department of Computer Science, University of Oxford, Oxford, UK
-  - $^5$ [please fill in]
-  - $^6$ [please fill in]
+  - $^5$ Institute for Biodiversity and Ecosystem Dynamics, University of Amsterdam, Amsterdam, NL
+  - $^6$ Centre for Interdisciplinary Methodologies, Social Sciences, University of Warwick, Coventry, CV4 7AL, UK
 bibliography: zoon_app.bib
 csl: mee.csl
 output:
@@ -58,17 +58,17 @@ options("rasterDataDir" = raster_dir)
 Species distribution modelling (SDM) has grown rapidly over the last 20 years.
 It is now one of “the most widely-reviewed topics in the ecological literature” [@Araujo2012] and the growth of this literature is still accelerating [@Barbosa2015].
 The SDM software market is similarly large and diverse [@Ahmed2015].
-Whilst most SDM users rely either on the MaxEnt standalone application [@Phillips2006] or the R programming language [@R] as the first choice software for their analyses [@Ahmed2015], there are many competing SDM-specific R packages, each implementing different approaches to fitting SDMs [@Thuiller2009; @dismo; @Naimi2016], as well as a range of alternative standalone applications.
+Whilst most SDM users rely either on the MaxEnt standalone application [@Phillips2006] or the R programming language [@R] as the first choice software for their analyses [@Ahmed2015] a variety of SDM-specific R packages are available, each implementing different approaches to fitting SDMs [@Thuiller2009; @dismo; @Naimi2016], as well as a range of alternative standalone applications.
 
-As a result, the SDM community is divided into research silos, with groups of researchers collaborating primarily with others who use the same software, even within specific R packages [@Ahmed2015], presenting a barrier to disseminating new SDM findings and methods.
-This is compounded since almost all available SDM software are focussed on analytical tasks such as constructing models, rather than enabling scientists to produce analyses that others can reproduce and modify.
-The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review, synthesis of research findings across studies, and reduces its capacity to be a self-correcting process [@Boulton2012].
+As a result, the SDM community can become siloed, with groups of researchers collaborating primarily with others who use the same software, even within specific R packages [@Ahmed2015], presenting a barrier to disseminating new SDM findings and methods.
+This is compounded since almost all available SDM software is focussed on analytical tasks such as constructing models, rather than enabling scientists to produce analyses in a format that others can reproduce and modify.
+The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review, synthesis of research findings across studies, and reduces capacity for the science to be a self-correcting process [@Boulton2012].
 
 For example, a fundamental dispute over the ability of SDMs to detect environmental associations [@Beale2008; @Araujo2009; @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
-Similarly, in the past decade the SDM community has failed to carry out any large scale comparisons of SDM methods, still relying on the work of @Elith2006 to make decisions, despite the development of hundreds of new methods as well as improved evaluation procedures since the publication of that study [@Roberts2016].
+Similarly, in the past decade the SDM community has failed to carry out any large scale comparisons of SDM methods, still relying on the work of @Elith2006 to select models and software [@Joppa2014], despite the development of many new methods as well as improved evaluation procedures since the publication of that study [@Roberts2016].
 The community's inability to repeat this comprehensive analysis is due to both lack of access to comparable data and the difficulty in learning and applying the many different pieces of software for model fitting.
 
-The SDM community's inability to compare models and repeat analyses has left the field unable to decisively answer even basic questions about how best to do SDM.
+Given current software and patterns of collaboration, the SDM community is unlikely to repeat or modify analyses. Nor is it likely to produce the large model comparisons that would answer even basic questions about how best to do SDM.
 It may also have contributed to widespread misunderstandings about how apply and interpret different modelling approaches [@Yackulic2013].
 In order to overcome these problems, the data and code underpinning SDM research need to be made more accessible, reproducible and modifiable by the whole research community.
 This can be achieved if technologies enable and encourage sharing of research as fully reproducible objects [@Peng2011], in ways that suit the diversity of users involved in SDM [@Ahmed2015].
@@ -76,7 +76,7 @@ This can be achieved if technologies enable and encourage sharing of research as
 The zoon R package has been developed specifically to improve reproducibility and comparability of SDMs in R by allowing users to encode entire SDM analyses as reproducible workflows of independently executable, community-contributed modules.
 The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1).
 Whilst zoon's modular nature is similar to other SDM R packages such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016], zoon instead pulls each module from an open repository that any SDM user can contribute to, and makes it easy for non-developers to contribute modules.
-zoon's focus on reproducibile and modifiable workflows is inspired by workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2015; @DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
+zoon's focus on reproducibile and modifiable workflows is inspired by repositories such as the Cardiac Web Lab [@Cooper2016] and workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2015; @DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
 
 This paper introduces version 0.6 of the zoon R package.
 We describe the modular structure of zoon workflows and how they can be constructed, shared, reproduced and modified.
@@ -122,7 +122,7 @@ Model modules are the only module type that may not be chained, since their outp
 `list` splits a workflow, with each path using a different one of the listed modules, as illustrated in Figure 1D.
 For example listing multiple model modules would take the same occurrence and covariate data and fit three separate models, applying the same output modules to each model separately.
 Lists can also be used to run the same SDM procedure for multiple species, or for multiple sets of covariates, or to compare different process modules.
-Listing output modules has the same effect as chaining them, each module is applied separately.
+Listing output modules causes each module to be applied separately.
 
 ### Replicate
 
@@ -144,6 +144,15 @@ mosquito2 <- workflow(occurrence = UKAnophelesPlumbeus,
                                         RandomForest),
                       output     = Appify)
 ```
+
+### Cross-validation and external validation
+
+`workflow` handles cross-validation and external validation internally, storing this information in the datframe of occurrence records.
+*Occurrence* or *process* modules can be used to assign records to one or more cross-validation folds (positive integers indicating different hold-out groups) or to an external validation dataset (indicated by a zero).
+At the *model* stage, `workflow` fits a separate model for each cross-validation fold then makes and stores predictions for the hold-out datapoints, as well as fitting a model using the whole dataset.
+In all model fitting, records flagged for external validation are omitted.
+These cross-validation predictions can then be subsequently analysed by *output* modules to estimate out-of sample predictive performance.
+Predictions can be also be made from the full model to an external validation dataset and evaluated.
 
 ### Sharing workflows
 
@@ -175,7 +184,7 @@ This functionality therefore enables researchers to explore and alter existing w
 
 ### Exploring available modules
 
-zoon modules are not distributed with the zoon R packages, but are instead downloaded on-the-fly from the online module repository.
+zoon modules are not distributed with the zoon R package, but are instead downloaded on-the-fly from the online module repository.
 New modules uploaded to the repository therefore become instantly available to zoon users, without having to update the R package.
 zoon can query the currently available modules of each type via the function `GetModuleList`.
 
@@ -183,16 +192,6 @@ All zoon modules on the repository are accompanied by documentation and metadata
 The documentation for any module on the repository can be accessed from R using the function `ModuleHelp`.
 zoon also provides a function `ZoonCitation` to provide citation information, similarly to the `citation` function provided with R for citing R packages.
 A web service for interactive exploration of available modules and their documentation will also be made available soon.
-
-
-### Cross-validation and external validation
-
-`workflow` handles cross-validation and external validation internally, storing this information in the datframe of occurrence records.
-*Occurrence* or *process* modules can be used to assign records to one or more cross-validation folds (positive integers indicating different hold-out groups) or to an external validation dataset (indicated by a zero).
-At the *model* stage, `workflow` fits a separate model for each cross-validation fold then makes and stores predictions for the hold-out datapoints, as well as fitting a model using the whole dataset.
-In all model fitting, records flagged for external validation are omitted.
-These cross-validation predictions can then be subsequently analysed by *output* modules to estimate out-of sample predictive performance.
-Predictions can be also be made from the full model to an external validation dataset and evaluated.
 
 ### Example Applications
 
@@ -469,7 +468,7 @@ for (i in 1:6) {
 
 ```
 
-```{r maxnet_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Prediction of the distribution of the Carolina wren from 5 different models, produced by the workflow `maxnet\\_comparison'. A) MaxEnt without threshold features. B) MaxNet with default settings. C) MaxNet without regularisation. D) MaxNet with only linear features. E) MaxNet without regularisation and only linear features. F) Logistic regression. MaxNet with full features but no regularisation (C) gave the most local complexity, indicative of overfitting to the data. The models with only linear features (D-F) had a broader distribution, indicative of underfitting. Differences between MaxNet with linear features and no  regularisation (E) and logistic regression (F) are due to the downweighting applied to background data in the former."}
+```{r maxnet_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Prediction of the distribution of the Carolina wren from 6 different models, produced by the workflow `maxnet\\_comparison'. A) MaxEnt without threshold features. B) MaxNet with default settings. C) MaxNet without regularisation. D) MaxNet with regularisation but only linear features. E) MaxNet without regularisation and only linear features. F) Logistic regression. MaxNet with full features but no regularisation (C) gave the most local complexity, indicative of overfitting to the data. The models with only linear features (D-F) had a broader distribution, indicative of underfitting. Differences between MaxNet with linear features and no  regularisation (E) and logistic regression (F) are due to the downweighting applied to background data in the former."}
 knitr::include_graphics("figs/maxnet_plotting-1.png")
 ```
 
@@ -498,7 +497,7 @@ Readers interested in a more comprehensive comparison, or in exploring the respo
 
 ### Future developments
 
-Reproducibility and open science are gaining attention [@Borregaard2016], and journals, funders and governments are increasingly making them a requirement [@McNutt2016; @EC2016; @Obama2013].
+Reproducibility and open science are gaining significant attention [@Borregaard2016], and journals, funders and governments are increasingly making them a requirement [@McNutt2016; @EC2016; @Obama2013].
 Researchers must therefore find ways of at least disseminating code and data, if not making them usable.
 Despite numerous platforms for archiving and sharing code and data, users still face a challenge locating and using resources across different platforms.
 Increasing the usability of code and data is therefore the real challenge of open and reproducible science.
@@ -516,6 +515,10 @@ We intend to supplement these with a gallery of research examples and a forum wh
 
 Version 0.6 of the zoon R package is archived at https://doi.org/10.5281/zenodo.240926.
 The code required to reproduce this manuscript can be downloaded at https://github.com/zoonproject/zoon_app_paper (to be replaced with zenodo archive link after proofing stage).
+
+### Acknowledgements
+
+The 2020 Science programme is funded through the EPSRC Cross-Disciplinary Interface Programme (grant number EP/I017909/1).
 
 ### References
 
