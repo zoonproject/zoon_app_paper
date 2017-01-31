@@ -6,7 +6,7 @@ The Zoon Project was set up to improve reproducibility in the ecological sub dis
 
 Like the many other SDM R packages, zoon enables users to fit of SDMs with a variety of methods. However the aim and novel contribution of zoon is quite different - to facilitate the SDM community in sharing methods (modules) and experiments (workflows) as standardised, repeatable and reusable artefacts. This aligns with the journal's recent efforts to improve archiving of analytical code and has the same end goal - improving the ecological community's ability to build on each others' work. We therefore believe that our manuscript would be well suited for publication as an Application paper.
 
-Note that two of the authors are MEE associate editors and that both Bob O'Hara and Rich FitzJohn have been involved in the development of Zoon, so one of the three remaining Applications AEs would be best placed to handle the manuscript.
+Note that two of the authors are MEE associate editors and that both Bob O'Hara and Rich FitzJohn have been involved in the development of Zoon, so one of the three remaining Applications AEs would be best placed to handle the manuscript. A list of researchers who have been involved in the development of zoon, and may therefore not be able to review the manuscript, is available at: https://zoonproject.wordpress.com/user-panel
 
 Yours Sincerely,
 Nick Golding, on behalf of the authors
