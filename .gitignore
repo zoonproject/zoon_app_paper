@@ -16,3 +16,6 @@ ms.pdf
 
 # the maxent executable
 maxent.jar
+
+# the saved workflows
+zoon_applications_paper_workflows.RData
