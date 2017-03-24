@@ -69,14 +69,14 @@ Similarly, in the past decade the SDM community has failed to carry out any larg
 The community's inability to repeat this comprehensive analysis is due to both lack of access to comparable data and the difficulty in learning and applying the many different pieces of software for model fitting.
 
 Given current software and patterns of collaboration, the SDM community is unlikely to repeat or modify analyses. Nor is it likely to produce the large model comparisons that would answer even basic questions about how best to do SDM.
-It may also have contributed to widespread misunderstandings about how apply and interpret different modelling approaches [@Yackulic2013].
+It may also have contributed to widespread misunderstandings about how to apply and interpret different modelling approaches [@Yackulic2013].
 In order to overcome these problems, the data and code underpinning SDM research need to be made more accessible, reproducible and modifiable by the whole research community.
 This can be achieved if technologies enable and encourage sharing of research as fully reproducible objects [@Peng2011], in ways that suit the diversity of users involved in SDM [@Ahmed2015].
 
 The zoon R package has been developed specifically to improve reproducibility and comparability of SDMs in R by allowing users to encode entire SDM analyses as repeatable and extensible workflows consisting of independently executable, community-contributed modules.
 The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1).
 Whilst zoon's modular nature is similar to other SDM R packages such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016], zoon instead pulls each module from an open repository that any SDM user can contribute to, and makes it easy for non-developers to contribute modules.
-zoon's focus on reproducibile and modifiable workflows is inspired by repositories such as the Cardiac Web Lab [@Cooper2016] and workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2015; @DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
+zoon's focus on reproducible and modifiable workflows is inspired by repositories such as the Cardiac Web Lab [@Cooper2016] and workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2015; @DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
 
 This paper introduces version 0.6 of the zoon R package.
 We describe the modular structure of zoon workflows and how they can be constructed, shared, reproduced and modified.
@@ -131,8 +131,8 @@ Some steps in SDM analyses are stochastic and need to be run multiple times; `Re
 
 ###
 
-The following workflow uses a chain to standardise the covariate rasters as well as generating background records, and uses a list to fit three different models: MaxEnt, Boosted Regression Trees (GBM) and RandomForest.
-The results of the three models are then returned in three Shiny apps allowing the user to interactively explore the occurrence and covariate data, model summaries and prediction maps.
+The following workflow uses a chain to standardise the covariate rasters as well as generating background records, and uses a list to fit three different models: MaxEnt, Boosted Regression Trees (also known as Generalized Boosted Regression Models; GBM) and RandomForest.
+The results of the three models are then returned in three Shiny apps (created by the `Appify` module) allowing the user to interactively explore the occurrence and covariate data, model summaries and prediction maps.
 
 ```{r workflow2, eval = FALSE, echo = TRUE}
 mosquito2 <- workflow(occurrence = UKAnophelesPlumbeus,
@@ -405,7 +405,7 @@ Given this close correspondence between MaxEnt and logistic regression, @Renner2
 zoon enables us to investigate this hypothesis by easily comparing MaxEnt models fitted with and without regularisation and feature construction.
 We fit MaxEnt with both the widely used java implementation (omitting threshold features) as well as the downweighted logistic regression approximation provided in the `maxnet` R package [@maxnet].
 We also compare these models with a standard logistic regression model which does not apply the downweighting step.
-The following workflow fits these models to a previously published presence-background data on the Caroline wren in the USA [@maxlike], maps their predictions (Figure 3) and evaluates the predictive performance of each model against the full presence-absence dataset by AUC.
+The following workflow fits these models to a previously published presence-background data on the Carolina wren in the USA [@maxlike], maps their predictions (Figure 3) and evaluates the predictive performance of each model against the full presence-absence dataset by AUC.
 Note that setting the regularisation constant in the `maxnet` package to zero caused numerical errors, so we use a small value instead.
 
 ```{r maxent_comparison, dpi = 600, fig.show = "hide", eval = TRUE, out.height = 600, out.width = 600}
@@ -495,10 +495,10 @@ The AUC statistics calculated against the presence-absence data were:
 cat(paste(names(AUCs), AUCs, collapse = '; '))
 cat('.')
 ```
-As expected, MaxEnt and MaxNet (the logistic regression approximation) generated similar predictions and had similar predictice performance.
-Likewise, once the regularisation and features of MaxNet were switched off, both the predictions and performance were very similar to Logistic regression.
+As expected, MaxEnt and MaxNet (the logistic regression approximation) generated similar predictions and had similar predictive performance.
+Likewise, once the regularisation and features of MaxNet were switched off, both the predictions and performance were very similar to logistic regression.
 
-Readers interested in a more comprehensive comparison, or in exploring the response curves can easily reproduce and modify the analysis either by editing and re-running the above code block or by downloading the workflow object and using the `ChangeWorkflow` function.
+Readers interested in a more comprehensive comparison, or in exploring the response curves, can easily reproduce and modify the analysis either by editing and re-running the above code block or by downloading the workflow object and using the `ChangeWorkflow` function.
 
 ### Future developments
 
