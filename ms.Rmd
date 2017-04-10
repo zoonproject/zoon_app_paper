@@ -85,7 +85,8 @@ We then illustrate how these concepts enable better SDM research by reproducing 
 # Building a workflow
 
 zoon encodes SDM analyses as a simple workflow of five key steps: obtaining occurrence data; obtaining covariate data; applying some processes to these data; fitting one or more models; and generating any outputs (Figure 1A).
-Each of these steps is encoded as one or more software modules of a given type.
+Each of these steps is encoded as one or more software modules (snippets of R code) to complete one of these tasks.
+zoon modules can use methods from any R package, providing a common interface between the many SDM packages already available.
 Users combine these modules via a call to the `workflow` function, which executes each module in turn, before returning a `zoonWorkflow` object - a shareable, extensible and fully reproducible documentation of the SDM analysis.
 Figure 1B illustrates how data and outputs are passed between modules of the five different types in a a zoon workflow.
 
@@ -160,6 +161,7 @@ The `zoonWorkflow` object returned by `workflow` contains all of the data, code 
 The object is therefore a self-contained representation of an entire analysis which can be saved as a binary `RData` object, archived, shared with colleagues or uploaded to the web.
 Anyone else may then load the object into their R session, load the zoon R package, and investigate the analysis.
 
+Workflow objects could therefore be provided as supplementary information to journal articles, or hosted online to meet journal requirements for public archiving of data and software. 
 zoon provides the `ZoonFigshare` function to facilitate sharing a completed workflow object from within R, via the free web platform figshare. `ZoonFigshare` takes a workflow object and some minimal metadata and uploads the workflow as an RData object, along with a metadata text file, to the user's figshare profile for others to download, inspect and modify.
 
 ### Exploring workflows
@@ -191,7 +193,12 @@ zoon can query the currently available modules of each type via the function `Ge
 All zoon modules on the repository are accompanied by documentation and metadata, similarly to R's helpfiles.
 The documentation for any module on the repository can be accessed from R using the function `ModuleHelp`.
 zoon also provides a function `ZoonCitation` to provide citation information, similarly to the `citation` function provided with R for citing R packages.
-A web service for interactive exploration of available modules and their documentation will also be made available soon.
+
+The only pre-requisite for uploading a module to the online repository is that it passes a series of automated unit and integration tests to ensure interoperability with other modules.
+Similarly to the CRAN archive of R packages, zoon leaves the SDM community to determine which methods and software should be used, rather than acting as a gatekeeper of SDM methods.
+
+A web service for interactive exploration of available modules and their documentation is currently being developed.
+This platform may include systems by which users can rate different modules, making it easier for the community to promote the best modules, flag methodological issues, and collaborate on module development.
 
 ### Example Applications
 
@@ -242,6 +249,7 @@ The resulting workflow contains all the code required to re-run the workflow, th
 The object `FengPapes` could therefore be saved as a binary file and shared as a reproducible representation of this research.
 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure 2, panels B and C.
+Various other output modules could be used here, e.g. to validate models, project distributions to new regions, or save prediction maps in a variety of formats.
 
 ```{r fengChangeWorkflow, eval = TRUE, fig.show = "hide", fig.height = 9, fig.width = 7.5, dev.args = list(pointsize = 16)}
 FengPapesUpdate <- 
@@ -396,6 +404,7 @@ BuildModule(object = spThin,
 
 This module can now be shared so that others can use it in their zoon workflows.
 Modules can be uploaded to the zoon modules repository via the online submission system at [URL TBD].
+The zoon package vignette *Building modules* provides full details and examples of how to build modules of each type.
 
 #### Example 3. Unpacking MaxEnt
 
@@ -509,6 +518,9 @@ Increasing the usability of code and data is therefore the real challenge of ope
 
 The size and fractured nature of the SDM research community therefore warrants a discipline-specific open research platform such as zoon to resolve these problems.
 By providing a common interface for SDM and the capacity to create and share methodological experiments zoon offers a new opportunity for the SDM community to develop community modelling benchmarks, and resolve scientific and methodological questions in ways that the current culture of publishing cannot achieve.
+
+zoon also has the potential to improve methodological standards in SDM, a research area in which there is widespread misunderstanding and misuse of techniques [@Yackulic2013].
+SDM methodologists could encode model validation procedures and best-practice guidance as zoon output modules, enabling end users to rapidly ensure their modelling procedures are fit for purpose [@Guillera-Arroita2015].
 
 zoon was both conceived and developed based on input from users.
 Continuing and expanding user engagement will be vital to forming a critical mass of ecologists creating and using zoon modules in their research.
