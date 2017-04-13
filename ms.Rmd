@@ -528,10 +528,16 @@ To assist users a number of tutorials on using zoon and developing modules are p
 We intend to supplement these with a gallery of research examples and a forum where the community can discuss and evaluate best SDM practice in a reproducible way.
 
 
-### Supporting Information
+### Supporting information
 
 Version 0.6 of the zoon R package is archived at https://doi.org/10.5281/zenodo.240926.
 The code required to reproduce this manuscript can be downloaded at https://github.com/zoonproject/zoon_app_paper (to be replaced with zenodo archive link after proofing stage).
+
+### Author's contributions
+All authors contributed to the design of the zoon R package.
+TAA, TCDL and NG implemented and programmed the R package with input from the other authors.
+NG wrote the first draft of the manuscript and all authors contributed to subsequent revisions and gave final approval for publication.
+
 
 ### Acknowledgements
 
