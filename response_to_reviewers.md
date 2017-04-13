@@ -99,3 +99,9 @@ We agree that automated checking and validation of analyses is an important and 
 > "Figure 1: What’s the difference between the grey and the black lines? Why in Figure 1C does the line come out of the bottom of the second process icon? Am I missing something?"
 
 The colour and orientation of the arrows are stylistic and intended to focus the reader's eye on the relevant part of each diagram. Black lines are used to highlight the inputs and outputs of the module type which lists and chains are being applied. In Figure 1C the black line goes out of the bottom of the box for symmetry with the black line going into the box. We believe these choices help make this an engaging figure, and need not be detailed in the figure caption.
+
+### #
+
+> "Line 281: Missing URL"
+
+The zoon modules website is in the final stage of development, and the URL for the module submission page will be available soon. If the article is accepted, we will provide the URL at the proofing stage.
