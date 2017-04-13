@@ -74,18 +74,6 @@ title = {{Opening the climate envelope reveals no macroscale associations with c
 volume = {105},
 year = {2008}
 }
-@article{DeGiovanni2015,
-abstract = {Ecological niche modelling {\{}(ENM){\}} Components are a set of reusable workflow components specialized for performing {\{}ENM{\}} tasks within the Taverna workflow management system. Each component encapsulates specific functionality and can be combined with other components to facilitate the creation of larger and more complex workflows. One key distinguishing feature of {\{}ENM{\}} Components is that most tasks are performed remotely by calling web services, simplifying software setup and maintenance on the client side and allowing more powerful computing resources to be exploited. This paper presents the current set of {\{}ENM{\}} Components in the context of the Taverna family of tools for creating, publishing and sharing workflows. An example is included showing how the components can be used in a preliminary investigation of the effects of mixing different spatial resolutions in {\{}ENM{\}} experiments.},
-author = {{De Giovanni}, Renato and Williams, Alan R. and Ernst, Vera Hern??ndez and Kulawik, Robert and Fernandez, Francisco Quevedo and Hardisty, Alex R.},
-doi = {10.1111/ecog.01552},
-file = {:Users/nick/Dropbox/papers/ecog1552.pdf:pdf},
-issn = {16000587},
-journal = {Ecography},
-number = {May},
-pages = {1--8},
-title = {{ENM Components: a new set of web service-based workflow components for ecological niche modelling}},
-year = {2015}
-}
 @article{Soininen2014,
 abstract = {ABSTRACT Aim We explored the effects ofmultiple species traits, spatial extent and ecosystem type on predictability in species distributions. Location Global. Methods We assembled over 4900 published AUC (area under the curve of a receiver operating characteristic plot) values from the species distribution model- ling literature. Our data covered broad variation in species characteristics such as body size or trophic position for taxa ranging from bacteria to mammals. Data covered ecosystems fromfreshwater to forests and encompassed geographical areas from the tropics to polar regions. We used generalized linear mixed models and boosted regression trees to analyse the AUC data. Results We found that most AUC values originated from large-sized terrestrial taxa while studies considering smaller taxa, especially from aquatic ecosystems, were rare.Predictability was highest in autotrophs and in active non-flying taxa and increased with body size and study extent. There were marginal differences in predictability between ectotherms and endotherms and between taxa originating from different ecosystems. Main conclusions Our results suggest that predictability in species distributions is related to organismal variables such as body size, dispersal mode and trophic position as well as to study extent.We also identified a gap in species distribution modelling studies for aquatic species and for small taxa},
 author = {Soininen, Janne and Luoto, Miska},
@@ -130,7 +118,7 @@ title = {{Presence-only modelling using MAXENT: When can we trust the inferences
 volume = {4},
 year = {2013}
 }
-@article{Royle2012,
+@article{maxlike,
 abstract = {1.Understanding the factors affecting species occurrence is a pre-eminent focus of applied ecological research. However, direct information about species occurrence is lacking for many species. Instead, researchers sometimes have to rely on so-called presence-only data (i.e. when no direct information about absences is available), which often results from opportunistic, unstructured sampling. maxent is a widely used software program designed to model and map species distribution using presence-only data. 2.We provide a critical review of maxent as applied to species distribution modelling and discuss how it can lead to inferential errors. A chief concern is that maxent produces a number of poorly defined indices that are not directly related to the actual parameter of interest – the probability of occurrence ($\psi$). This focus on an index was motivated by the belief that it is not possible to estimate $\psi$ from presence-only data; however, we demonstrate that $\psi$ is identifiable using conventional likelihood methods under the assumptions of random sampling and constant probability of species detection. 3.The model is implemented in a convenient r package which we use to apply the model to simulated data and data from the North American Breeding Bird Survey. We demonstrate that maxent produces extreme under-predictions when compared to estimates produced by logistic regression which uses the full (presence/absence) data set. We note that maxent predictions are extremely sensitive to specification of the background prevalence, which is not objectively estimated using the maxent method. 4.As with maxent, formal model-based inference requires a random sample of presence locations. Many presence-only data sets, such as those based on museum records and herbarium collections, may not satisfy this assumption. However, when sampling is random, we believe that inference should be based on formal methods that facilitate inference about interpretable ecological quantities instead of vaguely defined indices.},
 author = {Royle, J. Andrew and Chandler, Richard B. and Yackulic, Charles and Nichols, James D.},
 doi = {10.1111/j.2041-210X.2011.00182.x},
@@ -461,7 +449,7 @@ year = {2015}
 }
 
 @article{McNutt2016,
-  title={Taking up TOP},
+  title={Taking up {TOP}},
   author={McNutt, Marcia},
   journal={Science},
   volume={352},
@@ -522,13 +510,12 @@ year = {2015}
   year={2013}
 }
 
-@article{Boulton2012,
-  title={Science as an open enterprise},
-  author={Boulton, Geoffrey and Campbell, Philip and Collins, Brian and Elias, Peter and Hall, Wendy and Laurie, Graeme and O’Neill, Onora and Rawlins, Michael and Thornton, J and Vallance, Patrick and others},
-  journal={The Royal Society},
-  year={2012}
+@misc{Roysoc2012,
+  title={Science as an Open Enterprise},
+  author={Royal Society},
+  year={2012},
+  publisher={Royal Society London}
 }
-
 @article{DeGiovanni2016,
 abstract = {Ecological niche modelling (ENM) Components are a set of reusable workflow components specialized for performing ENM tasks within the Taverna workflow management system. Each component encapsulates specific functionality and can be combined with other components to facilitate the creation of larger and more complex workflows. One key distinguishing feature of {\{}ENM{\}} Components is that most tasks are performed remotely by calling web services, simplifying software setup and maintenance on the client side and allowing more powerful computing resources to be exploited. This paper presents the current set of ENM Components in the context of the Taverna family of tools for creating, publishing and sharing workflows. An example is included showing how the components can be used in a preliminary investigation of the effects of mixing different spatial resolutions in ENM experiments.},
 author = {{De Giovanni}, Renato and Williams, Alan R. and Ernst, Vera Hern{\'{a}}ndez and Kulawik, Robert and Fernandez, Francisco Quevedo and Hardisty, Alex R.},
@@ -544,17 +531,31 @@ volume = {39},
 year = {2016}
 }
 
-@article {Roberts2016,
-author = {Roberts, David R. and Bahn, Volker and Ciuti, Simone and Boyce, Mark S. and Elith, Jane and Guillera-Arroita, Gurutzeta and Hauenstein, Severin and Lahoz-Monfort, José J. and Schröder, Boris and Thuiller, Wilfried and Warton, David I. and Wintle, Brendan A. and Hartig, Florian and Dormann, Carsten F.},
-title = {Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure},
-journal = {Ecography},
-publisher = {Blackwell Publishing Ltd},
-issn = {1600-0587},
-url = {http://dx.doi.org/10.1111/ecog.02881},
+@article{Roberts2016,
+abstract = {Community assembly rules have been extensively studied, but its association with regional environmental variation, while land use history remains largely unexplored. Land use history might be especially important in Mediterranean forests, considering their historical deforestation and recent afforestation. Using forest inventories and historical (1956) and recent (2000) land cover maps, we explored the following hypotheses: 1) woody species assembly is driven by environmental factors, but also by historical landscape attributes; 2) recent forests exhibit lower woody species richness than pre-existing due to the existence of colonization credits; 3) these credits are modulated by species' life-forms and dispersal mechanisms. We examined the association of forest historical type (pre-existing versus recent) with total species richness and that of diverse life-forms and dispersal groups, also considering the effects of current environment and past landscape factors. When accounting for these effects, no significant differences in woody species richness were found between forest historical types except for vertebrate-dispersed species. Species richness of this group was affected by the interaction of forest historical type with distance to coast and rainfall: vertebrate-dispersed species richness increased with rainfall and distance to the coast in recent forests, while it was higher in dryer sites in pre-existing forests. In addition, forest historical types showed differences in woody species composition associated to diverse environmental and past landscape factors. In view of these results we can conclude that: 1) community assembly in terms of species richness is fast enough to exhaust most colonization credit in recent Mediterranean forests except for vertebrate-dispersed species; 2) for these species, colonization credit is affected by the interplay of forest history and a set of proxies of niche and landscape constraints of species dispersal and establishment; 3) woody species assemblage is mostly shaped by the species' ecological niches in these forests.},
+author = {Roberts, David R. and Bahn, Volker and Ciuti, Simone and Boyce, Mark S. and Elith, Jane and Guillera-Arroita, Gurutzeta and Hauenstein, Severin and Lahoz-Monfort, Jos{\'{e}} J. and Schr{\"{o}}der, Boris and Thuiller, Wilfried and Warton, David I. and Wintle, Brendan A. and Hartig, Florian and Dormann, Carsten F.},
 doi = {10.1111/ecog.02881},
-pages = {n/a--n/a},
-keywords = {evaluation, autocorrelation, independence, extrapolation, species distribution models, resource selection functions},
-year = {2016},
+file = {:Users/nick/Dropbox/papers/ecog2881 (2).pdf:pdf},
+isbn = {6503251521},
+issn = {09067590},
+journal = {Ecography},
+title = {{Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure}},
+year = {In Press}
+}
+@article{Hardisty2016,
+abstract = {Making forecasts about biodiversity and giving support to policy relies increasingly on large collections of data held electronically, and on substantial computational capability and capacity to analyse, model, simulate and predict using such data. However, the physically distributed nature of data resources and of expertise in advanced analytical tools creates many challenges for the modern scientist. Across the wider biological sciences, presenting such capabilities on the Internet (as “Web services”) and using scientific workflow systems to compose them for particular tasks is a practical way to carry out robust “in silico” science. However, use of this approach in biodiversity science and ecology has thus far been quite limited. BioVeL is a virtual laboratory for data analysis and modelling in biodiversity science and ecology, freely accessible via the Internet. BioVeL includes functions for accessing and analysing data through curated Web services; for performing complex in silico analysis through exposure of R programs, workflows, and batch processing functions; for on-line collaboration through sharing of workflows and workflow runs; for experiment documentation through reproducibility and repeatability; and for computational support via seamless connections to supporting computing infrastructures. We developed and improved more than 60 Web services with significant potential in many different kinds of data analysis and modelling tasks. We composed reusable workflows using these Web services, also incorporating R programs. Deploying these tools into an easy-to-use and accessible ‘virtual laboratory', free via the Internet, we applied the workflows in several diverse case studies. We opened the virtual laboratory for public use and through a programme of external engagement we actively encouraged scientists and third party application and tool developers to try out the services and contribute to the activity. Our work shows we can deliver an operational, scalable and flexible Internet-based virtual laboratory to meet new demands for data processing and analysis in biodiversity science and ecology. In particular, we have successfully integrated existing and popular tools and practices from different scientific disciplines to be used in biodiversity and ecological research.},
+author = {Hardisty, Alex R. and Bacall, Finn and Beard, Niall and Balc{\'{a}}zar-Vargas, Maria-Paula and Balech, Bachir and Barcza, Zolt{\'{a}}n and Bourlat, Sarah J. and {De Giovanni}, Renato and de Jong, Yde and {De Leo}, Francesca and Dobor, Laura and Donvito, Giacinto and Fellows, Donal and Guerra, Antonio Fernandez and Ferreira, Nuno and Fetyukova, Yuliya and Fosso, Bruno and Giddy, Jonathan and Goble, Carole and G{\"{u}}ntsch, Anton and Haines, Robert and Ernst, Vera Hern{\'{a}}ndez and Hettling, Hannes and Hidy, D{\'{o}}ra and Horv{\'{a}}th, Ferenc and Ittz{\'{e}}s, D{\'{o}}ra and Ittz{\'{e}}s, P{\'{e}}ter and Jones, Andrew and Kottmann, Renzo and Kulawik, Robert and Leidenberger, Sonja and Lyytik{\"{a}}inen-Saarenmaa, P{\"{a}}ivi and Mathew, Cherian and Morrison, Norman and Nenadic, Aleksandra and de la Hidalga, Abraham Nieva and Obst, Matthias and Oostermeijer, Gerard and Paymal, Elisabeth and Pesole, Graziano and Pinto, Salvatore and Poign{\'{e}}, Axel and Fernandez, Francisco Quevedo and Santamaria, Monica and Saarenmaa, Hannu and Sipos, Gergely and Sylla, Karl-Heinz and T{\"{a}}htinen, Marko and Vicario, Saverio and Vos, Rutger Aldo and Williams, Alan R. and Yilmaz, Pelin and Evans, MR and Evans, MR and Bithell, M and Cornell, SJ and Dall, SRX and D{\'{i}}az, S and Emmott, S and Purves, D and Scharlemann, J and Harfoot, M and Newbold, T and Tittensor, DP and Hutton, J and D{\'{i}}az, S and Demissew, S and Carabias, J and Joly, C and Lonsdale, M and Ash, N and Hampton, SE and Strasser, CA and Tewksbury, JJ and Gram, WK and Budden, AE and Batcheller, AL and Michener, WK and Jones, MB and Koureas, D and Arvanitidis, C and Belbin, L and Berendsohn, W and Damgaard, C and Groom, Q and Deelman, E and Vahi, K and Juve, G and Rynge, M and Callaghan, S and Maechling, PJ and Wolstencroft, K and Haines, R and Fellows, D and Williams, A and Withers, D and Owen, S and Goecks, J and Nekrutenko, A and Taylor, J and Hofmann, M and Klinkenberg, R and Fisher, P and Hedeler, C and Bentley, RD and Csillaghy, A and Aboudarham, J and Jacquey, C and Hapgood, MA and Bocchialini, K and Hardy, B and Douglas, N and Helma, C and Rautenberg, M and Jeliazkova, N and Jeliazkov, V and Rex, DE and Ma, JQ and Toga, AW and Kr{\"{u}}ger, F and Clare, EL and Greif, S and Siemers, BM and Symondson, WOC and Sommer, RS and Pennington, D and Higgins, D and Peterson, A and Jones, M and Lud{\"{a}}scher, B and Bowers, S and Jarnevich, CS and Holcombe, TR and Bella, EM and Carlson, ML and Graziano, G and Lamb, M and Dou, L and Cao, G and Morris, P and Morris, R and Lud{\"{a}}scher, B and Macklin, J and Papazoglou, MP and Georgakopoulos, D and Giovanni, R and Torres, E and Amaral, R and Blanquer, I and Rebello, V and Canhos, V and Bhagat, J and Tanoh, F and Nzuobontane, E and Laurent, T and Orlowski, J and Roos, M and Ihaka, R and Gentleman, R and Racine, JS and Leidenberger, S and Obst, M and Kulawik, R and Stelzer, K and Heyer, K and Hardisty, A and Giovanni, R and Williams, AR and Hern{\'{a}}ndez, E Vera and Kulawik, R and Fernandez, FQ and Hardisty, AR and Laugen, AT and Hollander, J and Obst, M and Strand, {\AA} and Hidy, D and Barcza, Z and Haszpra, L and Churkina, G and Pint{\'{e}}r, K and Nagy, Z and S{\'{a}}ndor, R and Ma, S and Acutis, M and Barcza, Z and Touhami, H Ben and Doro, L and S{\'{a}}ndor, R and Barcza, Z and Hidy, D and Lellei-Kov{\'{a}}cs, E and Ma, S and Bellocchi, G and Kopf, A and Bicak, M and Kottmann, R and Schnetzer, J and Kostadinov, I and Lehmann, K and Manzari, C and Fosso, B and Marzano, M and Annese, A and Caprioli, R and D'Erchia, AM and Fosso, B and Santamaria, M and Marzano, M and Alonso-Alemany, D and Valiente, G and Donvito, G and Sandionigi, A and Vicario, S and Prosdocimi, EM and Galimberti, A and Ferri, E and Bruno, A and Antonelli, A and Hettling, H and Condamine, FL and Vos, K and Nilsson, RH and Sanderson, MJ and Balech, B and Vicario, S and Donvito, G and Monaco, A and Notarangelo, P and Pesole, G and Deli{\'{c}}, D and Balech, B and Radulovi{\'{c}}, M and Loli{\'{c}}, B and Kara{\v{c}}i{\'{c}}, A and Vukosavljevi{\'{c}}, V and Leidenberger, S and Giovanni, R and Kulawik, R and Williams, AR and Bourlat, SJ and Roure, D and Goble, C and Stevens, R and Wolstencroft, K and Owen, S and Krebs, O and Nguyen, Q and Stanford, NJ and Golebiewski, M and Mathew, C and G{\"{u}}ntsch, A and Obst, M and Vicario, S and Haines, R and Williams, AR and Baker, E and Price, BW and Rycroft, SD and Hill, J and Smith, VS and Hampton, SE and Anderson, SS and Bagby, SC and Gries, C and Han, X and Hart, EM and Mislan, KAS and Heer, JM and White, EP and Kenall, A and Harold, S and Foote, C and Rigoni, R and Fontana, E and Guglielmetti, S and Fosso, B and D'Erchia, AM and Maina, V and Pereira, HM and Ferrier, S and Walters, M and Geller, GN and Jongman, RHG and Scholes, RJ and Verbruggen, H and Tyberghein, L and Pauly, K and Vlaeminck, C and Van, Nieuwenhuyze K and Kooistra, WHCF and Vilhena, DA and Antonelli, A and Kearney, MR and Wintle, BA and Porter, WP and White, RL and Sutton, AE and Salguero-G{\'{o}}mez, R and Bray, TC and Campbell, H and Cieraad, E and Michener, W and Beach, J and Jones, M and Lud{\"{a}}scher, B and Pennington, D and Pereira, R and Smith, VS and Rycroft, SD and Brake, I and Scott, B and Baker, E and Livermore, L and P{\'{e}}rez, F and Granger, B and G{\"{a}}rdenfors, U and J{\"{o}}nsson, M and Obst, M and Wremp, AM and Kindvall, O and Nilsson, J and Goble, C and Roure, D},
+doi = {10.1186/s12898-016-0103-y},
+file = {:Users/nick/Dropbox/papers/art{\%}3A10.1186{\%}2Fs12898-016-0103-y.pdf:pdf},
+issn = {1472-6785},
+journal = {BMC Ecology},
+keywords = {Ecology,Life Sciences,general},
+number = {1},
+pages = {49},
+publisher = {BioMed Central},
+title = {{BioVeL: a virtual laboratory for data analysis and modelling in biodiversity science and ecology}},
+volume = {16},
+year = {2016}
 }
 @article{Wolstencroft2013a,
 abstract = {The Taverna workflow tool suite (http://www.taverna.org.uk) is designed to combine distributed Web Services and/or local tools into complex analysis pipelines. These pipelines can be executed on local desktop machines or through larger infrastructure (such as supercomputers, Grids or cloud environments), using the Taverna Server. In bioinformatics, Taverna workflows are typically used in the areas of high-throughput omics analyses (for example, proteomics or transcriptomics), or for evidence gathering methods involving text mining or data mining. Through Taverna, scientists have access to several thousand different tools and resources that are freely available from a large range of life science institutions. Once constructed, the workflows are reusable, executable bioinformatics protocols that can be shared, reused and repurposed. A repository of public workflows is available at http://www.myexperiment.org. This article provides an update to the Taverna tool suite, highlighting new features and developments in the workbench and the Taverna Server.},
@@ -572,12 +573,13 @@ volume = {41},
 year = {2013}
 }
 
-  @Manual{maxnet,
-    title = {maxnet: Fitting 'Maxent' Species Distribution Models with 'glmnet'},
-    author = {Steven Phillips},
-    year = {2016},
-    note = {R package version 0.1.0},
-  }
+@Manual{maxnet,
+  title = {maxnet: Fitting `Maxent' Species Distribution Models with `glmnet'},
+  author = {Steven Phillips},
+  year = {2016},
+  note = {R package version 0.1.0},
+  url = {https://CRAN.R-project.org/package=maxnet} 
+}
 @article{Peng2011,
 author = {Peng, RD},
 file = {:Users/nick/Dropbox/papers/1226.full.pdf:pdf},
@@ -588,13 +590,21 @@ title = {{Reproducible Research in Computational Science}},
 volume = {334},
 year = {2011}
 }
- @Article{maxlike,
-    title = {Likelihood analysis of species occurrence probability	from presence-only data for modelling species distributions},
-    author = {J. Andrew Royle and Richard B. Chandler and Charles Yackulic and James D. Nichols},
-    journal = {Methods in Ecology and Evolution},
-    year = {2012},
-  }
-
+@article{Royle2012,
+abstract = {1.Understanding the factors affecting species occurrence is a pre-eminent focus of applied ecological research. However, direct information about species occurrence is lacking for many species. Instead, researchers sometimes have to rely on so-called presence-only data (i.e. when no direct information about absences is available), which often results from opportunistic, unstructured sampling. maxent is a widely used software program designed to model and map species distribution using presence-only data. 2.We provide a critical review of maxent as applied to species distribution modelling and discuss how it can lead to inferential errors. A chief concern is that maxent produces a number of poorly defined indices that are not directly related to the actual parameter of interest – the probability of occurrence ($\psi$). This focus on an index was motivated by the belief that it is not possible to estimate $\psi$ from presence-only data; however, we demonstrate that $\psi$ is identifiable using conventional likelihood methods under the assumptions of random sampling and constant probability of species detection. 3.The model is implemented in a convenient r package which we use to apply the model to simulated data and data from the North American Breeding Bird Survey. We demonstrate that maxent produces extreme under-predictions when compared to estimates produced by logistic regression which uses the full (presence/absence) data set. We note that maxent predictions are extremely sensitive to specification of the background prevalence, which is not objectively estimated using the maxent method. 4.As with maxent, formal model-based inference requires a random sample of presence locations. Many presence-only data sets, such as those based on museum records and herbarium collections, may not satisfy this assumption. However, when sampling is random, we believe that inference should be based on formal methods that facilitate inference about interpretable ecological quantities instead of vaguely defined indices.},
+author = {Royle, J. Andrew and Chandler, Richard B. and Yackulic, Charles and Nichols, James D.},
+doi = {10.1111/j.2041-210X.2011.00182.x},
+file = {:Users/nick/Dropbox/papers/j.2041-210X.2011.00182.x.pdf:pdf},
+isbn = {2041-210X},
+issn = {2041210X},
+journal = {Methods in Ecology and Evolution},
+keywords = {Bayes' rule,Detection probability,Logistic regression,Occupancy model,Occurrence probability,Presence-only data,Species distribution model,maxent},
+number = {3},
+pages = {545--554},
+title = {{Likelihood analysis of species occurrence probability from presence-only data for modelling species distributions}},
+volume = {3},
+year = {2012}
+}
 @article{Renner2013,
 abstract = {Modeling the spatial distribution of a species is a fundamental problem in ecology. A number of modeling methods have been developed, an extremely popular one being MAXENT, a maximum entropy modeling approach. In this article, we show that MAXENT is equivalent to a Poisson regression model and hence is related to a Poisson point process model, differing only in the intercept term, which is scale-dependent in MAXENT. We illustrate a number of improvements to MAXENT that follow from these relations. In particular, a point process model approach facilitates methods for choosing the appropriate spatial resolution, assessing model adequacy, and choosing the LASSO penalty parameter, all currently unavailable to MAXENT. The equivalence result represents a significant step in the unification of the species distribution modeling literature.},
 author = {Renner, Ian W. and Warton, David I.},
@@ -669,6 +679,7 @@ author = {Borregaard, Michael Krabbe and Hart, Edmund M},
 doi = {10.1111/ecog.02493},
 file = {:Users/nick/Dropbox/papers/ecog2493.pdf:pdf},
 issn = {09067590},
+volume = {39},
 pages = {349--353},
 title = {{Towards a more reproducible ecology}},
 year = {2016}

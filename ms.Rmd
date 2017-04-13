@@ -62,7 +62,7 @@ Whilst most SDM users rely either on the MaxEnt standalone application [@Phillip
 
 As a result, the SDM community can become siloed, with groups of researchers collaborating primarily with others who use the same software, even within specific R packages [@Ahmed2015], presenting a barrier to disseminating new SDM findings and methods.
 This is compounded since almost all available SDM software is focussed on analytical tasks such as constructing models, rather than enabling scientists to produce analyses in a format that others can reproduce and modify.
-The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review, synthesis of research findings across studies, and reduces capacity for the science to be a self-correcting process [@Boulton2012].
+The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review, synthesis of research findings across studies, and reduces capacity for the science to be a self-correcting process [@Roysoc2012].
 
 For example, a fundamental dispute over the ability of SDMs to detect environmental associations [@Beale2008; @Araujo2009; @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
 Similarly, in the past decade the SDM community has failed to carry out any large scale comparisons of SDM methods, still relying on the work of @Elith2006 to select models and software [@Joppa2014], despite the development of many new methods as well as improved evaluation procedures since the publication of that study [@Roberts2016].
@@ -76,7 +76,7 @@ This can be achieved if technologies enable and encourage sharing of research as
 The zoon R package has been developed specifically to improve reproducibility and comparability of SDMs in R by allowing users to encode entire SDM analyses as repeatable and extensible workflows consisting of independently executable, community-contributed modules.
 The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1).
 Whilst zoon's modular nature is similar to other SDM R packages such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016], zoon instead pulls each module from an open repository that any SDM user can contribute to, and makes it easy for non-developers to contribute modules.
-zoon's focus on reproducible and modifiable workflows is inspired by repositories such as the Cardiac Web Lab [@Cooper2016] and workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2015; @DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
+zoon's focus on reproducible and modifiable workflows is inspired by repositories such as the Cardiac Web Lab [@Cooper2016] and workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
 
 This paper introduces version 0.6 of the zoon R package.
 We describe the modular structure of zoon workflows and how they can be constructed, shared, reproduced and modified.
