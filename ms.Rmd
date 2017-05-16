@@ -543,5 +543,9 @@ NG wrote the first draft of the manuscript and all authors contributed to subseq
 
 The 2020 Science programme is funded through the EPSRC Cross-Disciplinary Interface Programme (grant number EP/I017909/1).
 
+### Data accessibility
+
+Nine-banded armadillo data were downloaded from GBIF, Carolina Wren data from @maxlike were accessed via the `maxlike` R package. Both datasets can be accessed using the code presented here.
+
 ### References
 
