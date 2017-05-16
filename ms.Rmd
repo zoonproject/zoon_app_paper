@@ -11,10 +11,8 @@ author:
 bibliography: zoon_app.bib
 csl: mee.csl
 output:
-  pdf_document:
-    fig_caption: yes
-    includes:
-      in_header: latex_preamble.tex
+  word_document:
+    fig_caption: true
     highlight: null
 ---
 
@@ -89,11 +87,6 @@ Each of these steps is encoded as one or more software modules (snippets of R co
 zoon modules can use methods from any R package, providing a common interface between the many SDM packages already available.
 Users combine these modules via a call to the `workflow` function, which executes each module in turn, before returning a `zoonWorkflow` object - a shareable, extensible and fully reproducible documentation of the SDM analysis.
 Figure 1B illustrates how data and outputs are passed between modules of the five different types in a a zoon workflow.
-
-
-```{r flow_diagram, echo = FALSE, out.width = "375px", fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Description of the five module types. B) Flow diagram illustrating how objects are passed between different module types: `data frame' - an dataframe of occurrence records; `raster' - a RasterStack object of the covariates; `model' - a ZoonModel object, generating standardised predictions from a given model. C) The flow diagram implied by chaining two `process' modules. D) The flow diagram implied by listing three `model' modules. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the zoon vignette `Building a module'."}
-knitr::include_graphics("figs/diagrams.png")
-```
 
 The following code uses `workflow` to run simple a presence-background SDM for a mosquito species in the UK, fitting a MaxEnt model with default settings and 500 randomly placed background points.
 
@@ -337,12 +330,6 @@ mtext(text = 'C',
         adj = 0)
 ```
 
-\blandscape
-```{r feng_papes_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Outputs of the workflow objects `FengPapes' and `FengPapesUpdate'. A) Map of the MaxEnt predicted distribution, with a 5\\% omission rate threshold, by the `PrintMap' module in the workflow `FengPapes' which encodes the core of a published analysis. B) A response curve produced by the `ResponseCurve' module for the first covariate, bio1 in the workflow `FengPapesUpdate', which modifies the original analysis workflow. C) A screenshot of the interactive map produced by the `InteractiveMap' modules in the workflow `FengPapesUpdate', displaying raw occurrence data and predicted distribution over a global map, allowing users to interactively explore their results. White areas are masked due to being in the MESS mask. Any SDM analysis distributed as a zoon workflow can be easily be explored and scrutinized by modifying its output modules using the function `ChangeWorkflow'."}
-knitr::include_graphics("figs/combinefengupdate-1.png")
-```
-\elandscape
-
 #### Example 2. Building a spatial thinning module
 
 @Aiello-Lammens2015 proposed an approach for dealing with spatial sampling bias in presence-only data by 'thinning' the presence data, and provide an R package `spThin` to implement their procedure [@spThin].
@@ -482,10 +469,6 @@ for (i in 1:6) {
 
 ```
 
-```{r maxent_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Prediction of the distribution of the Carolina wren from 6 different models, produced by the workflow `MaxEntComparison'. A) MaxEnt without threshold features. B) MaxNet with default settings. C) MaxNet without regularisation. D) MaxNet with regularisation but only linear features. E) MaxNet without regularisation and only linear features. F) Logistic regression. MaxNet with full features but no regularisation (C) gave the most local complexity, indicative of overfitting to the data. The models with only linear features (D-F) had a broader distribution, indicative of underfitting. Differences between MaxNet with linear features and no  regularisation (E) and logistic regression (F) are due to the downweighting applied to background data in the former."}
-knitr::include_graphics("figs/maxent_plotting-1.png")
-```
-
 ```{r maxent_aucs, eval = TRUE, echo = FALSE}
 # AUCs to be embedded in the text below
 perflist <- MaxEntComparison$report[seq(2, 12, by = 2)]
@@ -546,6 +529,21 @@ The 2020 Science programme is funded through the EPSRC Cross-Disciplinary Interf
 ### Data accessibility
 
 Nine-banded armadillo data were downloaded from GBIF, Carolina Wren data from @maxlike were accessed via the `maxlike` R package. Both datasets can be accessed using the code presented here.
+
+
+### Figures
+
+```{r flow_diagram, echo = FALSE, fig.cap = "Figure 1. The modular SDM structure encoded by a zoon workflow. A) Description of the five module types. B) Flow diagram illustrating how objects are passed between different module types: 'data frame' - an dataframe of occurrence records; 'raster' - a RasterStack object of the covariates; 'model' - a ZoonModel object, generating standardised predictions from a given model. C) The flow diagram implied by chaining two `process' modules. D) The flow diagram implied by listing three 'model' modules. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the zoon vignette 'Building a module'."}
+knitr::include_graphics("figs/diagrams.png")
+```
+
+```{r feng_papes_plots, cache = FALSE, echo = FALSE, fig.cap = "Figure 2. Outputs of the workflow objects 'FengPapes' and 'FengPapesUpdate'. A) Map of the MaxEnt predicted distribution, with a 5\\% omission rate threshold, by the 'PrintMap' module in the workflow 'FengPapes' which encodes the core of a published analysis. B) A response curve produced by the 'ResponseCurve' module for the first covariate, bio1 in the workflow 'FengPapesUpdate', which modifies the original analysis workflow. C) A screenshot of the interactive map produced by the 'InteractiveMap' modules in the workflow 'FengPapesUpdate', displaying raw occurrence data and predicted distribution over a global map, allowing users to interactively explore their results. White areas are masked due to being in the MESS mask. Any SDM analysis distributed as a zoon workflow can be easily be explored and scrutinized by modifying its output modules using the function 'ChangeWorkflow'."}
+knitr::include_graphics("figs/combinefengupdate-1.png")
+```
+
+```{r maxent_plots, cache = FALSE, echo = FALSE, fig.cap = "Figure 3. Prediction of the distribution of the Carolina wren from 6 different models, produced by the workflow 'MaxEntComparison'. A) MaxEnt without threshold features. B) MaxNet with default settings. C) MaxNet without regularisation. D) MaxNet with regularisation but only linear features. E) MaxNet without regularisation and only linear features. F) Logistic regression. MaxNet with full features but no regularisation (C) gave the most local complexity, indicative of overfitting to the data. The models with only linear features (D-F) had a broader distribution, indicative of underfitting. Differences between MaxNet with linear features and no  regularisation (E) and logistic regression (F) are due to the downweighting applied to background data in the former."}
+knitr::include_graphics("figs/maxent_plotting-1.png")
+```
 
 ### References
 
