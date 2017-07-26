@@ -8,8 +8,9 @@ spThin.R
 .Rproj.user
 zoon_app_paper.Rproj
 
-# pdf doc
+# output formats
 ms.pdf
+ms.docx
 
 # powerpoint docs for generating figures
 *.pptx

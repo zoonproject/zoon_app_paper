@@ -11,10 +11,8 @@ author:
 bibliography: zoon_app.bib
 csl: mee.csl
 output:
-  pdf_document:
-    fig_caption: yes
-    includes:
-      in_header: latex_preamble.tex
+  word_document:
+    fig_caption: true
     highlight: null
 ---
 
@@ -62,21 +60,21 @@ Whilst most SDM users rely either on the MaxEnt standalone application [@Phillip
 
 As a result, the SDM community can become siloed, with groups of researchers collaborating primarily with others who use the same software, even within specific R packages [@Ahmed2015], presenting a barrier to disseminating new SDM findings and methods.
 This is compounded since almost all available SDM software is focussed on analytical tasks such as constructing models, rather than enabling scientists to produce analyses in a format that others can reproduce and modify.
-The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review, synthesis of research findings across studies, and reduces capacity for the science to be a self-correcting process [@Boulton2012].
+The inability of SDM researchers to reproduce, scrutinise, and build on others' research prevents rigorous peer review, synthesis of research findings across studies, and reduces capacity for the science to be a self-correcting process [@Roysoc2012].
 
 For example, a fundamental dispute over the ability of SDMs to detect environmental associations [@Beale2008; @Araujo2009; @Beale2009] was left unresolved as only the original publication shared their analytical code [@Beale2008].
 Similarly, in the past decade the SDM community has failed to carry out any large scale comparisons of SDM methods, still relying on the work of @Elith2006 to select models and software [@Joppa2014], despite the development of many new methods as well as improved evaluation procedures since the publication of that study [@Roberts2016].
 The community's inability to repeat this comprehensive analysis is due to both lack of access to comparable data and the difficulty in learning and applying the many different pieces of software for model fitting.
 
 Given current software and patterns of collaboration, the SDM community is unlikely to repeat or modify analyses. Nor is it likely to produce the large model comparisons that would answer even basic questions about how best to do SDM.
-It may also have contributed to widespread misunderstandings about how apply and interpret different modelling approaches [@Yackulic2013].
+It may also have contributed to widespread misunderstandings about how to apply and interpret different modelling approaches [@Yackulic2013].
 In order to overcome these problems, the data and code underpinning SDM research need to be made more accessible, reproducible and modifiable by the whole research community.
 This can be achieved if technologies enable and encourage sharing of research as fully reproducible objects [@Peng2011], in ways that suit the diversity of users involved in SDM [@Ahmed2015].
 
 The zoon R package has been developed specifically to improve reproducibility and comparability of SDMs in R by allowing users to encode entire SDM analyses as repeatable and extensible workflows consisting of independently executable, community-contributed modules.
 The module-workflow structure enables scientists to more easily create and share components of their analysis; and then access, modify, reuse and combine the components of others (see below and Figure 1).
 Whilst zoon's modular nature is similar to other SDM R packages such as BioMod2 [@Thuiller2009] and sdm [@Naimi2016], zoon instead pulls each module from an open repository that any SDM user can contribute to, and makes it easy for non-developers to contribute modules.
-zoon's focus on reproducibile and modifiable workflows is inspired by repositories such as the Cardiac Web Lab [@Cooper2016] and workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2015; @DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
+zoon's focus on reproducible and modifiable workflows is inspired by repositories such as the Cardiac Web Lab [@Cooper2016] and workflow systems such as Taverna [@Wolstencroft2013a] and the BIOVEL system [@DeGiovanni2016], but embeds an SDM-specific workflow system within R, making it much more accessible to the SDM community.
 
 This paper introduces version 0.6 of the zoon R package.
 We describe the modular structure of zoon workflows and how they can be constructed, shared, reproduced and modified.
@@ -85,14 +83,10 @@ We then illustrate how these concepts enable better SDM research by reproducing 
 # Building a workflow
 
 zoon encodes SDM analyses as a simple workflow of five key steps: obtaining occurrence data; obtaining covariate data; applying some processes to these data; fitting one or more models; and generating any outputs (Figure 1A).
-Each of these steps is encoded as one or more software modules of a given type.
+Each of these steps is encoded as one or more software modules (snippets of R code) to complete one of these tasks.
+zoon modules can use methods from any R package, providing a common interface between the many SDM packages already available.
 Users combine these modules via a call to the `workflow` function, which executes each module in turn, before returning a `zoonWorkflow` object - a shareable, extensible and fully reproducible documentation of the SDM analysis.
 Figure 1B illustrates how data and outputs are passed between modules of the five different types in a a zoon workflow.
-
-
-```{r flow_diagram, echo = FALSE, out.width = "375px", fig.cap = "The modular SDM structure encoded by a zoon workflow. A) Description of the five module types. B) Flow diagram illustrating how objects are passed between different module types: `data frame' - an dataframe of occurrence records; `raster' - a RasterStack object of the covariates; `model' - a ZoonModel object, generating standardised predictions from a given model. C) The flow diagram implied by chaining two `process' modules. D) The flow diagram implied by listing three `model' modules. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the zoon vignette `Building a module'."}
-knitr::include_graphics("figs/diagrams.png")
-```
 
 The following code uses `workflow` to run simple a presence-background SDM for a mosquito species in the UK, fitting a MaxEnt model with default settings and 500 randomly placed background points.
 
@@ -131,8 +125,8 @@ Some steps in SDM analyses are stochastic and need to be run multiple times; `Re
 
 ###
 
-The following workflow uses a chain to standardise the covariate rasters as well as generating background records, and uses a list to fit three different models: MaxEnt, Boosted Regression Trees (GBM) and RandomForest.
-The results of the three models are then returned in three Shiny apps allowing the user to interactively explore the occurrence and covariate data, model summaries and prediction maps.
+The following workflow uses a chain to standardise the covariate rasters as well as generating background records, and uses a list to fit three different models: MaxEnt, Boosted Regression Trees (also known as Generalized Boosted Regression Models; GBM) and RandomForest.
+The results of the three models are then returned in three Shiny apps (created by the `Appify` module) allowing the user to interactively explore the occurrence and covariate data, model summaries and prediction maps.
 
 ```{r workflow2, eval = FALSE, echo = TRUE}
 mosquito2 <- workflow(occurrence = UKAnophelesPlumbeus,
@@ -160,6 +154,7 @@ The `zoonWorkflow` object returned by `workflow` contains all of the data, code 
 The object is therefore a self-contained representation of an entire analysis which can be saved as a binary `RData` object, archived, shared with colleagues or uploaded to the web.
 Anyone else may then load the object into their R session, load the zoon R package, and investigate the analysis.
 
+Workflow objects could therefore be provided as supplementary information to journal articles, or hosted online to meet journal requirements for public archiving of data and software. 
 zoon provides the `ZoonFigshare` function to facilitate sharing a completed workflow object from within R, via the free web platform figshare. `ZoonFigshare` takes a workflow object and some minimal metadata and uploads the workflow as an RData object, along with a metadata text file, to the user's figshare profile for others to download, inspect and modify.
 
 ### Exploring workflows
@@ -191,7 +186,12 @@ zoon can query the currently available modules of each type via the function `Ge
 All zoon modules on the repository are accompanied by documentation and metadata, similarly to R's helpfiles.
 The documentation for any module on the repository can be accessed from R using the function `ModuleHelp`.
 zoon also provides a function `ZoonCitation` to provide citation information, similarly to the `citation` function provided with R for citing R packages.
-A web service for interactive exploration of available modules and their documentation will also be made available soon.
+
+The only pre-requisite for uploading a module to the online repository is that it passes a series of automated unit and integration tests to ensure interoperability with other modules.
+Similarly to the CRAN archive of R packages, zoon leaves the SDM community to determine which methods and software should be used, rather than acting as a gatekeeper of SDM methods.
+
+A web service for interactive exploration of available modules and their documentation is currently being developed.
+This platform may include systems by which users can rate different modules, making it easier for the community to promote the best modules, flag methodological issues, and collaborate on module development.
 
 ### Example Applications
 
@@ -242,6 +242,7 @@ The resulting workflow contains all the code required to re-run the workflow, th
 The object `FengPapes` could therefore be saved as a binary file and shared as a reproducible representation of this research.
 
 Next, we update the workflow to produce an interactive map enabling anyone to inspect the data and predictions on a zoomable map, and to inspect the response curves of the fitted model. These outputs are shown in Figure 2, panels B and C.
+Various other output modules could be used here, e.g. to validate models, project distributions to new regions, or save prediction maps in a variety of formats.
 
 ```{r fengChangeWorkflow, eval = TRUE, fig.show = "hide", fig.height = 9, fig.width = 7.5, dev.args = list(pointsize = 16)}
 FengPapesUpdate <- 
@@ -329,12 +330,6 @@ mtext(text = 'C',
         adj = 0)
 ```
 
-\blandscape
-```{r feng_papes_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Outputs of the workflow objects `FengPapes' and `FengPapesUpdate'. A) Map of the MaxEnt predicted distribution, with a 5\\% omission rate threshold, by the `PrintMap' module in the workflow `FengPapes' which encodes the core of a published analysis. B) A response curve produced by the `ResponseCurve' module for the first covariate, bio1 in the workflow `FengPapesUpdate', which modifies the original analysis workflow. C) A screenshot of the interactive map produced by the `InteractiveMap' modules in the workflow `FengPapesUpdate', displaying raw occurrence data and predicted distribution over a global map, allowing users to interactively explore their results. White areas are masked due to being in the MESS mask. Any SDM analysis distributed as a zoon workflow can be easily be explored and scrutinized by modifying its output modules using the function `ChangeWorkflow'."}
-knitr::include_graphics("figs/combinefengupdate-1.png")
-```
-\elandscape
-
 #### Example 2. Building a spatial thinning module
 
 @Aiello-Lammens2015 proposed an approach for dealing with spatial sampling bias in presence-only data by 'thinning' the presence data, and provide an R package `spThin` to implement their procedure [@spThin].
@@ -395,7 +390,8 @@ BuildModule(object = spThin,
 ```
 
 This module can now be shared so that others can use it in their zoon workflows.
-Modules can be uploaded to the zoon modules repository via the online submission system at [URL TBD].
+Modules can be uploaded to the zoon modules repository via the online submission system at [zoonproject.org](http://zoonproject.org).
+The zoon package vignette *Building modules* provides full details and examples of how to build modules of each type.
 
 #### Example 3. Unpacking MaxEnt
 
@@ -405,7 +401,7 @@ Given this close correspondence between MaxEnt and logistic regression, @Renner2
 zoon enables us to investigate this hypothesis by easily comparing MaxEnt models fitted with and without regularisation and feature construction.
 We fit MaxEnt with both the widely used java implementation (omitting threshold features) as well as the downweighted logistic regression approximation provided in the `maxnet` R package [@maxnet].
 We also compare these models with a standard logistic regression model which does not apply the downweighting step.
-The following workflow fits these models to a previously published presence-background data on the Caroline wren in the USA [@maxlike], maps their predictions (Figure 3) and evaluates the predictive performance of each model against the full presence-absence dataset by AUC.
+The following workflow fits these models to a previously published presence-background data on the Carolina wren in the USA [@maxlike], maps their predictions (Figure 3) and evaluates the predictive performance of each model against the full presence-absence dataset by AUC.
 Note that setting the regularisation constant in the `maxnet` package to zero caused numerical errors, so we use a small value instead.
 
 ```{r maxent_comparison, dpi = 600, fig.show = "hide", eval = TRUE, out.height = 600, out.width = 600}
@@ -473,10 +469,6 @@ for (i in 1:6) {
 
 ```
 
-```{r maxent_plots, cache = FALSE, echo = FALSE, out.width = "450px", fig.cap = "Prediction of the distribution of the Carolina wren from 6 different models, produced by the workflow `MaxEntComparison'. A) MaxEnt without threshold features. B) MaxNet with default settings. C) MaxNet without regularisation. D) MaxNet with regularisation but only linear features. E) MaxNet without regularisation and only linear features. F) Logistic regression. MaxNet with full features but no regularisation (C) gave the most local complexity, indicative of overfitting to the data. The models with only linear features (D-F) had a broader distribution, indicative of underfitting. Differences between MaxNet with linear features and no  regularisation (E) and logistic regression (F) are due to the downweighting applied to background data in the former."}
-knitr::include_graphics("figs/maxent_plotting-1.png")
-```
-
 ```{r maxent_aucs, eval = TRUE, echo = FALSE}
 # AUCs to be embedded in the text below
 perflist <- MaxEntComparison$report[seq(2, 12, by = 2)]
@@ -495,10 +487,10 @@ The AUC statistics calculated against the presence-absence data were:
 cat(paste(names(AUCs), AUCs, collapse = '; '))
 cat('.')
 ```
-As expected, MaxEnt and MaxNet (the logistic regression approximation) generated similar predictions and had similar predictice performance.
-Likewise, once the regularisation and features of MaxNet were switched off, both the predictions and performance were very similar to Logistic regression.
+As expected, MaxEnt and MaxNet (the logistic regression approximation) generated similar predictions and had similar predictive performance.
+Likewise, once the regularisation and features of MaxNet were switched off, both the predictions and performance were very similar to logistic regression.
 
-Readers interested in a more comprehensive comparison, or in exploring the response curves can easily reproduce and modify the analysis either by editing and re-running the above code block or by downloading the workflow object and using the `ChangeWorkflow` function.
+Readers interested in a more comprehensive comparison, or in exploring the response curves, can easily reproduce and modify the analysis either by editing and re-running the above code block or by downloading the workflow object and using the `ChangeWorkflow` function.
 
 ### Future developments
 
@@ -510,20 +502,48 @@ Increasing the usability of code and data is therefore the real challenge of ope
 The size and fractured nature of the SDM research community therefore warrants a discipline-specific open research platform such as zoon to resolve these problems.
 By providing a common interface for SDM and the capacity to create and share methodological experiments zoon offers a new opportunity for the SDM community to develop community modelling benchmarks, and resolve scientific and methodological questions in ways that the current culture of publishing cannot achieve.
 
+zoon also has the potential to improve methodological standards in SDM, a research area in which there is widespread misunderstanding and misuse of techniques [@Yackulic2013].
+SDM methodologists could encode model validation procedures and best-practice guidance as zoon output modules, enabling end users to rapidly ensure their modelling procedures are fit for purpose [@Guillera-Arroita2015].
+
 zoon was both conceived and developed based on input from users.
 Continuing and expanding user engagement will be vital to forming a critical mass of ecologists creating and using zoon modules in their research.
 To assist users a number of tutorials on using zoon and developing modules are provided on the zoonproject GitHub repository and as vignettes distributed with zoon.
 We intend to supplement these with a gallery of research examples and a forum where the community can discuss and evaluate best SDM practice in a reproducible way.
 
 
-### Supporting Information
+### Supporting information
 
-Version 0.6 of the zoon R package is archived at https://doi.org/10.5281/zenodo.240926.
-The code required to reproduce this manuscript can be downloaded at https://github.com/zoonproject/zoon_app_paper (to be replaced with zenodo archive link after proofing stage).
+Version 0.6 of the zoon R package is archived at [doi.org/10.5281/zenodo.240926](https://doi.org/10.5281/zenodo.240926).
+The code required to reproduce this manuscript is archived at [doi.org/10.5281/zenodo.834870](https://doi.org/10.5281/zenodo.834870).
+
+### Author's contributions
+All authors contributed to the design of the zoon R package.
+TAA, TCDL and NG implemented and programmed the R package with input from the other authors.
+NG wrote the first draft of the manuscript and all authors contributed to subsequent revisions and gave final approval for publication.
+
 
 ### Acknowledgements
 
 The 2020 Science programme is funded through the EPSRC Cross-Disciplinary Interface Programme (grant number EP/I017909/1).
+
+### Data accessibility
+
+Nine-banded armadillo data were downloaded from GBIF, Carolina Wren data from @maxlike were accessed via the `maxlike` R package. Both datasets can be accessed using the code presented here.
+
+
+### Figures
+
+```{r flow_diagram, echo = FALSE, fig.cap = "Figure 1. The modular SDM structure encoded by a zoon workflow. A) Description of the five module types. B) Flow diagram illustrating how objects are passed between different module types: 'data frame' - an dataframe of occurrence records; 'raster' - a RasterStack object of the covariates; 'model' - a ZoonModel object, generating standardised predictions from a given model. C) The flow diagram implied by chaining two `process' modules. D) The flow diagram implied by listing three 'model' modules. Full details of module inputs and outputs, and the effects of listing and chaining each module type are given in the zoon vignette 'Building a module'."}
+knitr::include_graphics("figs/diagrams.png")
+```
+
+```{r feng_papes_plots, cache = FALSE, echo = FALSE, fig.cap = "Figure 2. Outputs of the workflow objects 'FengPapes' and 'FengPapesUpdate'. A) Map of the MaxEnt predicted distribution, with a 5\\% omission rate threshold, by the 'PrintMap' module in the workflow 'FengPapes' which encodes the core of a published analysis. B) A response curve produced by the 'ResponseCurve' module for the first covariate, bio1 in the workflow 'FengPapesUpdate', which modifies the original analysis workflow. C) A screenshot of the interactive map produced by the 'InteractiveMap' modules in the workflow 'FengPapesUpdate', displaying raw occurrence data and predicted distribution over a global map, allowing users to interactively explore their results. White areas are masked due to being in the MESS mask. Any SDM analysis distributed as a zoon workflow can be easily be explored and scrutinized by modifying its output modules using the function 'ChangeWorkflow'."}
+knitr::include_graphics("figs/combinefengupdate-1.png")
+```
+
+```{r maxent_plots, cache = FALSE, echo = FALSE, fig.cap = "Figure 3. Prediction of the distribution of the Carolina wren from 6 different models, produced by the workflow 'MaxEntComparison'. A) MaxEnt without threshold features. B) MaxNet with default settings. C) MaxNet without regularisation. D) MaxNet with regularisation but only linear features. E) MaxNet without regularisation and only linear features. F) Logistic regression. MaxNet with full features but no regularisation (C) gave the most local complexity, indicative of overfitting to the data. The models with only linear features (D-F) had a broader distribution, indicative of underfitting. Differences between MaxNet with linear features and no  regularisation (E) and logistic regression (F) are due to the downweighting applied to background data in the former."}
+knitr::include_graphics("figs/maxent_plotting-1.png")
+```
 
 ### References
 
