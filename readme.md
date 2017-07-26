@@ -8,6 +8,6 @@ The manuscript R-markdown file [ms.Rmd](ms.Rmd) can be compiled by clicking the 
 knitr::knit("ms.Rmd")
 ```
 
-This code is licenced under an [MIT Licence][LICENCE] and archived on zenodo.
+This code is licenced under an [MIT Licence](LICENCE) and archived on zenodo.
 
 [![DOI](https://zenodo.org/badge/52580972.svg)](https://zenodo.org/badge/latestdoi/52580972)
