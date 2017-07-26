@@ -513,8 +513,8 @@ We intend to supplement these with a gallery of research examples and a forum wh
 
 ### Supporting information
 
-Version 0.6 of the zoon R package is archived at https://doi.org/10.5281/zenodo.240926.
-The code required to reproduce this manuscript can be downloaded at https://github.com/zoonproject/zoon_app_paper (to be replaced with zenodo archive link after proofing stage).
+Version 0.6 of the zoon R package is archived at [doi.org/10.5281/zenodo.240926](https://doi.org/10.5281/zenodo.240926).
+The code required to reproduce this manuscript is archived at [doi.org/10.5281/zenodo.834870](https://doi.org/10.5281/zenodo.834870).
 
 ### Author's contributions
 All authors contributed to the design of the zoon R package.
