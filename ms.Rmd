@@ -390,7 +390,7 @@ BuildModule(object = spThin,
 ```
 
 This module can now be shared so that others can use it in their zoon workflows.
-Modules can be uploaded to the zoon modules repository via the online submission system at [URL TBD].
+Modules can be uploaded to the zoon modules repository via the online submission system at [zoonproject.org](http://zoonproject.org).
 The zoon package vignette *Building modules* provides full details and examples of how to build modules of each type.
 
 #### Example 3. Unpacking MaxEnt
